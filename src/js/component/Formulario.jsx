@@ -5,14 +5,15 @@ import { useNavigate } from 'react-router-dom';
 
 const Formulario = () => {
   const { userData, setUserData } = useContext(UserContext);
-  const [fullName, setFullName] = useState('');
+  const [full_name, setFull_name] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
+  const [newContactId, setNewContactId] = useState(1);
 
-  const handleFullNameChange = (e) => {
-    setFullName(e.target.value);
+  const handleFull_nameChange = (e) => {
+    setFull_name(e.target.value);
   };
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -30,9 +31,10 @@ const Formulario = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newContact={ fullName, email, address,phone };
+    let newContact={ id: userData.length + 1,full_name, email, address, phone};
+    console.log('New Contact:', newContact);
     setUserData([...userData,newContact]);
-    navigate('/');
+        navigate('/');
   };
 
 
@@ -44,7 +46,7 @@ const Formulario = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="fullName">Full Name</label>
-          <input type="text" className="form-control" id="fullName" value={fullName} onChange={handleFullNameChange} />
+          <input type="text" className="form-control" id="fullName" value={full_name} onChange={handleFull_nameChange} />
         </div>
         <div className="form-group">
           <label htmlFor="email">Email</label>
