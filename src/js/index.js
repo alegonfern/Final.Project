@@ -7,8 +7,10 @@ import "../styles/index.css";
 
 //import your own components
 import Formulario from "./component/Formulario.jsx";
+import Contacto from "./component/Contacto.jsx";
 
 //render your react application
 ReactDOM.render(<UserProvider>
     <Formulario />
+    <Contacto />
   </UserProvider>, document.querySelector("#app"));

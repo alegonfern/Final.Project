@@ -28,7 +28,8 @@ const Formulario = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUserData({ fullName, email, address,phone });
+    let newContact={ fullName, email, address,phone };
+    setUserData([...userData,newContact]);
   };
 
 
