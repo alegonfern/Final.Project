@@ -31,11 +31,43 @@ const Formulario = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newContact={ id: userData.length + 1,full_name, email, address, phone};
-    console.log('New Contact:', newContact);
-    setUserData([...userData,newContact]);
-        navigate('/');
-  };
+    let newContactPost={full_name, agenda_slug: "juana", email, address, phone};
+    let newContact={ id: userData.length + 1,full_name, agenda_slug: "juana", email, address, phone};
+    
+    const postOptions = {
+      method: "POST",
+      body: JSON.stringify(newContactPost), // Datos del nuevo contacto en formato JSON
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+const url="https://playground.4geeks.com/apis/fake/contact/";
+
+    fetch(url, postOptions)
+    .then(response => {
+      if (response.ok) {
+        console.log("POST: Contacto agregado exitosamente");
+        return response.json();
+      } else {
+        console.log(`Error en la solicitud POST ${response.status}`);
+        throw new Error("Error en la solicitud POST");
+      }
+    })
+    .then(data => {
+      
+      console.log(data); // mostrar la respuesta del servidor
+      const updatedData = [...userData, newContact]; // Actualizar los datos en el contexto
+      setUserData(updatedData);
+      navigate("/"); // Redirigir a la página de contactos
+    })
+    .catch(error => {
+      console.error("Error en la solicitud POST:", error);
+    });
+
+
+
+   
+        };
 
 
 
