@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useContext,useState,useEffect} from "react";
 import { UserContext } from "../store/UserContext";
+import { useNavigate } from 'react-router-dom';
 
 const Formulario = () => {
   const { userData, setUserData } = useContext(UserContext);
@@ -8,6 +9,7 @@ const Formulario = () => {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
+  const navigate = useNavigate();
 
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
@@ -30,6 +32,7 @@ const Formulario = () => {
     e.preventDefault();
     let newContact={ fullName, email, address,phone };
     setUserData([...userData,newContact]);
+    navigate('/');
   };
 
 

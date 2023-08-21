@@ -1,6 +1,10 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../store/UserContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 
 const Contacto = () => {
   const { userData } = useContext(UserContext);
@@ -8,6 +12,9 @@ const Contacto = () => {
   return (
     <div className="container mt-4">
       <h2>Contactos</h2>
+      <div className='mt-2 mb-2 d-md-flex justify-content-md-end'>
+          <Link to="/NewContact" className="btn btn-success">Agregar Nuevo Contacto</Link>
+          </div>
       {userData.map((contact, index) => (
       <div>
         <div className="card mb-3">
