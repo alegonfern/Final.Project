@@ -11,7 +11,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState([]);
 
-  const url = "https://playground.4geeks.com/apis/fake/contact/agenda/ramira";
+  const url = "https://playground.4geeks.com/apis/fake/contact/agenda/juana";
 
   const getOptions = {
     method: "GET",
