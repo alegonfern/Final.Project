@@ -11,9 +11,11 @@ import "../styles/index.css";
 //import your own components
 import Formulario from "./component/Formulario.jsx";
 import Contacto from "./component/Contacto.jsx";
+import Navbar from "./component/Navbar";
 
 //render your react application
-ReactDOM.render(
+ReactDOM.render(<>
+  <Navbar/>
   <UserProvider>
     <Router>
       <Routes>
@@ -22,6 +24,7 @@ ReactDOM.render(
         <Route path="/EditContact/:id" element={<Formulario />} />
       </Routes>
     </Router>
-  </UserProvider>,
+  </UserProvider>
+  </>,
   document.querySelector('#app')
 );
