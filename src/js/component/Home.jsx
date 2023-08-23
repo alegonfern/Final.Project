@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-    const { charactersData, setCharactersData, getCharacters } = useContext(UserContext);
+    const { charactersData, setCharactersData, getCharacters, characterData, setCharacterData } = useContext(UserContext);
 
     useEffect(() => {
         getCharacters();
@@ -20,14 +20,14 @@ const Home = () => {
                 </div>
             </div>
         </header>
-       
-            <section className="py-5" >
-            
-                <div className="container px-4 px-lg-5 mt-5" >
-                
-                    <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" >
-                    {charactersData.map((character) => (
-                        <div className="col mb-5" key={character.uid}>
+
+        <section className="py-5" >
+
+            <div className="container px-4 px-lg-5 mt-5" >
+
+                <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" >
+                    {characterData.map((character) => (
+                        <div className="col mb-5" key={character.result.uid}>
                             <div className="card h-100">
 
                                 <img className="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
@@ -35,23 +35,23 @@ const Home = () => {
                                 <div className="card-body p-4">
                                     <div className="text-center">
 
-                                        <h5 className="fw-bolder">{character.name}</h5>
+                                        <h5 className="fw-bolder">{character.result.properties.name}</h5>
 
-                                        $40.00 - $80.00
+                                        {character.result.properties.gender}
                                     </div>
                                 </div>
 
                                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                                    <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#">View details</a></div>
                                 </div>
                             </div>
                         </div>
-                           ))};
-                    </div>
-                 
+                    ))};
                 </div>
-                
-            </section>
+
+            </div>
+
+        </section>
     </>
     )
 };
