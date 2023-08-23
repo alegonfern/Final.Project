@@ -12,6 +12,7 @@ import "../styles/index.css";
 import Formulario from "./component/Formulario.jsx";
 import Contacto from "./component/Contacto.jsx";
 import Navbar from "./component/Navbar";
+import Home from "./component/Home";
 
 //render your react application
 ReactDOM.render(<>
@@ -19,8 +20,8 @@ ReactDOM.render(<>
   <UserProvider>
     <Router>
       <Routes>
-        <Route path="/" element={<Contacto />} />
-        <Route path="/NewContact" element={<Formulario />} />
+      <Route path="/" element={<Home />} />
+         <Route path="/NewContact" element={<Formulario />} />
         <Route path="/EditContact/:id" element={<Formulario />} />
       </Routes>
     </Router>

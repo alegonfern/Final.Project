@@ -1,4 +1,4 @@
-archivo = "Navbar.jsx"
+archivo = "Home.jsx"
 valor_antiguo = "class"
 valor_nuevo = "className"
 
