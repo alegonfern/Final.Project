@@ -46,7 +46,7 @@ const Formulario = () => {
     if (id) {
       // Editar contacto existente
       const updatedContact = {
-        agenda_slug: "juana" ,
+        agenda_slug: "juana",
         full_name,
         email,
         address,

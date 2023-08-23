@@ -1,21 +1,21 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../store/UserContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-
 const Contacto = () => {
-  const { userData, setUserData } = useContext(UserContext);
- // Efecto para actualizar los datos cuando userData cambie
- useEffect(() => {
-  console.log("userData actualizado:", userData);
-}, [userData]);
+  const { userData, getagenda} = useContext(UserContext);
+  
+  useEffect(() => {
+  getagenda();
+}, []);
 
   const generateRandomId = () => {
     return Math.floor(Math.random() * 1000); // Genera un ID aleatorio entre 0 y 999
   };
+
 
   return (
     <div className="container mt-4">
@@ -45,15 +45,15 @@ const Contacto = () => {
               <Link to={`/EditContact/${contact.id}`} className="btn">
                 <FontAwesomeIcon icon={faEdit} />
               </Link>
-          
-            <button className="btn">
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
+
+              <button className="btn">
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </div>
           </div>
         </div>
-        </div>
-  ))
-}
+      ))
+      }
     </div >
   );
 };
