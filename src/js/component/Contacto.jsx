@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Contacto = () => {
-  const { userData, getagenda} = useContext(UserContext);
+  const { userData,setUserData, getagenda} = useContext(UserContext);
   
   useEffect(() => {
   getagenda();
@@ -14,6 +14,37 @@ const Contacto = () => {
 
   const generateRandomId = () => {
     return Math.floor(Math.random() * 1000); // Genera un ID aleatorio entre 0 y 999
+  };
+
+
+  const handleDelete = (idToDelete) => {
+    const deleteUrl =
+      "https://playground.4geeks.com/apis/fake/contact/" + idToDelete;
+
+    const deleteOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(deleteUrl, deleteOptions)
+      .then((response) => {
+        if (response.ok) {
+          console.log("DELETE: Contacto eliminado exitosamente");
+          // Actualizar el estado del contexto eliminando el contacto
+          const updatedUserData = userData.filter(
+            (contact) => contact.id !== idToDelete
+          );
+          setUserData(updatedUserData);
+        } else {
+          console.log(`Error en la solicitud DELETE ${response.status}`);
+          throw new Error("Error en la solicitud DELETE");
+        }
+      })
+      .catch((error) => {
+        console.error("Error en la solicitud DELETE:", error);
+      });
   };
 
 
@@ -47,7 +78,7 @@ const Contacto = () => {
               </Link>
 
               <button className="btn">
-                <FontAwesomeIcon icon={faTrash} />
+                <FontAwesomeIcon onClick={() => handleDelete(contact.id)} icon={faTrash} />
               </button>
             </div>
           </div>
