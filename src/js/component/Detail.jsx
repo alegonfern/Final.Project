@@ -4,17 +4,17 @@ import { UserContext } from "../store/UserContext";
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPersonHalfDress, faEye, faCalendar, faRulerVertical} from "@fortawesome/free-solid-svg-icons";
+import { faPersonHalfDress, faEye, faCalendar, faRulerVertical } from "@fortawesome/free-solid-svg-icons";
 
 
 const Detail = () => {
     const { characterData } = useContext(UserContext);
     const { characterId } = useParams();
-    console.log("characterId desde Params:", characterId); 
+    console.log("characterId desde Params:", characterId);
 
     const selectedCharacter = characterData.find(character => character.result.uid === characterId);
     const shuffledCharacters = characterData.slice().sort(() => Math.random() - 0.5);
-    
+
     if (!selectedCharacter) {
         return <p>Loading...</p>;
     }
@@ -28,14 +28,14 @@ const Detail = () => {
                             <div className="small mb-1">{selectedCharacter.result.description}</div>
                             <h1 className="display-5 fw-bolder">{selectedCharacter.result.properties.name}</h1>
                             <div className="fs-5 mb-5">
-                                <p className="fs-4">
-                                <FontAwesomeIcon icon={faPersonHalfDress} className="me-2 text-muted" />{selectedCharacter.result.properties.gender}</p>
-                                <p className="fs-4">
-                                <FontAwesomeIcon icon={faEye} className="me-2 text-muted" />{selectedCharacter.result.properties.eye_color}</p>
-                                <p className="fs-4">
-                                <FontAwesomeIcon icon={faCalendar} className="me-2 text-muted" />{selectedCharacter.result.properties.birth_year}</p>
-                                <p className="fs-4">
-                                <FontAwesomeIcon icon={faRulerVertical} className="me-2 text-muted" />{selectedCharacter.result.properties.height}</p>
+                                <p className="fs-5 text-muted mb-0">
+                                    <FontAwesomeIcon icon={faPersonHalfDress} className="me-2 text-muted fa-xs align-middle" />{selectedCharacter.result.properties.gender}</p>
+                                <p className="fs-5 text-muted mb-0">
+                                    <FontAwesomeIcon icon={faEye} className="me-2 text-muted fa-xs align-middle" />{selectedCharacter.result.properties.eye_color}</p>
+                                <p className="fs-5 text-muted mb-0">
+                                    <FontAwesomeIcon icon={faCalendar} className="me-2 text-muted fa-xs align-middle" />{selectedCharacter.result.properties.birth_year}</p>
+                                <p className="fs-5 text-muted mb-0">
+                                    <FontAwesomeIcon icon={faRulerVertical} className="me-2 text-muted fa-xs align-middle" />{selectedCharacter.result.properties.height}</p>
                             </div>
                             <p className="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero</p>
                             <div className="d-flex">
@@ -52,7 +52,7 @@ const Detail = () => {
 
             <section className="py-5 bg-light">
                 <div className="container px-4 px-lg-5 mt-5">
-                    <h2 className="fw-bolder mb-4">Related products</h2>
+                    <h2 className="fw-bolder mb-4">Others Characters</h2>
 
                     <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                         {shuffledCharacters.slice(0, 4).map(character => (
