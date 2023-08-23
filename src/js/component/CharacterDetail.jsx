@@ -7,13 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonHalfDress, faEye, faCalendar, faRulerVertical } from "@fortawesome/free-solid-svg-icons";
 
 
-const Detail = () => {
+const CharacterDetail = () => {
     const { characterData } = useContext(UserContext);
     const { characterId } = useParams();
-    console.log("characterId desde Params:", characterId);
+
 
     const selectedCharacter = characterData.find(character => character.result.uid === characterId);
     const shuffledCharacters = characterData.slice().sort(() => Math.random() - 0.5);
+
 
     if (!selectedCharacter) {
         return <p>Loading...</p>;
@@ -72,7 +73,7 @@ const Detail = () => {
 
                                     <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                         <div className="text-center">
-                                            <Link to={`/detail/${character.result.uid}`} className="btn btn-outline-dark mt-auto">View options</Link>
+                                            <Link to={`/detail_character/${character.result.uid}`} className="btn btn-outline-dark mt-auto">View options</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -85,4 +86,4 @@ const Detail = () => {
     )
 };
 
-export default Detail;
+export default CharacterDetail;

@@ -42,7 +42,7 @@ const Home = () => {
                                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
 
                                     <div className="text-center">
-                                        <Link to={`/detail/${character.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
+                                        <Link to={`/detail_character/${character.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@ const Home = () => {
                                 </div>
 
                                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="">View details</a></div>
+                                <Link to={`/detail_planet/${planet.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
                                 </div>
                             </div>
                         </div>
