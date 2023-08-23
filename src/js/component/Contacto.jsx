@@ -3,14 +3,14 @@ import { UserContext } from '../store/UserContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faLocationDot, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const Contacto = () => {
-  const { userData,setUserData, getagenda} = useContext(UserContext);
-  
+  const { userData, setUserData, getagenda } = useContext(UserContext);
+
   useEffect(() => {
-  getagenda();
-}, []);
+    getagenda();
+  }, []);
 
   const generateRandomId = () => {
     return Math.floor(Math.random() * 1000); // Genera un ID aleatorio entre 0 y 999
@@ -67,9 +67,12 @@ const Contacto = () => {
             <div className="col-md-6">
               <div className="card-body">
                 <h5 className="card-title">{contact.full_name}</h5>
-                <p className="card-text">Email: {contact.email}</p>
-                <p className="card-text">Dirección: {contact.address}</p>
-                <p className="card-text">Teléfono: {contact.phone}</p>
+                <p className="card-text">
+                  <FontAwesomeIcon icon={faEnvelope} className="me-2 text-muted" />Email: {contact.email}</p>
+                <p className="card-text">
+                  <FontAwesomeIcon icon={faLocationDot} className="me-2 text-muted" />Dirección: {contact.address}</p>
+                <p className="card-text">
+                  <FontAwesomeIcon icon={faPhone} className="me-2 text-muted" />Teléfono: {contact.phone}</p>
               </div>
             </div>
             <div className="col-md-4 d-flex align-items-start">

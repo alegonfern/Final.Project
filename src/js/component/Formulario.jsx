@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../store/UserContext";
 import { useNavigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Formulario = () => {
   const { userData, setUserData, updateUserContact, addNewUserContact } = useContext(UserContext);
@@ -146,6 +147,11 @@ const Formulario = () => {
           SAVE
         </button>
       </form>
+
+      <Link to={`/`} className="btn btn-link custom-link">
+        or get back to contact
+      </Link>
+
     </div>
   );
 };
