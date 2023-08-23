@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 const Detail = () => {
     const { characterData, planetData } = useContext(UserContext);
     const { characterId } = useParams();
+    console.log("characterId desde Params:", characterId); // Agregar esta línea
+
     const selectedCharacter = characterData.find(character => character.result.uid === characterId);
 
     return (
@@ -16,13 +18,13 @@ const Detail = () => {
                     <div className="row gx-4 gx-lg-5 align-items-center">
                         <div className="col-md-6"><img className="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
                         <div className="col-md-6">
-                            <div className="small mb-1">SKU: BST-498</div>
-                            <h1 className="display-5 fw-bolder">{selectedCharacter.result.name}</h1>
+                            <div className="small mb-1">{selectedCharacter.result.description}</div>
+                            <h1 className="display-5 fw-bolder">{selectedCharacter.result.properties.name}</h1>
                             <div className="fs-5 mb-5">
-                                <span className="text-decoration-line-through">$45.00</span>
-                                <span>$40.00</span>
+                                <span className="fs-4">{selectedCharacter.result.properties.gender}</span>
+                                
                             </div>
-                            <p className="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
+                            <p className="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero</p>
                             <div className="d-flex">
 
                                 <button className="btn btn-outline-dark flex-shrink-0" type="button">

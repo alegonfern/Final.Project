@@ -13,6 +13,7 @@ import Formulario from "./component/Formulario.jsx";
 import Contacto from "./component/Contacto.jsx";
 import Navbar from "./component/Navbar";
 import Home from "./component/Home";
+import Detail from "./component/Detail";
 
 //render your react application
 ReactDOM.render(<>
@@ -21,8 +22,8 @@ ReactDOM.render(<>
     <Router>
       <Routes>
       <Route path="/" element={<Home />} />
-         <Route path="/NewContact" element={<Formulario />} />
-        <Route path="/EditContact/:id" element={<Formulario />} />
+      <Route path="/detail/:characterId" element={<Detail />} />
+    
       </Routes>
     </Router>
   </UserProvider>

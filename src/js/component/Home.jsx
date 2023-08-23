@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-    const { getCharacters, characterData, planetData , getPlanets} = useContext(UserContext);
+    const { getCharacters, characterData, planetData, getPlanets } = useContext(UserContext);
 
     useEffect(() => {
         getCharacters();
@@ -43,7 +43,10 @@ const Home = () => {
                                 </div>
 
                                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="{`/detail/${character.result.uid}`}">View details</a></div>
+
+                                    <div className="text-center">
+                                        <Link to={`/detail/${character.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
