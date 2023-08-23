@@ -7,10 +7,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     const { getCharacters, characterData, planetData, getPlanets } = useContext(UserContext);
 
-    useEffect(() => {
-        getCharacters();
-        getPlanets();
-    }, []);
+  
     return (<>
 
         <header className="bg-dark py-5">

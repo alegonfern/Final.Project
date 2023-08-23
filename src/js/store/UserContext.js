@@ -3,11 +3,12 @@ import React, { createContext, useEffect, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [userData, setUserData] = useState([]);
-  const [charactersData, setCharactersData] = useState([]);
+const [userData, setUserData] = useState([]);
+const [charactersData, setCharactersData] = useState([]);
 const [characterData, setCharacterData] = useState([]);
 const [planetsData, setPlanetsData] = useState([]);
 const [planetData, setPlanetData] = useState([]);
+
 
   const getCharacters = () => {
     const url = "https://www.swapi.tech/api/people/";
@@ -122,7 +123,10 @@ const [planetData, setPlanetData] = useState([]);
   };
 
 
-
+  useEffect(() => {
+    getCharacters();
+    getPlanets();
+}, []);
 
 
 
