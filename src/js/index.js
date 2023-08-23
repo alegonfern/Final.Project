@@ -19,6 +19,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<Contacto />} />
         <Route path="/NewContact" element={<Formulario />} />
+        <Route path="/EditContact/:id" element={<Formulario />} />
       </Routes>
     </Router>
   </UserProvider>,

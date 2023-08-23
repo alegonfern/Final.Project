@@ -8,6 +8,10 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Contacto = () => {
   const { userData, setUserData } = useContext(UserContext);
+ // Efecto para actualizar los datos cuando userData cambie
+ useEffect(() => {
+  console.log("userData actualizado:", userData);
+}, [userData]);
 
   const generateRandomId = () => {
     return Math.floor(Math.random() * 1000); // Genera un ID aleatorio entre 0 y 999
@@ -38,17 +42,19 @@ const Contacto = () => {
               </div>
             </div>
             <div className="col-md-4 d-flex align-items-start">
-              <button className="btn">
+              <Link to={`/EditContact/${contact.id}`} className="btn">
                 <FontAwesomeIcon icon={faEdit} />
-              </button>
-              <button className="btn">
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-            </div>
+              </Link>
+          
+            <button className="btn">
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
           </div>
         </div>
-      ))}
-    </div>
+        </div>
+  ))
+}
+    </div >
   );
 };
 

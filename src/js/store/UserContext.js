@@ -1,9 +1,3 @@
-// src/UserContext.js
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-
-
 import React, { createContext, useEffect, useState } from 'react';
 
 export const UserContext = createContext();
@@ -15,33 +9,42 @@ export const UserProvider = ({ children }) => {
 
   const getOptions = {
     method: "GET",
-    //body: JSON.stringify(),
     headers: {
       "Content-Type": "application/json"
     }
   };
 
-  useEffect( () => {
+  useEffect(() => {
     fetch(url, getOptions)
       .then(getResponse => {
         if (getResponse.status >= 200 && getResponse.status < 300) {
           console.log("GET: Agenda cargada exitosamente");
-          return getResponse.json();        } else {
+          return getResponse.json();
+        } else {
           console.log(`Error en la solicitud GET ${getResponse.status}`);
         }
       })
       .then(data => {
-        setUserData(data); // Aquí asigno los datos al estado userData
-              })
+        setUserData(data);
+      })
       .catch(error => {
         console.error("Error en la solicitud GET:", error);
-      })
-    }, []);
+      });
+  }, []);
 
-  
+  const updateUserContact = (updatedContact) => {
+    const updatedUserData = userData.map(contact =>
+      contact.id === updatedContact.id ? updatedContact : contact
+    );
+    setUserData(updatedUserData);
+  };
+
+  const addNewUserContact = (newContact) => {
+    setUserData([...userData, newContact]);
+  };
 
   return (
-    <UserContext.Provider value={{ userData, setUserData }}>
+    <UserContext.Provider value={{ userData, setUserData, updateUserContact, addNewUserContact }}>
       {children}
     </UserContext.Provider>
   );

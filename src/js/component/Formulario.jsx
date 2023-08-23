@@ -1,16 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useContext,useState,useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../store/UserContext";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Formulario = () => {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData, setUserData, updateUserContact, addNewUserContact } = useContext(UserContext);
   const [full_name, setFull_name] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const navigate = useNavigate();
   const [newContactId, setNewContactId] = useState(1);
+  const { id } = useParams(); // Obtengo el ID del contacto de los parámetros de la URL
 
   const handleFull_nameChange = (e) => {
     setFull_name(e.target.value);
@@ -26,50 +27,99 @@ const Formulario = () => {
   };
 
   useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+    if (id) {
+      const contactToEdit = userData.find((contact) => contact.id === parseInt(id));
+      if (contactToEdit) {
+        setFull_name(contactToEdit.full_name);
+        setEmail(contactToEdit.email);
+        setAddress(contactToEdit.address);
+        setPhone(contactToEdit.phone);
+      }
+    }
+  }, [userData, id]);
+
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
-    let newContactPost={full_name, agenda_slug: "juana", email, address, phone};
-    let newContact={ id: userData.length + 1,full_name, agenda_slug: "juana", email, address, phone};
-    
-    const postOptions = {
-      method: "POST",
-      body: JSON.stringify(newContactPost), // Datos del nuevo contacto en formato JSON
-      headers: {
-        "Content-Type": "application/json"
-      }
+
+    if (id) {
+      // Editar contacto existente
+      const updatedContact = {
+        agenda_slug: "juana" ,
+        full_name,
+        email,
+        address,
+        phone,
+      };
+
+      const puturl = "https://playground.4geeks.com/apis/fake/contact/" + parseInt(id);
+      const putoptions = {
+        method: "PUT",
+        body: JSON.stringify(updatedContact),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      fetch(puturl, putoptions)
+        .then(response => {
+          if (response.ok) {
+            console.log("PUT: Contacto actualizado exitosamente");
+            // Actualizar el estado del contexto con los nuevos datos
+            updateUserContact(updatedContact);
+            navigate("/");
+          } else {
+            console.log(`Error en la solicitud PUT ${response.status}`);
+            throw new Error("Error en la solicitud PUT");
+          }
+        })
+        .catch(error => {
+          console.error("Error en la solicitud PUT:", error);
+        });
+    } else {
+      let newContactPost = { full_name, agenda_slug: "juana", email, address, phone };
+      let newContact = { id: userData.length + 1, full_name, agenda_slug: "juana", email, address, phone };
+
+      const postOptions = {
+        method: "POST",
+        body: JSON.stringify(newContactPost), // Datos del nuevo contacto en formato JSON
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      const url = "https://playground.4geeks.com/apis/fake/contact/";
+
+      fetch(url, postOptions)
+        .then(response => {
+          if (response.ok) {
+            console.log("POST: Contacto agregado exitosamente");
+            return response.json();
+          } else {
+            console.log(`Error en la solicitud POST ${response.status}`);
+            throw new Error("Error en la solicitud POST");
+          }
+        })
+        .then(data => {
+
+          console.log(data); // mostrar la respuesta del servidor
+          // Actualizar los datos en el contexto
+          addNewUserContact(newContact);
+          navigate("/"); // Redirigir a la página de contactos
+        })
+        .catch(error => {
+          console.error("Error en la solicitud POST:", error);
+        });
+
+
     };
-const url="https://playground.4geeks.com/apis/fake/contact/";
 
-    fetch(url, postOptions)
-    .then(response => {
-      if (response.ok) {
-        console.log("POST: Contacto agregado exitosamente");
-        return response.json();
-      } else {
-        console.log(`Error en la solicitud POST ${response.status}`);
-        throw new Error("Error en la solicitud POST");
-      }
-    })
-    .then(data => {
-      
-      console.log(data); // mostrar la respuesta del servidor
-      const updatedData = [...userData, newContact]; // Actualizar los datos en el contexto
-      setUserData(updatedData);
-      navigate("/"); // Redirigir a la página de contactos
-    })
-    .catch(error => {
-      console.error("Error en la solicitud POST:", error);
-    });
-
-
-
-   
-        };
-
-
+    // Limpiar el formulario y redirigir después de guardar/crear
+    setFull_name("");
+    setEmail("");
+    setAddress("");
+    setPhone("");
+  };
 
 
   return (
