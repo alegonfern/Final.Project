@@ -5,12 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPeopleGroup, faCloudSun, faMountain, faArrowDown } from "@fortawesome/free-solid-svg-icons";
-
+import { faHeart as faSolidHeart, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const PlanetDetail = () => {
-    const { planetData } = useContext(UserContext);
+    const { planetData, addFavorite, removeFavorite, isFavorite } = useContext(UserContext);
     const { planetId } = useParams();
-
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
     const selectedPlanet = planetData.find(planet => planet.result.uid === planetId);
     const shuffledPlanets = planetData.slice().sort(() => Math.random() - 0.5);
@@ -40,11 +41,20 @@ const PlanetDetail = () => {
                             </div>
                             <p className="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero</p>
                             <div className="d-flex">
+                            <FontAwesomeIcon icon={isFavorite(`P_${selectedPlanet.result.uid}`) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(`P_${selectedPlanet.result.uid}`) ? "#f90606" : "" }} className="fa-xl" onClick={() => {
+                                            const favorite = {
+                                                id: `P_${selectedPlanet.result.uid}`,
+                                                name: selectedPlanet.result.properties.name
+                                            };
 
-                                <button className="btn btn-outline-dark flex-shrink-0" type="button">
-                                    <i className="bi-cart-fill me-1"></i>
-                                    Add to cart
-                                </button>
+                                            if (storedFavorites.some((item) => item.id === favorite.id)) {
+                                                removeFavorite(favorite);
+                                            } else {
+                                                addFavorite(favorite);
+                                            }
+                                        }}
+                                        />
+                              
                             </div>
                         </div>
                     </div>
@@ -72,8 +82,26 @@ const PlanetDetail = () => {
                                     </div>
 
                                     <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div className="text-center">
+                                        <div className="text-center d-flex justify-content-between align-items-center">
                                             <Link to={`/detail_planet/${planet.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
+                                            <FontAwesomeIcon icon={isFavorite(`P_${planet.result.uid}`) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(`P_${planet.result.uid}`) ? "#f90606" : "" }} className="fa-xl" onClick={() => {
+                                            const favorite = {
+                                                id: `P_${planet.result.uid}`,
+                                                name: planet.result.properties.name
+                                            };
+
+                                            if (storedFavorites.some((item) => item.id === favorite.id)) {
+                                                removeFavorite(favorite);
+                                            } else {
+                                                addFavorite(favorite);
+                                            }
+                                        }}
+                                        />
+                                        
+                                        
+                                        
+                                        
+                                        
                                         </div>
                                     </div>
                                 </div>
