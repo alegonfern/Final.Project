@@ -9,12 +9,8 @@ import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Home = () => {
     const { characterData, planetData, addFavorite, removeFavorite, isFavorite } = useContext(UserContext);
-
     const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    useEffect(() => {
-        const storedFavorites = localStorage.getItem("favorites");
-
-    }, []);
+   
 
     return (<>
 
@@ -51,11 +47,11 @@ const Home = () => {
 
                                     <div className="text-center d-flex justify-content-between align-items-center">
                                         <Link to={`/detail_character/${character.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
-                                        <FontAwesomeIcon icon={isFavorite(character.result.uid) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(character.result.uid) ? "#f90606" : "" }} className="fa-xl" onClick={() => {
-                                            if (isFavorite(character.result.uid)) {
-                                                removeFavorite(character.result.uid);
+                                        <FontAwesomeIcon icon={isFavorite(`C_${character.result.uid}`) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(`C_${character.result.uid}`) ? "#f90606" : "" }} className="fa-xl" onClick={() => {
+                                            if (storedFavorites.includes(`C_${character.result.uid}`)) {
+                                                removeFavorite(`C_${character.result.uid}`);
                                             } else {
-                                                addFavorite(character.result.uid);
+                                                addFavorite(`C_${character.result.uid}`);
                                             }
                                         }} />
                                     </div>
@@ -89,7 +85,13 @@ const Home = () => {
                                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                     <div className="text-center d-flex justify-content-between align-items-center">
                                         <Link to={`/detail_planet/${planet.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
-                                        <FontAwesomeIcon icon={isFavorite(planet.result) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(planet.result) ? "#f90606" : "" }} className="fa-xl" onClick={() => addFavorite(planet.result)} />
+                                        <FontAwesomeIcon icon={isFavorite(`P_${planet.result.uid}`) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(`P_${planet.result.uid}`) ? "#f90606" : "" }} className="fa-xl" onClick={() => {
+                                            if (storedFavorites.includes(`P_${planet.result.uid}`)) {
+                                                removeFavorite(`P_${planet.result.uid}`);
+                                            } else {
+                                                addFavorite(`P_${planet.result.uid}`);
+                                            }
+                                        }} />
                                     </div>
                                 </div>
                             </div>

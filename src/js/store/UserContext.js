@@ -3,11 +3,14 @@ import React, { createContext, useEffect, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-const [charactersData, setCharactersData] = useState([]);
-const [characterData, setCharacterData] = useState([]);
-const [planetsData, setPlanetsData] = useState([]);
-const [planetData, setPlanetData] = useState([]);
-const [favorites, setFavorites] = useState([]);
+  const [charactersData, setCharactersData] = useState([]);
+  const [characterData, setCharacterData] = useState([]);
+  const [planetsData, setPlanetsData] = useState([]);
+  const [planetData, setPlanetData] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    const storedFavorites = localStorage.getItem("favorites");
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  });
 
   const getCharacters = () => {
     const url = "https://www.swapi.tech/api/people/";
@@ -50,10 +53,16 @@ const [favorites, setFavorites] = useState([]);
           Promise.all(characterPromises)
             .then(characterDataArray => {
               console.log("Detalles de los personajes:", characterDataArray);
-              // Almacenar la información de los personajes en el estado characterData
-              setCharacterData(characterDataArray);
-            })
-            .catch(error => {
+// Modificar los IDs de los personajes con el prefijo "C_"
+    const modifiedCharacterDataArray = characterDataArray.map(character => ({
+      ...character,
+      uid: "C_" + character.uid
+    }));
+
+    // Almacenar la información de los personajes en el estado characterData
+    setCharacterData(modifiedCharacterDataArray);
+  })
+              .catch(error => {
               console.error("Error en la solicitud GET:", error);
             });
         } else {
@@ -106,9 +115,15 @@ const [favorites, setFavorites] = useState([]);
           Promise.all(planetPromises)
             .then(planetDataArray => {
               console.log("Detalles de los planetas:", planetDataArray);
-              // Almacenar la información de los personajes en el estado characterData
-              setPlanetData(planetDataArray);
-            })
+             // Modificar los IDs de los Planetas con el prefijo "P_"
+    const modifiedplanetDataArray = planetDataArray.map(planet => ({
+      ...planet,
+      uid: "P_" + planet.uid
+    }));
+
+    // Almacenar la información de los planetas en el estado planetData
+    setPlanetData(modifiedplanetDataArray);
+  })
             .catch(error => {
               console.error("Error en la solicitud GET:", error);
             });
@@ -125,32 +140,32 @@ const [favorites, setFavorites] = useState([]);
   useEffect(() => {
     getCharacters();
     getPlanets();
-}, []);
+  }, []);
 
-const addFavorite = (item) => {
-  setFavorites((prevFavorites) => {
-    const newFavorites = [...prevFavorites, item];
-    localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
-    return newFavorites;
-  });
-};
+  const addFavorite = (itemId) => {
+    setFavorites((prevFavorites) => {
+      const newFavorites = [...prevFavorites, itemId];
+      localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
+      return newFavorites;
+    });
+  };
 
-const removeFavorite = (itemId) => {
-  setFavorites((prevFavorites) => {
-    const newFavorites = prevFavorites.filter((item) => item.uid !== itemId);
-    localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
-    return newFavorites;
-  });
-};
+  const removeFavorite = (itemId) => {
+    setFavorites((prevFavorites) => {
+      const newFavorites = prevFavorites.filter((item) => item !== itemId);
+      localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
+      return newFavorites;
+    });
+  };
 
- const isFavorite = (itemId) => {
-  console.log("Desde IsFavorite:",itemId);
-  return favorites.includes(itemId);
-  
-};
+  const isFavorite = (itemId) => {
+    console.log("Desde IsFavorite:", itemId);
+    return favorites.includes(itemId);
+
+  };
 
   return (
-    <UserContext.Provider value={{ charactersData,  characterData, planetsData, planetData,favorites, addFavorite, removeFavorite, isFavorite }}>
+    <UserContext.Provider value={{ charactersData, characterData, planetsData, planetData, favorites, addFavorite, removeFavorite, isFavorite }}>
       {children}
     </UserContext.Provider>
   );
