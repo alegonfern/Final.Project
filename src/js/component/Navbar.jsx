@@ -1,33 +1,44 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../store/UserContext";
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Navbar = () => {
     const { favorites } = useContext(UserContext);
-return(
-<nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <div className="container px-4 px-lg-5">
-        <a className="navbar-brand" href="/">Start Bootstrap</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            
-            <form className="d-flex ms-auto">
-            <button className="btn btn-outline-dark" type="submit">
-                    <i className="bi-cart-fill me-1"></i>
-                   Favorites
-                   <span className="badge bg-dark text-white ms-1 rounded-pill">
-                            <FontAwesomeIcon icon={faHeart} className="me-1" />
-                            {favorites.length}
-                        </span>
+
+    return (
+        <nav className="navbar navbar-expand-lg bg-light">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="/">Start Bootstrap</a>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
                 </button>
-            </form>
-        </div>
-    </div>
-</nav>
-  );
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav ms-auto bg-primary rounded">
+
+                        <li className="nav-item dropdown">
+                            <div className="dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" role="button" id="favorites-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <FontAwesomeIcon icon={faHeart} className="me-1" />
+                                    Favorites <span className="badge bg-dark text-white ms-1 rounded-pill">{favorites.length}</span>
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="favorites-dropdown">
+                                    {favorites.length > 0 ? (
+                                        favorites.map((favorite, index) => (
+                                            <li key={index}><a className="dropdown-item" href="#">{favorite.name}</a></li>
+                                        ))
+                                    ) : (
+                                        <li><a className="dropdown-item disabled" href="#">No favorites selected</a></li>
+                                    )}
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    );
 };
 
 export default Navbar;

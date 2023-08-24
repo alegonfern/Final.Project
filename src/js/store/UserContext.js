@@ -142,26 +142,24 @@ export const UserProvider = ({ children }) => {
     getPlanets();
   }, []);
 
-  const addFavorite = (itemId) => {
+  const addFavorite = (item) => {
     setFavorites((prevFavorites) => {
-      const newFavorites = [...prevFavorites, itemId];
+      const newFavorites = [...prevFavorites, item];
       localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
       return newFavorites;
     });
   };
 
-  const removeFavorite = (itemId) => {
+  const removeFavorite = (itemToRemove) => {
     setFavorites((prevFavorites) => {
-      const newFavorites = prevFavorites.filter((item) => item !== itemId);
+      const newFavorites = prevFavorites.filter((item) => item.id !== itemToRemove.id);
       localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
       return newFavorites;
     });
   };
 
   const isFavorite = (itemId) => {
-    console.log("Desde IsFavorite:", itemId);
-    return favorites.includes(itemId);
-
+    return favorites.some((item) => item.id === itemId);
   };
 
   return (
