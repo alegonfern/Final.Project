@@ -150,7 +150,7 @@ const removeFavorite = (itemId) => {
 };
 
   return (
-    <UserContext.Provider value={{ charactersData,  characterData, planetsData, planetData,favorites, addFavorite, removeFavorite, isFavorite, setFavorites }}>
+    <UserContext.Provider value={{ charactersData,  characterData, planetsData, planetData,favorites, addFavorite, removeFavorite, isFavorite }}>
       {children}
     </UserContext.Provider>
   );

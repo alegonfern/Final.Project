@@ -8,16 +8,14 @@ import { faHeart as faSolidHeart, faHeart } from "@fortawesome/free-solid-svg-ic
 import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Home = () => {
-    const { characterData, planetData, addFavorite,isFavorite,setFavorites } = useContext(UserContext);
-    
-    
+    const { characterData, planetData, addFavorite, removeFavorite, isFavorite } = useContext(UserContext);
+
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
     useEffect(() => {
         const storedFavorites = localStorage.getItem("favorites");
-        if (storedFavorites) {
-          setFavorites(JSON.parse(storedFavorites));
-        }
-      }, []);
-    
+
+    }, []);
+
     return (<>
 
         <header className="bg-dark py-5">
@@ -53,9 +51,15 @@ const Home = () => {
 
                                     <div className="text-center d-flex justify-content-between align-items-center">
                                         <Link to={`/detail_character/${character.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
-                                        <FontAwesomeIcon icon={isFavorite(character.result) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(character.result) ? "#f90606" : "" }}  className="fa-xl"  onClick={() => addFavorite(character.result)}/>
-                                        </div>
-                                  
+                                        <FontAwesomeIcon icon={isFavorite(character.result.uid) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(character.result.uid) ? "#f90606" : "" }} className="fa-xl" onClick={() => {
+                                            if (isFavorite(character.result.uid)) {
+                                                removeFavorite(character.result.uid);
+                                            } else {
+                                                addFavorite(character.result.uid);
+                                            }
+                                        }} />
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -83,10 +87,10 @@ const Home = () => {
                                     </div>
                                 </div>
                                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div className="text-center d-flex justify-content-between align-items-center">
-                                <Link to={`/detail_planet/${planet.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
-                                <FontAwesomeIcon icon={isFavorite(planet.result) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(planet.result) ? "#f90606" : "" }}  className="fa-xl"  onClick={() => addFavorite(planet.result)}/>
-                                </div>
+                                    <div className="text-center d-flex justify-content-between align-items-center">
+                                        <Link to={`/detail_planet/${planet.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
+                                        <FontAwesomeIcon icon={isFavorite(planet.result) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(planet.result) ? "#f90606" : "" }} className="fa-xl" onClick={() => addFavorite(planet.result)} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
