@@ -9,13 +9,12 @@ import "../styles/index.css";
 
 
 //import your own components
-import Formulario from "./component/Formulario.jsx";
-import Contacto from "./component/Contacto.jsx";
+
 import Navbar from "./component/Navbar";
 import Home from "./component/Home";
 import CharacterDetail from "./component/CharacterDetail";
 import PlanetDetail from "./component/PlanetDetail";
-
+import Footer from "./component/Footer";
 //render your react application
 ReactDOM.render(<>
 <UserProvider>
@@ -28,6 +27,7 @@ ReactDOM.render(<>
 
       </Routes>
     </Router>
+    <Footer />
   </UserProvider>
 </>,
   document.querySelector('#app')
