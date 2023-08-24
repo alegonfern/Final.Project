@@ -3,12 +3,11 @@ import React, { createContext, useEffect, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-const [userData, setUserData] = useState([]);
 const [charactersData, setCharactersData] = useState([]);
 const [characterData, setCharacterData] = useState([]);
 const [planetsData, setPlanetsData] = useState([]);
 const [planetData, setPlanetData] = useState([]);
-
+const [favorites, setFavorites] = useState([]);
 
   const getCharacters = () => {
     const url = "https://www.swapi.tech/api/people/";
@@ -128,70 +127,30 @@ const [planetData, setPlanetData] = useState([]);
     getPlanets();
 }, []);
 
+const addFavorite = (item) => {
+  setFavorites((prevFavorites) => {
+    const newFavorites = [...prevFavorites, item];
+    localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
+    return newFavorites;
+  });
+};
 
+const removeFavorite = (itemId) => {
+  setFavorites((prevFavorites) => {
+    const newFavorites = prevFavorites.filter((item) => item.uid !== itemId);
+    localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
+    return newFavorites;
+  });
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const getagenda = () => {
-    const url = "https://playground.4geeks.com/apis/fake/contact/agenda/juana";
-
-    const getOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-    fetch(url, getOptions)
-      .then(getResponse => {
-        if (getResponse.status >= 200 && getResponse.status < 300) {
-          console.log("GET: Agenda cargada exitosamente");
-          return getResponse.json();
-        } else {
-          console.log(`Error en la solicitud GET ${getResponse.status}`);
-        }
-      })
-      .then(data => {
-        setUserData(data);
-      })
-      .catch(error => {
-        console.error("Error en la solicitud GET:", error);
-      });
-  };
-
-  const updateUserContact = (updatedContact) => {
-    console.log("userData actualizado en contexto:", updatedContact);
-    const updatedUserData = userData.map(contact =>
-      contact.id === updatedContact.id ? updatedContact : contact
-    );
-    setUserData(updatedUserData);
-  };
-
-  const addNewUserContact = (newContact) => {
-
-    setUserData([...userData, newContact]);
-  };
+ const isFavorite = (itemId) => {
+  console.log("Desde IsFavorite:",itemId);
+  return favorites.includes(itemId);
+  
+};
 
   return (
-    <UserContext.Provider value={{ charactersData, setCharactersData, getCharacters, characterData, setCharacterData, planetsData, setPlanetsData, getPlanets, planetData, setPlanetData,userData, setUserData, updateUserContact, addNewUserContact, getagenda }}>
+    <UserContext.Provider value={{ charactersData,  characterData, planetsData, planetData,favorites, addFavorite, removeFavorite, isFavorite, setFavorites }}>
       {children}
     </UserContext.Provider>
   );

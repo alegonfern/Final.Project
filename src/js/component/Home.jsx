@@ -3,11 +3,21 @@ import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../store/UserContext";
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as faSolidHeart, faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Home = () => {
-    const { getCharacters, characterData, planetData, getPlanets } = useContext(UserContext);
-
-  
+    const { characterData, planetData, addFavorite,isFavorite,setFavorites } = useContext(UserContext);
+    
+    
+    useEffect(() => {
+        const storedFavorites = localStorage.getItem("favorites");
+        if (storedFavorites) {
+          setFavorites(JSON.parse(storedFavorites));
+        }
+      }, []);
+    
     return (<>
 
         <header className="bg-dark py-5">
@@ -41,9 +51,11 @@ const Home = () => {
 
                                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
 
-                                    <div className="text-center">
+                                    <div className="text-center d-flex justify-content-between align-items-center">
                                         <Link to={`/detail_character/${character.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
-                                    </div>
+                                        <FontAwesomeIcon icon={isFavorite(character.result) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(character.result) ? "#f90606" : "" }}  className="fa-xl"  onClick={() => addFavorite(character.result)}/>
+                                        </div>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -70,9 +82,11 @@ const Home = () => {
                                         Population: {planet.result.properties.population}
                                     </div>
                                 </div>
-
                                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div className="text-center d-flex justify-content-between align-items-center">
                                 <Link to={`/detail_planet/${planet.result.uid}`} className="btn btn-outline-dark mt-auto">View details</Link>
+                                <FontAwesomeIcon icon={isFavorite(planet.result) ? faSolidHeart : faRegularHeart} style={{ color: isFavorite(planet.result) ? "#f90606" : "" }}  className="fa-xl"  onClick={() => addFavorite(planet.result)}/>
+                                </div>
                                 </div>
                             </div>
                         </div>
