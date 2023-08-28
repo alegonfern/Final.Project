@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../store/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-
+//Prueba
 const Footer = () => {
   const { favorites, removeFavorite, characterData, planetData } = useContext(UserContext);
 
