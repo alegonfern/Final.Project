@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
+import requests
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
@@ -21,10 +22,10 @@ class Character(db.Model):
     __tablename__ = "character"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
-    specie = db.Column(db.String(250))
-    gender = db.Column(db.String(250), nullable=False)
-    heigth = db.Column(db.Integer)
-    weight = db.Column(db.Integer)
+    specie = db.Column(db.String(250), nullable=True)
+    gender = db.Column(db.String(250), nullable=True)
+    heigth = db.Column(db.Integer, nullable=True)
+    weight = db.Column(db.Integer, nullable=True)
 
 
 class Planet(db.Model):
@@ -47,7 +48,31 @@ class Favorite(db.Model):
     character = db.relationship("Character")
 
 
-# ruta /characters  método GET lista todos los personajesy devuelve como una respuesta JSON.
+# GET para obtener datos desde StarWars
+@app.route("/external-character", methods=["GET"])
+def get_external_character():
+    response = requests.get("https://www.swapi.tech/api/people/")
+    external_character_data = (
+        response.json()
+    )  # Obtener lista de personajes en formato JSON
+
+    # Creo un nuevo objeto Character a partir de los datos externos
+    character_list = external_character_data[
+        "results"
+    ]  # Lista de personajes desde la respuesta JSON
+    for character_data in character_list:
+        new_character = Character(
+            name=character_data["name"],
+            id=int(character_data["uid"]),  # Convierto uid a entero
+        )
+
+    db.session.add(new_character)  # Agrego el nuevo personaje
+    db.session.commit()  # Realizar el commit para persistir en la base de datos
+
+    return jsonify({"message": "Characters created from external source"}), 201
+
+
+# ruta /characters  método GET lista todos los personajes y devuelve como una respuesta JSON.
 @app.route("/characters", methods=["GET"])
 def get_all_characters():
     characters = Character.query.all()
@@ -56,10 +81,6 @@ def get_all_characters():
         character_data = {
             "id": character.id,
             "name": character.name,
-            "specie": character.specie,
-            "gender": character.gender,
-            "heigth": character.heigth,
-            "weight": character.weight,
         }
         character_list.append(character_data)
     return jsonify(character_list)
