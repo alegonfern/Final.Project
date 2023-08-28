@@ -22,10 +22,10 @@ class Character(db.Model):
     __tablename__ = "character"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
-    specie = db.Column(db.String(250), nullable=True)
-    gender = db.Column(db.String(250), nullable=True)
-    heigth = db.Column(db.Integer, nullable=True)
-    weight = db.Column(db.Integer, nullable=True)
+    specie = db.Column(db.String(250), nullable=True, default="Unknown")
+    gender = db.Column(db.String(250), nullable=True, default="Unknown")
+    heigth = db.Column(db.Integer, nullable=True, default="Unknown")
+    weight = db.Column(db.Integer, nullable=True, default="Unknown")
 
 
 class Planet(db.Model):
@@ -55,21 +55,27 @@ def get_external_character():
     external_character_data = (
         response.json()
     )  # Obtener lista de personajes en formato JSON
+    # Cero una ista para almacenar nuevos personajes
+    new_characters = []
 
     # Creo un nuevo objeto Character a partir de los datos externos
-    character_list = external_character_data[
-        "results"
-    ]  # Lista de personajes desde la respuesta JSON
+    character_list = external_character_data["results"]
+
+    # Lista de personajes desde la respuesta JSON
     for character_data in character_list:
         new_character = Character(
             name=character_data["name"],
             id=int(character_data["uid"]),  # Convierto uid a entero
         )
-
-    db.session.add(new_character)  # Agrego el nuevo personaje
+        new_characters.append(new_character)  # Agrego el nuevo personaje a la lista
+    db.session.add_all(new_characters)  # Agrego todos los personajes
     db.session.commit()  # Realizar el commit para persistir en la base de datos
 
-    return jsonify({"message": "Characters created from external source"}), 201
+    num_characters_added = len(
+        character_list
+    )  # Obtener el número de personajes agregados
+    message = f"{num_characters_added} characters created from external source"
+    return jsonify({"message": message}), 201
 
 
 # ruta /characters  método GET lista todos los personajes y devuelve como una respuesta JSON.
@@ -88,13 +94,6 @@ def get_all_characters():
 
 if __name__ == "__main__":
     with app.app_context():
+        db.drop_all()
         db.create_all()
-
-        # Agregar un personaje a la base de datos para probar el endpoint
-        new_character = Character(
-            name="Luke Skywalker", specie="Human", gender="Male", heigth=175, weight=70
-        )
-        db.session.add(new_character)
-        db.session.commit()
-
         app.run(debug=True)
