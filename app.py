@@ -8,6 +8,8 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
 db = SQLAlchemy(app)
 
+# Definicion del modelo de datos:
+
 
 class User(db.Model):
     __tablename__ = "user"
@@ -22,7 +24,7 @@ class Character(db.Model):
     __tablename__ = "character"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
-    specie = db.Column(db.String(250), nullable=True, default="Unknown")
+    eye_color = db.Column(db.String(250), nullable=True, default="Unknown")
     gender = db.Column(db.String(250), nullable=True, default="Unknown")
     heigth = db.Column(db.Integer, nullable=True, default="Unknown")
     weight = db.Column(db.Integer, nullable=True, default="Unknown")
@@ -48,37 +50,42 @@ class Favorite(db.Model):
     character = db.relationship("Character")
 
 
-# GET para obtener datos desde StarWars
+# Creacion de Endpoint GET personajes y Planetas.
+
+
+# GET para obtener datos personajes desde Api Externa y alimentar mi Base de datos.
 @app.route("/external-character", methods=["GET"])
 def get_external_character():
     response = requests.get("https://www.swapi.tech/api/people/")
-    external_character_data = (
-        response.json()
-    )  # Obtener lista de personajes en formato JSON
-    # Cero una ista para almacenar nuevos personajes
-    new_characters = []
+    external_character_data = response.json()
 
-    # Creo un nuevo objeto Character a partir de los datos externos
     character_list = external_character_data["results"]
+    num_characters_added = 0  # Contador para el número de personajes agregados
 
-    # Lista de personajes desde la respuesta JSON
     for character_data in character_list:
-        new_character = Character(
-            name=character_data["name"],
-            id=int(character_data["uid"]),  # Convierto uid a entero
-        )
-        new_characters.append(new_character)  # Agrego el nuevo personaje a la lista
-    db.session.add_all(new_characters)  # Agrego todos los personajes
-    db.session.commit()  # Realizar el commit para persistir en la base de datos
+        character_url = character_data["url"]
+        character_uid = character_data["uid"]
+        character_response = requests.get(character_url)
+        character_details = character_response.json()["result"]["properties"]
 
-    num_characters_added = len(
-        character_list
-    )  # Obtener el número de personajes agregados
+        new_character = Character(
+            name=character_details["name"],
+            id=int(character_uid),
+            eye_color=character_details["eye_color"],
+            gender=character_details["gender"],
+            heigth=int(character_details["height"]),
+            weight=int(character_details["mass"]),
+        )
+
+        db.session.add(new_character)
+        db.session.commit()
+        num_characters_added += 1
+
     message = f"{num_characters_added} characters created from external source"
     return jsonify({"message": message}), 201
 
 
-# ruta /characters  método GET lista todos los personajes y devuelve como una respuesta JSON.
+# Método GET para listar todos los personajes y id.
 @app.route("/characters", methods=["GET"])
 def get_all_characters():
     characters = Character.query.all()
@@ -90,6 +97,25 @@ def get_all_characters():
         }
         character_list.append(character_data)
     return jsonify(character_list)
+
+
+# Método GET para obtener el detalle de un personaje en particular.
+@app.route("/character/<int:character_id>", methods=["GET"])
+def get_character_details(character_id):
+    character = Character.query.get(character_id)
+    if character is None:
+        return jsonify({"message": "Character not found"}), 404
+
+    character_details = {
+        "id": character.id,
+        "name": character.name,
+        "eye_color": character.eye_color,
+        "gender": character.gender,
+        "heigth": character.heigth,
+        "weight": character.weight,
+    }
+
+    return jsonify(character_details)
 
 
 if __name__ == "__main__":
