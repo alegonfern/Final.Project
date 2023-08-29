@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -13,7 +14,7 @@ class User(db.Model):
     username = db.Column(db.String(250), nullable=False)
     mail = db.Column(db.String(250), nullable=False, unique=True)
     password = db.Column(db.String(250), nullable=False)
-    suscription_date = db.Column(db.DateTime, nullable=False)
+    suscription_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
 class Character(db.Model):
