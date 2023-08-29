@@ -3,9 +3,16 @@ from models import Planet, Character, User, Favorite
 import requests
 from models import db
 
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
 db.init_app(app)
+
+# Configura Flask-Admin
+admin = Admin(app, name="Admin", template_mode="bootstrap3")
+admin.add_view(ModelView(User, db.session))
 
 
 # Creacion de Endpoint GET personajes y Planetas.

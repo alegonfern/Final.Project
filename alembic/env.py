@@ -7,6 +7,7 @@ from models import (
     Character,
     Planet,
     Favorite,
+    User,
 )  # Ajusta la importación según la ubicación correcta
 
 
