@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from models import Planet, Character, User, Favorite
 import requests
 from models import db
@@ -8,9 +8,10 @@ from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
+app.config["SECRET_KEY"] = "123456"  # Mi propia clave secreta
 db.init_app(app)
 
-# Configura Flask-Admin
+# Configuracion Flask-Admin
 admin = Admin(app, name="Admin", template_mode="bootstrap3")
 admin.add_view(ModelView(User, db.session))
 
@@ -150,6 +151,81 @@ def get_planet_details(planet_id):
     }
 
     return jsonify(planet_details)
+
+
+# Metodo GET users para Listar todos los usuarios
+@app.route("/users", methods=["GET"])
+def get_all_users():
+    users = User.query.all()
+    user_list = []
+    for user in users:
+        user_data = {
+            "id": user.id,
+            "username": user.username,
+            "mail": user.mail,
+            "suscription_date": user.suscription_date,
+        }
+        user_list.append(user_data)
+    return jsonify(user_list)
+
+
+# Metodo Post para anadir un nuevo planeta favorito al usuario actual.
+@app.route("/favorite/planet/<int:planet_id>", methods=["POST"])
+def add_planet_favorite(planet_id):
+    user_id = request.args.get("user_id")
+    print("user_id:", user_id)
+    if user_id is None:
+        return jsonify({"message": "User id missing"}), 400
+
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"message": "User id not found"}), 404
+
+    planet = Planet.query.get(planet_id)
+    if planet is None:
+        return jsonify({"message": "Planet id not found"}), 404
+
+    new_favorite = Favorite(user_id=user_id, planet_id=planet_id)
+    db.session.add(new_favorite)
+    db.session.commit()
+
+    return jsonify({"message": "Favorite added successfully"}), 201
+
+
+# Metodo [DELETE] para eliminar planeta de favorito.
+@app.route("/favorite/planet/<int:planet_id>", methods=["DELETE"])
+def delete_planet_favorite(planet_id):
+    user_id = request.args.get("user_id")
+    if user_id is None:
+        return jsonify({"message": "User id missing"}), 400
+
+    favorite = Favorite.query.filter_by(user_id=user_id, planet_id=planet_id).first()
+    if favorite is None:
+        return jsonify({"message": "Favorite not found"}), 404
+
+    planet = Planet.query.get(planet_id)
+
+    if planet is None:
+        return jsonify({"message": "Planet id not found"}), 404
+
+    planet_info = {
+        "id": planet.id,
+        "name": planet.name,
+        "climate": planet.climate,
+        "terrain": planet.terrain,
+        "population": planet.population,
+    }
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return (
+        jsonify(
+            {
+                "message": f"The following Planet: {planet_info} was removed from favorites"
+            }
+        ),
+        200,
+    )
 
 
 if __name__ == "__main__":
