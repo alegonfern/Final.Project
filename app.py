@@ -135,6 +135,30 @@ def get_all_planets():
     return jsonify(planet_list)
 
 
+# Método GET para listar todos los favoritos de un Usuario mediante relaciones de tabla.
+@app.route("/favorite/<int:user_id>", methods=["GET"])
+def get_all_favorites(user_id):
+    favorites = Favorite.query.filter_by(user_id=user_id).all()
+    favorite_list = []
+    for favorite in favorites:
+        favorite_data = {}
+
+        if favorite.planet:  # Verifico si favorite.planet no es None
+            favorite_data["planet"] = {
+                "id": favorite.planet.id,
+                "name": favorite.planet.name,
+            }
+
+        if favorite.character:  # Verifico si favorite.character no es None
+            favorite_data["character"] = {
+                "id": favorite.character.id,
+                "name": favorite.character.name,
+            }
+
+        favorite_list.append(favorite_data)
+    return jsonify(favorite_list)
+
+
 # Método GET para obtener el detalle de un planeta en particular segun id.
 @app.route("/planet/<int:planet_id>", methods=["GET"])
 def get_planet_details(planet_id):
@@ -189,13 +213,38 @@ def add_planet_favorite(planet_id):
     db.session.add(new_favorite)
     db.session.commit()
 
-    return jsonify({"message": "Favorite added successfully"}), 201
+    return jsonify({"message": "Planet added successfully toa Favorite"}), 201
 
 
-# Metodo [DELETE] para eliminar planeta de favorito.
+# Metodo Post para anadir un nuevo Character favorito al usuario actual.
+@app.route("/favorite/character/<int:character_id>", methods=["POST"])
+def add_character_favorite(character_id):
+    user_id = request.args.get("user_id")
+    print("user_id:", user_id)
+    if user_id is None:
+        return jsonify({"message": "User id missing"}), 400
+
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"message": "User id not found"}), 404
+
+    character = Character.query.get(character_id)
+    if character is None:
+        return jsonify({"message": "Character id not found"}), 404
+
+    new_favorite = Favorite(user_id=user_id, character_id=character_id)
+    db.session.add(new_favorite)
+    db.session.commit()
+
+    return jsonify({"message": "Character added successfully toa Favorite "}), 201
+
+
+# Metodo [DELETE] para eliminar planeta de favorito. (ejemplo:..favorite/planet/5?user_id=1)
 @app.route("/favorite/planet/<int:planet_id>", methods=["DELETE"])
 def delete_planet_favorite(planet_id):
-    user_id = request.args.get("user_id")
+    user_id = request.args.get(
+        "user_id"
+    )  # Obtengo ID de la cadena URL después del signo ("?").
     if user_id is None:
         return jsonify({"message": "User id missing"}), 400
 
@@ -203,7 +252,9 @@ def delete_planet_favorite(planet_id):
     if favorite is None:
         return jsonify({"message": "Favorite not found"}), 404
 
-    planet = Planet.query.get(planet_id)
+    planet = Planet.query.get(
+        planet_id
+    )  # consulta a la base de datos para obtener un registro de la tabla "Planet" utilizando el ID del planeta como criterio de búsqueda.
 
     if planet is None:
         return jsonify({"message": "Planet id not found"}), 404
@@ -218,10 +269,44 @@ def delete_planet_favorite(planet_id):
     db.session.delete(favorite)
     db.session.commit()
 
+
+# Metodo [DELETE] para eliminar Character favorito. (ejemplo:..favorite/character/5?user_id=1)
+@app.route("/favorite/character/<int:character_id>", methods=["DELETE"])
+def delete_character_favorite(character_id):
+    user_id = request.args.get(
+        "user_id"
+    )  # Obtengo ID de la cadena URL después del signo ("?").
+    if user_id is None:
+        return jsonify({"message": "User id missing"}), 400
+
+    favorite = Favorite.query.filter_by(
+        user_id=user_id, character_id=character_id
+    ).first()
+    if favorite is None:
+        return jsonify({"message": "Favorite not found"}), 404
+
+    character = Character.query.get(
+        character_id
+    )  # consulta a la base de datos para obtener un registro de la tabla "Planet" utilizando el ID del planeta como criterio de búsqueda.
+
+    if character is None:
+        return jsonify({"message": "Character id not found"}), 404
+
+    character_info = {
+        "id": character.id,
+        "name": character.name,
+        "eye_color": character.eye_color,
+        "gender": character.gender,
+        "heigth": character.heigth,
+        "weight": character.weight,
+    }
+    db.session.delete(favorite)
+    db.session.commit()
+
     return (
         jsonify(
             {
-                "message": f"The following Planet: {planet_info} was removed from favorites"
+                "message": f"The following Character: {character_info} was removed from favorites"
             }
         ),
         200,
