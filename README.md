@@ -47,7 +47,7 @@ Este proyecto esta configurado para el uso de:
     - Descripción: Automatiza la generación y aplicación de scripts de migración para mantener la base de datos sincronizada con los cambios en el esquema de datos a medida que evoluciona una aplicación.
 
 
-## Cual es la Estructura de Carpetas y Arhivos?
+## Cual es la Estructura de Carpetas y Archivos?
 
 - src:  Esta contiene la carpeta de Componentes y Store.
     - Componentes: Donde se almacenan todos los componentes .jsx
@@ -58,4 +58,14 @@ Junto con lo anterior esta el archivo index.js el cual renderiza el poryecto.
 - app.py:  Archivo donde se crean los End Point importando el modelo de datos desde models.py
 - models.py:  Archivo donde se estructura la base de datos.
 - alembic/env.py: es parte de la configuración y funcionamiento del sistema de migraciones para bases de datos, es donde se importa la estructura de base de datos "models.py"
+
+## Sobre que Archivos o Carpetas trabajaremos?
+
+- Carpeta: Components para crear los distintos componentes del proyecto
+- Archivos: Los siguientes archivos ".jsx" y ".py" son sobre los que se ira desarrollando el codigo que le dara vida a la aplicacion.
+      -app.py
+      -models.py
+      -UserContext.jsx
+      -index.jsx
+      -alembic/env.py
 
