@@ -61,7 +61,7 @@ Junto con lo anterior esta el archivo index.js el cual renderiza el poryecto.
 
 ## Sobre que Archivos o Carpetas trabajaremos?
 
-- Carpeta: Components para crear los distintos componentes del proyecto
+- Carpeta: Components para crear los distintos componentes ".jsx" del proyecto
 - Archivos: Los siguientes archivos ".jsx" y ".py" son sobre los que se ira desarrollando el codigo que le dara vida a la aplicacion.
       -app.py
       -models.py
