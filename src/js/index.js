@@ -10,16 +10,17 @@ import "../styles/index.css";
 
 //import your own components
 
-import Navbar from "./component/Navbar";
+//import Navbar from "./component/Navbar";
 import Home from "./component/Home";
 import CharacterDetail from "./component/CharacterDetail";
 import PlanetDetail from "./component/PlanetDetail";
 import Footer from "./component/Footer";
+import Sidebar from "./component/Sidebar";
 //render your react application
 ReactDOM.render(<>
-<UserProvider>
-  <Navbar />
-      <Router>
+  <UserProvider>
+    <Sidebar />
+    <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/detail_character/:characterId" element={<CharacterDetail />} />

@@ -1,0 +1,23 @@
+/* Sidebar.css */
+#sidebar {
+    height: 100vh;
+    background-color: #000;
+    color: #9c27b0; /* Morado */
+  }
+  
+  #sidebar ul.nav {
+    flex-direction: column;
+  }
+  
+  #sidebar .nav-item {
+    padding: 10px;
+  }
+  
+  #sidebar .nav-link {
+    color: #9c27b0; /* Morado */
+  }
+  
+  #sidebar .nav-link:hover {
+    color: #f44336; /* Rojo al pasar el mouse */
+  }
+  
