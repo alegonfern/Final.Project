@@ -14,7 +14,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const url = "/login";
+        const url = "http://127.0.0.1:5000/login";
 
         const postOptions = {
             method: "POST",
@@ -43,7 +43,7 @@ const Login = () => {
     return (
         <div className="container mt-5">
             <div className="row">
-                <div className="col-md-6 offset-md-3 border rounded">
+                <div className="col-md-3 mx-auto border rounded">
                     <h1 className="text-center">Iniciar sesión</h1>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">

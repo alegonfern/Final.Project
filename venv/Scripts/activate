@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\56993\Documents\SoyHenry\Projects\Star Wars Blog _ API\JuancarlosMuller.StarWarsBlog\venv"
+VIRTUAL_ENV="C:\Users\Edu\Documents\GitHub\Final.Project\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
