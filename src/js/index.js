@@ -28,7 +28,7 @@ ReactDOM.render(<>
         <Route path="/Singup" element={<Singup />} />
         <Route path="/Home" element={<Sidebar />} />
         <Route path="/Home" element={<Home />} />
-        <Route path="/detail_character/:characterId" element={<CharacterDetail />} />
+        <Route path="/detail_character/" element={<CharacterDetail />} />
         <Route path="/detail_planet/:planetId" element={<PlanetDetail />} />
 
       </Routes>

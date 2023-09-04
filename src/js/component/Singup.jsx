@@ -13,8 +13,8 @@ const Singup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const putOptions = {
-            method: 'PUT',
+        const postOptions = {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
