@@ -26,7 +26,6 @@ ReactDOM.render(<>
     <Router>
       <Routes>
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/Home" element={<Sidebar />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/detail_character/" element={<CharacterDetail />} />
         <Route path="/detail_planet/:planetId" element={<PlanetDetail />} />
