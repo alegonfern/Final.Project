@@ -16,19 +16,24 @@ import CharacterDetail from "./component/CharacterDetail";
 import PlanetDetail from "./component/PlanetDetail";
 import Footer from "./component/Footer";
 import Sidebar from "./component/Sidebar";
+import Login from "./component/Login";
+
 //render your react application
 ReactDOM.render(<>
   <UserProvider>
-    <Sidebar />
+    <Login />
+
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+
+        <Route path="/Home" element={<Sidebar />} />
+        <Route path="/Home" element={<Home />} />
         <Route path="/detail_character/:characterId" element={<CharacterDetail />} />
         <Route path="/detail_planet/:planetId" element={<PlanetDetail />} />
 
       </Routes>
     </Router>
-    <Footer />
+
   </UserProvider>
 </>,
   document.querySelector('#app')
