@@ -120,9 +120,9 @@ Lo anterior se traduce en:
 
 - admin = Admin(app, name="Admin", template_mode="bootstrap3"): Crea una instancia de la clase Admin llamada admin y la configura:
 
-       - Admin(app, name="Admin", template_mode="bootstrap3"): Crea una instancia de Admin que estará vinculada a tu aplicación Flask (app).
-       - name="Admin": Define un nombre para tu interfaz de administración, que se mostrará en la página de administración.
-       - template_mode="bootstrap3": Especifica el modo de plantilla que se utilizará para la interfaz de administración. En este caso, se utiliza el modo "bootstrap3", que se refiere a un estilo basado en Bootstrap 3 para la apariencia de la interfaz.
+   - Admin(app, name="Admin", template_mode="bootstrap3"): Crea una instancia de Admin que estará vinculada a tu aplicación Flask (app).
+   - name="Admin": Define un nombre para tu interfaz de administración, que se mostrará en la página de administración.
+   - template_mode="bootstrap3": Especifica el modo de plantilla que se utilizará para la interfaz de administración. En este caso, se utiliza el modo "bootstrap3", que se refiere a un estilo basado en Bootstrap 3 para la apariencia de la interfaz.
 
 - admin.add_view(ModelView(User, db.session)): Agrega una vista para el modelo de datos User a la interfaz de administración. Esto se desglosa de la siguiente manera:
 
