@@ -1,14 +1,14 @@
 import React from 'react'
 import { useState } from 'react'
 
-const Singup = () => {
+const Signup = () => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const url = "/singup";
+    const url = "/signup";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -167,4 +167,4 @@ const Singup = () => {
     )
 }
 
-export default Singup
+export default Signup
