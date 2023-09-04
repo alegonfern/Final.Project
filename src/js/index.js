@@ -17,7 +17,7 @@ import PlanetDetail from "./component/PlanetDetail";
 import Footer from "./component/Footer";
 import Sidebar from "./component/Sidebar";
 import Login from "./component/Login";
-import Singup from "./component/Singup";
+import Signup from "./component/Signup";
 
 //render your react application
 ReactDOM.render(<>
@@ -25,7 +25,7 @@ ReactDOM.render(<>
     <Login />
     <Router>
       <Routes>
-        <Route path="/Singup" element={<Singup />} />
+        <Route path="/Signup" element={<Signup />} />
         <Route path="/Home" element={<Sidebar />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/detail_character/" element={<CharacterDetail />} />
