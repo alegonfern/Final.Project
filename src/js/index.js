@@ -23,10 +23,9 @@ import Singup from "./component/Singup";
 ReactDOM.render(<>
   <UserProvider>
     <Login />
-    <Singup/>
     <Router>
       <Routes>
-
+        <Route path="/Singup" element={<Singup />} />
         <Route path="/Home" element={<Sidebar />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/detail_character/:characterId" element={<CharacterDetail />} />
