@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../store/UserContext";
-import '../../styles/Sidebar.css';;
+import '../../styles/Sidebar.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDna as faSolidDna } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
 
@@ -39,20 +41,24 @@ const Login = () => {
 
 
     return (
-        <div className="container mt-4">
+        <div className="container mt-5">
             <div className="row">
                 <div className="col-md-6 offset-md-3 border rounded">
                     <h1 className="text-center">Iniciar sesión</h1>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Usuario:</label>
-                            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required /><br />
+                            <br />
+                            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Contraseña:</label>
-                            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required /><br />
+                            <br />
+                            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                         </div>
-                        <button type="submit" className="btn btn-dark">Iniciar sesión</button>
+                        <button type="submit" className="btn btn-dark">Iniciar sesión&nbsp;&nbsp;&nbsp;
+                            <FontAwesomeIcon icon={faSolidDna} rotation={90} style={{ color: "#05ff09" }} />
+                        </button>
                     </form>
                     <div className="mt-3">
                         <a href="#">Olvidé mi contraseña</a>
