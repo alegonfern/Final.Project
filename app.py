@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from models import Planet, Character, User, Favorite
 import requests
 from models import db
-
+from werkzeug.security import check_password_hash
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
@@ -14,6 +14,23 @@ db.init_app(app)
 # Configuracion Flask-Admin
 admin = Admin(app, name="Admin", template_mode="bootstrap3")
 admin.add_view(ModelView(User, db.session))
+
+
+# validacion de Inicio de Sesion con metodo POST.
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
+
+    user = User.query.filter_by(username=username).first()
+
+    if user and check_password_hash(user.password, password):
+        # Autenticación exitosa
+        return jsonify({"message": "Autenticación exitosa"})
+    else:
+        # Autenticación fallida, devuelve un mensaje de error
+        return jsonify({"message": "Credenciales incorrectas"}), 401
 
 
 # Creacion de Endpoint GET personajes y Planetas.
