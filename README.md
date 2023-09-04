@@ -91,11 +91,13 @@ Junto con lo anterior esta el archivo index.js el cual renderiza el poryecto.
 **Paso 2: Instalación de Paquetes**
 
 Dentro del entorno virtual activado, instala las siguientes bibliotecas necesarias para tu aplicación Flask:
-
+   - Lista las librerias instaladas en el entorno virtual: `pip list`
    - Flask: `pip install Flask`
    - Flask-SQLAlchemy: `pip install Flask-SQLAlchemy`
    - Flask-Admin: `pip install flask-admin`
    - requests: `pip install requests`
+   - Flask-Migrate: `pip install Flask-Migrate`
+
 
 **Paso 3: Estructura del Proyecto**
 
