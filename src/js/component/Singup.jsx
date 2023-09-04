@@ -53,18 +53,22 @@ const Singup = () => {
                 </div>
                 <div className="col-md-6">
                     <label for="input_email" className="form-label">Email</label>
+                    <br />
                     <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div className="col-md-6">
                     <label for="input_confirm_email" className="form-label">Confirmar email</label>
+                    <br />
                     <input type="email" id="confirm_email" value={email} />
                 </div>
                 <div className="col-md-6">
                     <label for="input_password" className="form-label">Contraseña</label>
+                    <br />
                     <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <div className="col-md-6">
                     <label for="input_confirm_password" className="form-label">Confirmar contraseña</label>
+                    <br />
                     <input type="password" className="form-control" id="confirm_password" value={password} />
                 </div>
 
