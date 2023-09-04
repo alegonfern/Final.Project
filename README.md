@@ -97,6 +97,7 @@ Dentro del entorno virtual activado, instala las siguientes bibliotecas necesari
    - Flask-Admin: `pip install flask-admin`
    - requests: `pip install requests`
    - Flask-Migrate: `pip install Flask-Migrate`
+   - flas-bcrypt: `pip install flask-bcrypt`
 
 
 **Paso 3: Estructura del Proyecto**

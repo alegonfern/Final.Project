@@ -10,6 +10,7 @@ from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
 app.config["SECRET_KEY"] = "123456"  # Mi propia clave secreta
 db.init_app(app)
