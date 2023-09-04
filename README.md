@@ -69,3 +69,73 @@ Junto con lo anterior esta el archivo index.js el cual renderiza el poryecto.
       -index.jsx
       -alembic/env.py
 
+
+
+# Instalar las bibliotecas necesarias y ejecutar una aplicación Flask. 
+
+**Paso 1: Creación de un Entorno Virtual**
+1. Abre una terminal o línea de comandos.
+2. Navega al directorio raíz de tu proyecto.
+3. Ejecuta el siguiente comando para crear un entorno virtual:
+
+   ```
+   python -m venv venv
+   ```
+
+4. Activa el entorno virtual con el siguiente comando:
+
+    ```
+    venv\Scripts\activate
+    ```
+
+**Paso 2: Instalación de Paquetes**
+
+5. Dentro del entorno virtual activado, instala las siguientes bibliotecas necesarias para tu aplicación Flask:
+
+   - Flask: `pip install Flask`
+   - Flask-SQLAlchemy: `pip install Flask-SQLAlchemy`
+   - Flask-Admin: `pip install flask-admin`
+   - requests: `pip install requests`
+
+**Paso 3: Estructura del Proyecto**
+
+6. Asegúrate de tener la estructura adecuada con un archivo `app.py` que contiene tu aplicación Flask y los modelos definidos en otro archivo `models.py` ambos archivos en el directorio raiz.
+
+**Paso 4: Configuración de Flask-Admin**
+
+7. Configura Flask-Admin en tu aplicación Flask, definiendo vistas y modelos para administrar en el archivo `app.py`. Ejemplo:
+
+   ```python
+   from flask_admin import Admin
+   from models import User
+   admin = Admin(app, name="Admin", template_mode="bootstrap3")
+   admin.add_view(ModelView(User, db.session))
+   ```
+
+Lo anterior se traduce en:
+
+- from flask_admin import Admin: Importa la clase Admin del módulo flask_admin. Flask-Admin es una extensión de Flask que facilita la creación de una interfaz de administración web para tu aplicación.
+
+- from models import User: Importa la clase User desde el módulo models. Esto asume que tienes un archivo llamado models.py en tu proyecto donde has definido la clase User. Esta línea importa el modelo de datos de usuario que deseas administrar.
+
+- admin = Admin(app, name="Admin", template_mode="bootstrap3"): Crea una instancia de la clase Admin llamada admin y la configura:
+
+            - Admin(app, name="Admin", template_mode="bootstrap3"): Crea una instancia de Admin que estará vinculada a tu aplicación Flask (app).
+            - name="Admin": Define un nombre para tu interfaz de administración, que se mostrará en la página de administración.
+            - template_mode="bootstrap3": Especifica el modo de plantilla que se utilizará para la interfaz de administración. En este caso, se utiliza el modo "bootstrap3", que se refiere a un estilo basado en Bootstrap 3 para la apariencia de la interfaz.
+
+- admin.add_view(ModelView(User, db.session)): Agrega una vista para el modelo de datos User a la interfaz de administración. Esto se desglosa de la siguiente manera:
+
+- ModelView(User, db.session): Crea una vista para el modelo User. Aquí, User es el modelo de datos que quieres administrar, y db.session es la sesión de base de datos de SQLAlchemy asociada a tu aplicación Flask.
+- admin.add_view(...): Agrega la vista recién creada a la interfaz de administración configurada en el paso anterior.
+
+
+**Paso 5: Ejecución de la Aplicación**
+
+8. Desde el directorio raíz de tu proyecto, ejecuta tu aplicación Flask con el siguiente comando:
+
+   ```
+   python -m flask run
+   ```
+
+9. Abre un navegador web y ve a la URL donde se ejecuta tu aplicación Flask, "http://localhost:5000/admin" para Flask-Admin.
