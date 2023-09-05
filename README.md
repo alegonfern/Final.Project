@@ -98,6 +98,7 @@ Dentro del entorno virtual activado, instala las siguientes bibliotecas necesari
    - requests: `pip install requests`
    - Flask-Migrate: `pip install Flask-Migrate`
    - flas-bcrypt: `pip install flask-bcrypt`
+   - flas-cors: `pip install Flask-Cors`
 
 
 **Paso 3: Estructura del Proyecto**
