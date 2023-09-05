@@ -1,10 +1,13 @@
 import React from 'react'
-import Post from './Post';
+import Carousel from './Carousel';
+import PostList from './Postlist';
 
 const Home = () => {
 
 
     return (
+
+
         <div className="container-fluid">
             <div class="container border-top border-muted my-5">
                 <div class="card mb-3 border-0 pt-5" style={{ width: "420px" }}>
@@ -20,29 +23,14 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div class="card-group my-5">
-                    <div class="card">
-                        <img style={{ height: "420px" }} src="https://bitwares.net/wp-content/uploads/2021/08/Shooters-Gratuitos-Competitivos-Bitwares-735x400.jpg?crop=1" class="card-img-top" alt="Imagen de referencia grupo" />
-                        <div class="card-body d-grid bg-dark">
-                        <button type="btn" class="btn btn-dark">¡Shooter!</button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img style={{ height: "420px" }} src="https://areajugones.sport.es/wp-content/uploads/2020/06/Top-Moba.jpg.webp" class="card-img-top" alt="Imagen de referencia" />
-                        <div class="card-body d-grid bg-dark">
-                        <button type="btn" class="btn btn-dark mx-2">¡MOBA!</button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img style={{ height: "420px" }} src="https://c4.wallpaperflare.com/wallpaper/606/502/422/video-game-collage-blizzard-entertainment-diablo-wallpaper-preview.jpg" class="card-img-top" alt="Imagen de referencia" />
-                        <div class="card-body d-grid bg-dark">
-                        <button type="btn" class="btn btn-dark mx-2">¡MMORPG!</button>
-                        </div>
-                    </div>
+
+
+                <Carousel />
+
+                <div className='post-container'>
+                    <h3>Bitácora</h3>
+                    <PostList/>
                 </div>
-                <>
-                <Post/>
-                </>
             </div>
         </div>
 
