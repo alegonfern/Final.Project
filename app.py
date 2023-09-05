@@ -7,9 +7,11 @@ from flask_admin import Admin
 from flask_migrate import Migrate
 from flask_admin.contrib.sqla import ModelView
 from flask_cors import CORS
+import logging
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+logging.basicConfig(filename="app.log", level=logging.INFO)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
 app.config["SECRET_KEY"] = "123456"  # Mi propia clave secreta
@@ -19,9 +21,25 @@ db.init_app(app)
 # Configura migraciones
 migrate = Migrate(app, db)  # Configura las migraciones
 
+
 # Configuracion Flask-Admin
 admin = Admin(app, name="Admin", template_mode="bootstrap3")
-admin.add_view(ModelView(User, db.session))
+
+
+# Modifico la clase UserAdmin para manejar la contraseña
+class UserAdmin(ModelView):
+    column_exclude_list = [
+        "password_hash"
+    ]  # Excluir el campo de contraseña en la vista
+
+    def on_model_change(self, form, model, is_created):
+        # Si la contraseña ha cambiado o es una nueva entrada, genera el hash
+        if form.password_hash.data:
+            model.password_hash = generate_password_hash(form.password_hash.data)
+
+
+# Agrego la vista personalizada de UserAdmin al admin
+admin.add_view(UserAdmin(User, db.session))
 
 
 # validacion de Inicio de Sesion con metodo POST.
@@ -40,10 +58,14 @@ def login():
             return jsonify({"message": "Autenticación exitosa"})
         else:
             # Autenticación fallida, contraseña incorrecta
-            logging.warning(f"Autenticación fallida para el usuario: {username} (contraseña incorrecta)")
+            logging.warning(
+                f"Autenticación fallida para el usuario: {username} (contraseña incorrecta)"
+            )
     else:
         # Autenticación fallida, usuario no encontrado
-        logging.warning(f"Autenticación fallida para el usuario: {username} (usuario no encontrado)")
+        logging.warning(
+            f"Autenticación fallida para el usuario: {username} (usuario no encontrado)"
+        )
 
     # Devuelve un mensaje de error
     return jsonify({"message": "Credenciales incorrectas"}), 401
@@ -66,9 +88,9 @@ def get_users():
         }
         user_list.append(user_data)  # Agrega el usuario a la lista
 
-    return jsonify({"users": user_list})  # Devuelve la lista de usuarios en formato JSON
-
-
+    return jsonify(
+        {"users": user_list}
+    )  # Devuelve la lista de usuarios en formato JSON
 
 
 if __name__ == "__main__":
