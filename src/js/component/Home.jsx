@@ -1,6 +1,6 @@
 import React from 'react'
 import Carousel from './Carousel';
-import PostList from './Postlist';
+import PostList from './post components/PostList';
 
 const Home = () => {
 
@@ -29,7 +29,7 @@ const Home = () => {
 
                 <div className='post-container'>
                     <h3>Bitácora</h3>
-                    <PostList/>
+                    <PostList />
                 </div>
             </div>
         </div>
