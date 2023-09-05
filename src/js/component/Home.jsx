@@ -1,9 +1,9 @@
 import React from 'react'
-
+import { useState } from 'react';
+import Post from './Post';
 
 const Home = () => {
 
-    const url = "http://127.0.0.1:5000/home";
 
     return (
         <div className="container-fluid">
@@ -25,7 +25,7 @@ const Home = () => {
                     <div class="card">
                         <img style={{ height: "420px" }} src="https://bitwares.net/wp-content/uploads/2021/08/Shooters-Gratuitos-Competitivos-Bitwares-735x400.jpg?crop=1" class="card-img-top" alt="Imagen de referencia grupo" />
                         <div class="card-body d-grid bg-dark">
-                        <button type="btn" class="btn btn-dark ">¡Shooter!</button>
+                        <button type="btn" class="btn btn-dark">¡Shooter!</button>
                         </div>
                     </div>
                     <div class="card">
@@ -41,20 +41,9 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <form>
-                        <div class="mb-3">
-                            {/* <label for="exampleInputEmail1" class="form-label">Email address</label> */}
-                            <input type="text" class="form-control form-control-lg" id="post" aria-describedby="post" placeholder='Cuéntanos ¿en qué estás pensando?' />
-                        </div>
-
-                        <div>
-                            <button type="btn" class="btn btn-dark mx-2">¡Postear texto!</button>
-                            <button type="file" class="btn btn-dark mx-2">¡Postear foto/video!</button>
-                        </div>
-                    </form>
-                </div>
+                <>
+                <Post/>
+                </>
             </div>
         </div>
 

@@ -19,7 +19,7 @@ const Signup = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ firstName, lastName, email }),
-        }; // Add closing parenthesis here
+        };
 
         fetch(url, postOptions)
             .then(response => {
