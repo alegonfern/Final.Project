@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // include your styles into the webpack bundle
 import "../styles/index.css";
+import '../styles/Profile.css'
 
 
 //import your own components
@@ -18,6 +19,7 @@ import Footer from "./component/Footer";
 import Sidebar from "./component/Sidebar";
 import Login from "./component/Login";
 import Signup from "./component/Signup";
+import Profile from "./component/Profile";
 
 //render your react application
 ReactDOM.render(<>
@@ -30,7 +32,7 @@ ReactDOM.render(<>
         <Route path="/Home" element={<Home />} />
         <Route path="/detail_character/" element={<CharacterDetail />} />
         <Route path="/detail_planet/:planetId" element={<PlanetDetail />} />
-
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
 
