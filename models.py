@@ -1,9 +1,8 @@
-from app import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
@@ -19,5 +18,7 @@ class User(db.Model):
     suscription_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def set_password(self, password):
-        bcrypt = Flask().bcrypt
-        self.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
