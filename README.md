@@ -88,6 +88,11 @@ Junto con lo anterior esta el archivo index.js el cual renderiza el poryecto.
     venv\Scripts\activate
     ```
 
+5. Para desactivar el entorno virtual con el siguiente comando:
+
+    ```
+    venv\Scripts\deactivate
+    ```
 **Paso 2: Instalación de Paquetes**
 
 Dentro del entorno virtual activado, instala las siguientes bibliotecas necesarias para tu aplicación Flask:
@@ -99,6 +104,7 @@ Dentro del entorno virtual activado, instala las siguientes bibliotecas necesari
    - Flask-Migrate: `pip install Flask-Migrate`
    - flas-bcrypt: `pip install flask-bcrypt`
    - flas-cors: `pip install Flask-Cors`
+   - react-icons: `npm install react-icons`
 
 
 **Paso 3: Estructura del Proyecto**
@@ -141,5 +147,9 @@ Desde el directorio raíz de tu proyecto, ejecuta tu aplicación Flask con el si
    ```
    python -m flask run
    ```
+o
 
+  ```
+   python app.y
+   ```
 Abre un navegador web y ve a la URL donde se ejecuta tu aplicación Flask, "http://localhost:5000/admin" para Flask-Admin.
