@@ -1,4 +1,5 @@
 import React from 'react'
+import ProfileCard from './ProfileCard'
 
 const Profile = () => {
     return (
@@ -7,18 +8,7 @@ const Profile = () => {
 
             <div className="container">
 
-                <div class="card mb-3 border-0 pt-5" style={{ width: "420px" }}>
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="https://img.freepik.com/iconos-gratis/usuario_318-875902.jpg" class="img-fluid rounded-circle" alt="Avatar del usuario" />
-                        </div>
-                        <div class="col-md-8 d-flex align-items-end">
-                            <div class="card-body">
-                                <h5 class="card-title">Nombre usuario</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ProfileCard/>
 
 
 

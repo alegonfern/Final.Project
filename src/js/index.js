@@ -19,16 +19,18 @@ import Sidebar from "./component/Sidebar";
 import Login from "./component/Login";
 import Signup from "./component/Signup";
 import Profile from "./component/Profile";
+import Group from './component/Group';
 
 
 //render your react application
 ReactDOM.render(<>
   <UserProvider>
-    <Login />
     <Router>
       <Routes>
+        <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Home" element={<Home />} />
+        <Route path="/Group" element={<Group />} />
         <Route path="/detail_character/" element={<CharacterDetail />} />
         <Route path="/detail_planet/:planetId" element={<PlanetDetail />} />
         <Route path="/profile" element={<Profile />} />
