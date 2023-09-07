@@ -36,17 +36,13 @@ class UserAdminView(ModelView):
         user=User()
         form.populate_obj(user) # Aplicar cambio password hash.
         profile=Profile()
+        user.password_hash=generate_password_hash(form.password_hash.data)
         user.profile=profile
         self.session.add(user)
         self.session.commit()
         return True
 
-    def on_model_change(self, form, model):
-        # Si la contraseña ha cambiado o es una nueva entrada, genera el hash
-        if form.password_hash.data:
-            model.password_hash = generate_password_hash(form.password_hash.data)
-            hashed_password= model.password_hash
-            print(f"Contraseña en hash: {hashed_password}")
+        
         
  
 # Agrego la vista personalizada de UserAdmin al admin
