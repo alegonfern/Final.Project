@@ -9,7 +9,7 @@ const ProfileCard = () => {
                 </div>
                 <div className="col-md-8 d-flex align-items-end">
                     <div className="card-body">
-                        <h5 className="card-title">Nombre usuario</h5>
+                        <h5 className="card-title">Nombre de Usuario</h5>
                     </div>
                 </div>
             </div>

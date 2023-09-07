@@ -1,7 +1,7 @@
 import React from 'react'
 import ProfileCard from './ProfileCard'
-import GroupCard from './GroupCard'
-import GroupCarousel from './GroupCarousel'
+import GroupCard from './group component/GroupCard'
+import GroupCarousel from './group component/GroupCarousel'
 
 const Group = () => {
     return (
@@ -11,10 +11,11 @@ const Group = () => {
                     <ProfileCard />
                 </div>
                 <div className='col-8'>
-                    <GroupCard />
+                    <GroupCard 
+                    imagen={'https://bitwares.net/wp-content/uploads/2021/08/Shooters-Gratuitos-Competitivos-Bitwares-735x400.jpg?crop=1'}/>
                 </div>
                 <div className='col-12'>
-                    <GroupCarousel/>
+                    <GroupCarousel />             
                 </div>
             </div>
         </div>
