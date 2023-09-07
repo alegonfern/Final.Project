@@ -3,13 +3,13 @@ import ProfileCard from './ProfileCard'
 import GroupCard from './group component/GroupCard'
 import GroupCarousel from './group component/GroupCarousel'
 import PostList from './post components/PostList'
-import News from './group component/News'
+import NewsCarousel from './group component/NewsCarousel'
 
 const Group = () => {
     return (
         <div className='container'>
             <div className='row'>
-                
+
                 <div className='col-4'>
                     <ProfileCard />
                 </div>
@@ -30,7 +30,7 @@ const Group = () => {
                         <PostList />
                     </div>
                     <div className='col-4'>
-                        <News />
+                        <NewsCarousel />
                     </div>
                 </div></div>
         </div>
