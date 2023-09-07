@@ -37,7 +37,7 @@ const PostForm = ({ onSubmit }) => {
             onChange={handleInputChange}
           />
         </div>
-        <div class="d-grid gap-2 col-12 mx-auto">
+        <div className="d-grid gap-2 col-12 mx-auto">
         <button className="btn btn-dark mt-2" type="submit">
           Post
         </button>

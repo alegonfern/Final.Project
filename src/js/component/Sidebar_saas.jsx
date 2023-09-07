@@ -3,8 +3,6 @@ import React from 'react';
 const Sidebar_saas = () => {
     return (
         <>
-
-
             <div className="sidebar">
                 <div className="sidebar-header">
                     <h3>Gamer Dashboard</h3>
@@ -32,8 +30,6 @@ const Sidebar_saas = () => {
                     </li>
                 </ul>
             </div>
-
-
         </>
     )
 
