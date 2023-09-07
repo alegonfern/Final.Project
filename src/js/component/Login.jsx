@@ -54,16 +54,18 @@ const Login = () => {
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Usuario:</label>
                             <br />
-                            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                            <input className="form-control form-control-sm" type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Contraseña:</label>
                             <br />
-                            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                            <input className="form-control form-control-sm" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                         </div>
-                        <button type="submit" className="btn btn-dark">Iniciar sesión&nbsp;&nbsp;&nbsp;
-                            <FontAwesomeIcon icon={faSolidDna} rotation={90} style={{ color: "#05ff09" }} />
-                        </button>
+                        <div className="d-flex justify-content-center mt-3">
+                            <button type="submit" className="btn btn-dark">Iniciar sesión&nbsp;&nbsp;&nbsp;
+                                <FontAwesomeIcon icon={faSolidDna} rotation={90} style={{ color: "#05ff09" }} />
+                            </button>
+                        </div>
                     </form>
                     <div className="mt-3">
                         <a href="#">Olvidé mi contraseña</a>
