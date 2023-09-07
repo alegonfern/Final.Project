@@ -153,3 +153,8 @@ o
    python app.y
    ```
 Abre un navegador web y ve a la URL donde se ejecuta tu aplicación Flask, "http://localhost:5000/admin" para Flask-Admin.
+
+**Manejo de Baso de datos**
+
+- Creacion de migraciones: `alembic revision -m "Nombre Migracion"`
+- Aplicar migracion a Base de datos: `alembic upgrade head`

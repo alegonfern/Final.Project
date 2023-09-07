@@ -1,6 +1,6 @@
-archivo = "PlanetDetail.jsx"
-valor_antiguo = "character"
-valor_nuevo = "planet"
+archivo = "Home"
+valor_antiguo = "class="
+valor_nuevo = "className="
 
 with open(archivo, 'r') as f:
     contenido = f.read()

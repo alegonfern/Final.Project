@@ -11,12 +11,17 @@ db = SQLAlchemy()
 
 class User(db.Model):
     __tablename__ = "user"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) 
     username = db.Column(db.String(250), nullable=False)
     mail = db.Column(db.String(250), nullable=False, unique=True)
     password_hash = db.Column(db.String(250), nullable=False)
     suscription_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
+    first_name = db.Column(db.String(250), nullable=False)
+    last_name = db.Column(db.String(250), nullable=False)
+    birth_date = db.Column(db.DateTime, nullable=False)
+    gender = db.Column(db.String(250), nullable=False)
+    profile = db.relationship("Profile",uselist=False)
+    
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
         print(f"Contraseña almacenada: {self.password_hash}")
@@ -24,39 +29,14 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
-'''
-class User(db.Model):
-    __tablename__ = "user"
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(250), nullable=False)
-    mail = db.Column(db.String(250), nullable=False, unique=True)
-    password_hash = db.Column(db.String(250), nullable=False)
-    subscription_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    first_name = db.Column(db.String(250), nullable=False)
-    last_name = db.Column(db.String(250), nullable=False)
-    birth_date = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(250), nullable=False)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-        print(f"Contraseña almacenada: {self.password_hash}")
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
 
 class Profile(db.Model):
     __tablename__ = 'profile'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    profile_first_name = db.Column(db.String(250), nullable=False, unique=True)
-    profile_last_name = db.Column(db.String(250), nullable=False, unique=True)
-    profile_picture = db.Column(db.String(250))
-    profile_achievements = db.Column(db.String(250))
-    profile_interests = db.Column(db.String(250))
-    profile_groups = db.Column(db.String(250))
-    achievements = db.relationship('Achievements', backref='profile', lazy=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
+    profile_picture = db.Column(db.String(250), nullable=True, default="")
+    profile_interests = db.Column(db.String(250), nullable=True, default="")
+    profile_groups = db.Column(db.String(250), nullable=True, default="")
     interests = db.relationship('Interests', backref='profile', lazy=True)
     matches = db.relationship('Match', secondary='profile_matches', lazy='subquery', backref=db.backref('profiles', lazy=True))
     
@@ -88,11 +68,11 @@ class Gender(db.Model):
     games = db.relationship('Game', secondary=gender_games, lazy='subquery', backref=db.backref('genders', lazy=True))
 
 
-class InteractionAchievements(db.Model):
+""" class InteractionAchievements(db.Model):
     __tablename__ = 'interaction_achievements'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
-    achievements_id = db.Column(db.Integer, db.ForeignKey('achievements.id'), primary_key=True)
+    achievements_id = db.Column(db.Integer, db.ForeignKey('achievements.id'), primary_key=True) """
 
 
 profile_matches = db.Table('profile_matches', db.Column('profile_id', db.Integer, db.ForeignKey('profile.id'), primary_key=True), db.Column('match_id', db.Integer, db.ForeignKey('match.id'), primary_key=True))
@@ -104,13 +84,13 @@ class Match(db.Model):
     # Columns of match table
 
 
-class Home(db.Model):
+""" class Home(db.Model):
     __tablename__ = 'home'
     id = db.Column(db.Integer, primary_key=True)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)
     profile_post_id = db.Column(db.Integer, db.ForeignKey('personal_post.id'), primary_key=True)
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
-    personal_posts = db.relationship('Personal_post', backref='home', lazy=True)
+    personal_posts = db.relationship('PersonalPost', backref='home', lazy=True)
     groups = db.relationship('Group', backref='home', lazy=True)
     
 class PersonalPost(db.Model):
@@ -118,8 +98,8 @@ class PersonalPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)
     home_id = db.Column(db.Integer, db.ForeignKey('home.id'), primary_key=True)
-
-
+ """
+""" 
 class Group(db.Model):
     __tablename__ = 'group'
     id = db.Column(db.Integer, primary_key=True)
@@ -127,10 +107,10 @@ class Group(db.Model):
     home_id = db.Column(db.Integer, db.ForeignKey('home.id'), primary_key=True)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)
     group_post_id = db.Column(db.Integer, db.ForeignKey('group_post.id'), primary_key=True)
-    group_posts = db.relationship('GroupPost', backref='group', lazy=True)
+    group_posts = db.relationship('GroupPost', backref='group', lazy=True) """
 
-class GroupPost(db.Model):
+""" class GroupPost(db.Model):
     __tablename__ = 'group_post'
     id = db.Column(db.Integer, primary_key=True)
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)'''
+    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True) """

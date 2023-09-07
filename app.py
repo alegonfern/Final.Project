@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from models import User
+from models import User, Profile
 import requests
 from models import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -27,20 +27,30 @@ admin = Admin(app, name="Admin", template_mode="bootstrap3")
 
 
 # Modifico la clase UserAdmin para manejar la contraseña
-class UserAdmin(ModelView):
+class UserAdminView(ModelView):
     column_exclude_list = [
         "password_hash"
     ]  # Excluir el campo de contraseña en la vista
+    
+    def create_model(self,form):
+        user=User()
+        form.populate_obj(user) # Aplicar cambio password hash.
+        profile=Profile()
+        user.profile=profile
+        self.session.add(user)
+        self.session.commit()
+        return True
 
-    def on_model_change(self, form, model, is_created):
+    def on_model_change(self, form, model):
         # Si la contraseña ha cambiado o es una nueva entrada, genera el hash
         if form.password_hash.data:
             model.password_hash = generate_password_hash(form.password_hash.data)
-
-
+        
+        
+ 
 # Agrego la vista personalizada de UserAdmin al admin
-admin.add_view(UserAdmin(User, db.session))
-
+admin.add_view(UserAdminView(User, db.session))
+admin.add_view(ModelView(Profile, db.session))
 
 # validacion de Inicio de Sesion con metodo POST.
 @app.route("/login", methods=["POST"])
@@ -102,14 +112,14 @@ def get_shooter():
         {"group": "shooter"}
     ) 
 
-@app.route("/group/moba", methods=['GET'])
+""" @app.route("/group/moba", methods=['GET'])
 def get_moba():
 
     pass
 
     return jsonify(
         {"group": "moba"}
-    )
+    ) """
 
 @app.route("/group/mmorpg", methods=['GET'])
 def get_mmorpg():
