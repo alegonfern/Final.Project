@@ -1,15 +1,13 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from "react-router-dom";
+
 
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
 
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
+
 
   const flogin = (username, password) => {
     const url = "http://127.0.0.1:5000/login";
@@ -40,14 +38,14 @@ export const UserProvider = ({ children }) => {
 
   const handleGoogleCallback = async (code) => {
     const key = 'AIzaSyDvHtJsPXyQX7k91Ppo4GSvms0gt0HlXJw';
-    const tokenRequestUrl = 'https://oauth2.googleapis.com/token';
+    const tokenRequestUrl = 'https://accounts.google.com/o/oauth2/token';
 
     const tokenRequestBody = {
-      key: key,
+      code: key,
       client_id: '538564562238-jsduha69drfedvhe9kmhqos83nrsm8ga.apps.googleusercontent.com',
       client_secret: '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',
       redirect_uri: 'http://127.0.0.1:5000/login',
-      grant_type: 'authorization_code',
+      grant_type: authorization_code,
     };
 
     // Realizo una solicitud POST para obtener el token de acceso

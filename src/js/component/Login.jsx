@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../store/UserContext";
-import '../../styles/Sidebar.css';
+import '../../styles/Google.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDna as faSolidDna } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
+import googleIcon from '../../img/google-icon.png'
 
 const Login = () => {
 
@@ -22,7 +23,7 @@ const Login = () => {
             const success = await handleGoogleCallback(code);
 
             if (success) {
-                navigate("/home"); // Redirigo al usuario después de la autenticación exitosa
+                navigate("/Home"); // Redirigo al usuario después de la autenticación exitosa
             } else {
                 setError("Error al iniciar sesión con Google");
             }
@@ -38,7 +39,7 @@ const Login = () => {
         flogin(username, password)
             .then((isAuthenticated) => {
                 if (isAuthenticated) {
-                    window.location.href = '/home';
+                    window.location.href = '/Home';
                 }
             });
     };
@@ -72,9 +73,8 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <div>
-
-                <button onClick={handleGoogleSignIn}>Iniciar sesión con Google</button>
+            <div className="d-flex justify-content-center mt-3">
+                <button className="google-login-button mx-auto" onClick={handleGoogleSignIn}> <img src={googleIcon} className="google-icon img-fluid"></img>Iniciar sesión con Google</button>
             </div>
         </div>
     );

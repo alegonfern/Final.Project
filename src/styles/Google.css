@@ -1,0 +1,20 @@
+/* Estilos CSS para el botón de inicio de sesión con Google */
+.google-login-button {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #4285F4;
+    border: 2px solid #4285F4;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Estilos para el icono de Google */
+.google-icon {
+    vertical-align: middle;
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    width: 30px; /* Ancho deseado en píxeles */
+    height: 30px; /* Alto deseado en píxeles */
+    }
