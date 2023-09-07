@@ -18,6 +18,7 @@ import Signup from "./component/Signup";
 import Profile from "./component/Profile";
 import Group from './component/Group';
 import GoogleCallback from './component/GoogleCallback';
+import Google_test from "./component/test component/Google_test";
 
 //render your react application
 ReactDOM.render(<>
@@ -30,6 +31,7 @@ ReactDOM.render(<>
         <Route path="/Home" element={<Home />} />
         <Route path="/Group" element={<Group />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/Google" element={<Google_test />} />
       </Routes>
     </Router>
   </UserProvider>
