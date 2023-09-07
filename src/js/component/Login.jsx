@@ -3,39 +3,43 @@ import { UserContext } from "../store/UserContext";
 import '../../styles/Sidebar.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDna as faSolidDna } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
+    const { flogin, handleGoogleCallback } = useContext(UserContext);
     //Estados para reoceger UserName y Password
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+
+    const handleGoogleSignIn = async () => {
+        try {
+            // Entrego el código de autorización de Google a handleGoogleCallback
+            const code = 'AIzaSyDvHtJsPXyQX7k91Ppo4GSvms0gt0HlXJw';
+            const success = await handleGoogleCallback(code);
+
+            if (success) {
+                navigate("/home"); // Redirigo al usuario después de la autenticación exitosa
+            } else {
+                setError("Error al iniciar sesión con Google");
+            }
+        } catch (error) {
+            setError("Error al iniciar sesión con Google");
+        }
+    };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const url = "http://127.0.0.1:5000/login";
-
-        const postOptions = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        }
-
-        fetch(url, postOptions)
-            .then(response => {
-                if (response.ok) {
-                    // Autenticación exitosa, redirige a la página de inicio
+        flogin(username, password)
+            .then((isAuthenticated) => {
+                if (isAuthenticated) {
                     window.location.href = '/home';
-                } else {
-                    // Autenticación fallida, muestra un mensaje de error
-                    console.error('Credenciales incorrectas');
                 }
-            })
-            .catch((error) => {
-                console.error('Error al enviar la solicitud', error);
             });
     };
 
@@ -68,8 +72,12 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <div>
+
+                <button onClick={handleGoogleSignIn}>Iniciar sesión con Google</button>
+            </div>
         </div>
     );
-}
 
+}
 export default Login;

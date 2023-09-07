@@ -10,10 +10,10 @@ const Home = () => {
 
         <div className='row'>
             <div className="container-fluid">
-                <div class="container border-top border-muted my-5">
-                   
-                    <ProfileCard/>
-                    
+                <div className="container border-top border-muted my-5">
+
+                    <ProfileCard />
+
                     <Carousel />
 
                     <div className='post-container'>
