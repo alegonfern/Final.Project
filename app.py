@@ -92,7 +92,60 @@ def get_users():
         {"users": user_list}
     )  # Devuelve la lista de usuarios en formato JSON
 
+# Rutas provisorias para grupos
+@app.route("/group/survival", methods=['GET'])
+def get_shooter():
 
+    pass
+
+    return jsonify(
+        {"group": "shooter"}
+    ) 
+
+@app.route("/group/moba", methods=['GET'])
+def get_moba():
+
+    pass
+
+    return jsonify(
+        {"group": "moba"}
+    )
+
+@app.route("/group/mmorpg", methods=['GET'])
+def get_mmorpg():
+
+    pass
+
+    return jsonify(
+        {"group": "mmorpg"}
+    )
+
+@app.route("/group/survival", methods=['GET'])
+def get_survival():
+
+    pass
+
+    return jsonify(
+        {"group": "survival"}
+    )
+
+@app.route("/group/roguelike", methods=['GET'])
+def get_roguelike():
+
+    pass
+
+    return jsonify(
+        {"group": "roguelike"}
+    )
+
+@app.route("/group/terror", methods=['GET'])
+def get_terror():
+
+    pass
+
+    return jsonify(
+        {"group": "terror"}
+    )
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     with app.app_context():

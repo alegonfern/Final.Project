@@ -18,16 +18,6 @@ const PostList = () => {
     setPosts(updatedPosts);
   };
 
-  const fulfillPost = id => {
-    const updatedPosts = posts.map(post => {
-      if (post.id === id) {
-        post.fulfilled = !post.fulfilled;
-      }
-      return post;
-    });
-    setPosts(updatedPosts);
-  };
-
   return (
     <>
       <PostForm onSubmit={addPost} />
@@ -37,8 +27,6 @@ const PostList = () => {
             key={post.id}
             id={post.id}
             text={post.text}
-            fulfilled={post.fulfilled}
-            fulfillPost={fulfillPost}
             deletePost={deletePost}
           />
         ))}

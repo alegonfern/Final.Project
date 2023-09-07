@@ -1,41 +1,46 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../store/UserContext";
-import '../../styles/Sidebar.css';
+import '../../styles/Google.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDna as faSolidDna } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from 'react-router-dom';
+import googleIcon from '../../img/google-icon.png'
 
 const Login = () => {
 
+    const { flogin, handleGoogleCallback } = useContext(UserContext);
     //Estados para reoceger UserName y Password
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+
+    const handleGoogleSignIn = async () => {
+        try {
+            // Entrego el código de autorización de Google a handleGoogleCallback
+            const code = 'AIzaSyDvHtJsPXyQX7k91Ppo4GSvms0gt0HlXJw';
+            const success = await handleGoogleCallback(code);
+
+            if (success) {
+                navigate("/Home"); // Redirigo al usuario después de la autenticación exitosa
+            } else {
+                setError("Error al iniciar sesión con Google");
+            }
+        } catch (error) {
+            setError("Error al iniciar sesión con Google");
+        }
+    };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const url = "http://127.0.0.1:5000/login";
-
-        const postOptions = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        }
-
-        fetch(url, postOptions)
-            .then(response => {
-                if (response.ok) {
-                    // Autenticación exitosa, redirige a la página de inicio
-                    window.location.href = '/home';
-                } else {
-                    // Autenticación fallida, muestra un mensaje de error
-                    console.error('Credenciales incorrectas');
+        flogin(username, password)
+            .then((isAuthenticated) => {
+                if (isAuthenticated) {
+                    window.location.href = '/Home';
                 }
-            })
-            .catch((error) => {
-                console.error('Error al enviar la solicitud', error);
             });
     };
 
@@ -49,16 +54,18 @@ const Login = () => {
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Usuario:</label>
                             <br />
-                            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                            <input className="form-control form-control-sm" type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Contraseña:</label>
                             <br />
-                            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                            <input className="form-control form-control-sm" type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                         </div>
-                        <button type="submit" className="btn btn-dark">Iniciar sesión&nbsp;&nbsp;&nbsp;
-                            <FontAwesomeIcon icon={faSolidDna} rotation={90} style={{ color: "#05ff09" }} />
-                        </button>
+                        <div className="d-flex justify-content-center mt-3">
+                            <button type="submit" className="btn btn-dark">Iniciar sesión&nbsp;&nbsp;&nbsp;
+                                <FontAwesomeIcon icon={faSolidDna} rotation={90} style={{ color: "#05ff09" }} />
+                            </button>
+                        </div>
                     </form>
                     <div className="mt-3">
                         <a href="#">Olvidé mi contraseña</a>
@@ -68,8 +75,11 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <div className="d-flex justify-content-center mt-3">
+                <button className="google-login-button mx-auto" onClick={handleGoogleSignIn}> <img src={googleIcon} className="google-icon img-fluid"></img>Iniciar sesión con Google</button>
+            </div>
         </div>
     );
-}
 
+}
 export default Login;

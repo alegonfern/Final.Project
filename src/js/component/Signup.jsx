@@ -7,8 +7,10 @@ const Signup = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [userName, setUsername] = useState('');
 
-    const url = "/signup";
+
+    const url = "http://127.0.0.1:5000/signup";
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,7 +20,7 @@ const Signup = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ firstName, lastName, email }),
+            body: JSON.stringify({ firstName, lastName, email, userName }),
         };
 
         fetch(url, postOptions)
@@ -40,34 +42,39 @@ const Signup = () => {
 
     return (
         <div className="container-fluid">
-            <div className="col-md-6 offset-md-3 border rounded">
+            <div className="col-md-6 col-lg-6 col-sm-6 offset-md-3 border rounded">
                 <div className=' card singup_form p-3'><h3>¡Regístrate, ven a jugar con nosotros!</h3><p>No lo lamentarás.</p></div>
 
                 <form className="row g-3 m-2" onSubmit={handleSubmit}>
-                    <div className="col-md-6">
+                    <div className="col-md-6"col-lg-6 col-sm-6 >
                         <label for="input_first_name" className="form-label">Nombre</label>
                         <input type="text" id="first_name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6"col-lg-6 col-sm-6 >
                         <label for="input_last_name" className="form-label">Apellido</label>
                         <input type="text" id="last_name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6"col-lg-6 col-sm-6 >
                         <label for="input_email" className="form-label">Email</label>
                         <br />
                         <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6"col-lg-6 col-sm-6 >
                         <label for="input_confirm_email" className="form-label">Confirmar email</label>
                         <br />
                         <input type="email" id="confirm_email" value={email} />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-12 col-lg-12 col-sm-12">
+                        <label for="input_password" className="form-label">Nombre de usuario</label>
+                        <br />
+                        <input type="text" id="user_name" value={userName} onChange={(e) => setUsername(e.target.value)} required />
+                    </div>
+                    <div className="col-md-6"col-lg-6 col-sm-6 >
                         <label for="input_password" className="form-label">Contraseña</label>
                         <br />
                         <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6"col-lg-6 col-sm-6 >
                         <label for="input_confirm_password" className="form-label">Confirmar contraseña</label>
                         <br />
                         <input type="password" className="form-control" id="confirm_password" value={password} />
