@@ -45,7 +45,8 @@ class UserAdminView(ModelView):
         # Si la contraseña ha cambiado o es una nueva entrada, genera el hash
         if form.password_hash.data:
             model.password_hash = generate_password_hash(form.password_hash.data)
-        
+            hashed_password= model.password_hash
+            print(f"Contraseña en hash: {hashed_password}")
         
  
 # Agrego la vista personalizada de UserAdmin al admin
