@@ -25,10 +25,9 @@ import Contacts from "./component/contact list/Contacts";
 import Navbar from "./component/NavBar";
 
 
-
-//render your react application
-ReactDOM.render(
-  <UserProvider>
+function App() {
+    
+<UserProvider>
     <Router>
       <Navbar />
       <div className="app" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
@@ -52,6 +51,7 @@ ReactDOM.render(
         </div>
       </div>
     </Router>
-  </UserProvider >,
-  document.querySelector('#app')
-);
+  </UserProvider >
+}
+
+export default App

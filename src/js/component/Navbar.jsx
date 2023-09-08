@@ -5,7 +5,7 @@ import '../../styles/Navbar.css';
 
 const Navbar = () => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <nav className="navbar navbar-expand-lg navbar-secondary bg-secondary fixed-top">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">
                     <FontAwesomeIcon icon={faDna} rotation={90} style={{ color: "#05ff09", fontSize: "3rem" }} className="icon" />

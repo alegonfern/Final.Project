@@ -7,7 +7,11 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [theme, setTheme] = useState('light');
 
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   const flogin = (username, password) => {
     const url = "http://127.0.0.1:5000/login";
@@ -69,7 +73,7 @@ export const UserProvider = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin }}>
+    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme }}>
       {children}
     </UserContext.Provider>
   );

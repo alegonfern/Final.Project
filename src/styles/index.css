@@ -25,3 +25,33 @@ p {
 h1 {
     color: white;
 }
+
+:root {
+    --bg-color: #FFFFFF;
+    --header-color: #D3D3D3;
+    --text-color: #000000;
+    --graph-color: #4B0082;
+    --button-color: #008000;
+  }
+  
+  [data-theme="dark"] {
+    --bg-color: #000000;
+    --header-color: #696969;
+    --text-color: #FFFFFF;
+    --graph-color: #8A2BE2;
+    --button-color: #ADFF2F;
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  header {
+    background-color: var(--header-color);
+  }
+  
+  button {
+    background-color: var(--button-color);
+  }
+  
