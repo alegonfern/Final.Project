@@ -35,3 +35,8 @@
     z-index: 1030;
   }
   
+  .navbar {
+    transform: scaleY(0.5);
+    transform-origin: top;
+  }
+    

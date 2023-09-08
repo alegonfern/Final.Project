@@ -28,21 +28,16 @@ import Navbar from "./component/NavBar";
 ReactDOM.render(
   <UserProvider>
     <Router>
-      <div className="content">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/login_google" element={<GoogleCallback />} />
-          <Route path="/Signup" element={<Signup />} />
-        </Routes>
-      </div>
-
+      <Navbar />
       <div className="app" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
         <div>
-          <Navbar />
           <Sidebar />
         </div>
-        <div>
+        <div className="content">
           <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/login_google" element={<GoogleCallback />} />
+            <Route path="/Signup" element={<Signup />} />
             <Route path="/Intereses" element={<Intereses />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/Group" element={<Group />} />
