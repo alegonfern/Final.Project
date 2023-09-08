@@ -105,7 +105,13 @@ Dentro del entorno virtual activado, instala las siguientes bibliotecas necesari
    - flas-bcrypt: `pip install flask-bcrypt`
    - flas-cors: `pip install Flask-Cors`
    - react-icons: `npm install react-icons`
+   - react-google-login: `npm install gapi-script react-google-login`
 
+   Para instalar todas las librerias recomiendo usar:
+
+    ```
+    pip install -r requirements.txt
+    ```
 
 **Paso 3: Estructura del Proyecto**
 
