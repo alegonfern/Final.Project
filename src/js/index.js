@@ -19,6 +19,9 @@ import Profile from "./component/Profile";
 import Group from './component/Group';
 import GoogleCallback from './component/GoogleCallback';
 import Google_test from "./component/test component/Google_test";
+import Intereses from './component/Intereses';
+import Match from './component/Match';
+import MatchPreview from './component/MatchPreview';
 
 //render your react application
 ReactDOM.render(<>
