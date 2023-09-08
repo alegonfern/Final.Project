@@ -23,6 +23,8 @@ import Intereses from './component/Intereses';
 import Match from './component/Match';
 import MatchPreview from './component/MatchPreview';
 import Sidebar from './component/Sidebar';
+import Contacts from './component/contact list/Contacts'
+
 
 //render your react application
 ReactDOM.render(
@@ -42,6 +44,7 @@ ReactDOM.render(
             <Route path="/match" element={<Match />} />
             <Route path="/Google" element={<Google_test />} />
             <Route path="/MatchPreview" element={<MatchPreview />} />
+            <Route path="/Contacts" element={<Contacts /> } />
           </Routes>
         </div>
       </div>
