@@ -4,28 +4,75 @@
     --text-color: #000000;
     --graph-color: #4B0082;
     --button-color: #008000;
-  }
-  
-  [data-theme="dark"] {
-    --bg-color: #000000;
-    --header-color: #696969;
-    --text-color: #FFFFFF;
-    --graph-color: #8A2BE2;
-    --button-color: #ADFF2F;
-  }
-  
-  body {
+}
+
+
+/* Estilos para el Modo DARK */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --header-bg-color: #121212;
+    --sidebar-bg-color: #0e0e0e;
+    --text-color: #ffffff;
+    --link-color: #00aaff;
+    --link-hover-color: #ff7f50;
+    --button-bg-color: #ff7f50;
+    --button-text-color: #ffffff;
+    --accent-color-1: #ff7f50;
+    --accent-color-2: #00ff00;
+    --modal-bg-color: #1a1a1a;
+}
+
+/* Aplicar estilos generales */
+body {
     background-color: var(--bg-color);
     color: var(--text-color);
-  }
-  
-  header {
-    background-color: var(--header-color);
-  }
-  
-  button {
-    background-color: var(--button-color);
-  }
-  
-  /* Aquí puedes agregar más selectores y estilos para aplicar los colores a otros elementos de tu aplicación */
-  
+}
+
+header {
+    background-color: var(--header-bg-color);
+}
+
+.sidebar {
+    background-color: var(--sidebar-bg-color);
+}
+
+a {
+    color: var(--link-color);
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+}
+
+/* Navbar personalizado para el Modo DARK */
+[data-theme="dark"] .navbar-secondary {
+    background-color: var(--header-bg-color) !important;
+    /* Sobrescribe el estilo de Bootstrap */
+    /* Otros estilos específicos del Navbar en el Modo DARK si es necesario */
+}
+
+/* Estilos para el texto dentro del Navbar en el Modo DARK */
+[data-theme="dark"] .navbar-secondary .navbar-text {
+    color: var(--text-color) !important;
+    /* Color del texto en el Modo DARK */
+}
+
+/* Sidebar personalizado para el Modo DARK */
+[data-theme="dark"] .sidebar-container {
+    background-color: var(--sidebar-bg-color) !important;
+    /* Sobrescribe el estilo de Bootstrap */
+    color: var(--text-color) !important;
+    /* Color del texto en el Sidebar en el Modo DARK */
+    /* Otros estilos específicos del Sidebar en el Modo DARK si es necesario */
+}
+
+/* Estilos para los textos dentro de los elementos <a> en el Sidebar en el Modo DARK */
+[data-theme="dark"] .sidebar-container .nav-item a.nav-link {
+    color: var(--text-color) !important;
+    /* Color del texto en el Modo DARK */
+}
