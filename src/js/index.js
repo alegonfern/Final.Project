@@ -19,7 +19,6 @@ import Profile from "./component/Profile";
 import Group from './component/Group';
 import GoogleCallback from './component/GoogleCallback';
 import Google_test from "./component/test component/Google_test";
-import Match from "./component/Match";
 
 //render your react application
 ReactDOM.render(<>
@@ -29,11 +28,13 @@ ReactDOM.render(<>
         <Route path="/login" element={<Login />} />
         <Route path="/login_google" element={<GoogleCallback />} />
         <Route path="/Signup" element={<Signup />} />
+        <Route path="/Intereses" element={<Intereses />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/Group" element={<Group />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/match" element={<Match />} />
         <Route path="/Google" element={<Google_test />} />
+        <Route path="/MatchPreview" element={<MatchPreview />} />
       </Routes>
     </Router>
   </UserProvider>
