@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 
-const CarouselCard = ({ AvatarUsuario, NombreUsuario, InfoPerfil}) => {
+const CarouselCard = ({ AvatarUsuario, NombreUsuario /*, InfoPerfil */ }) => {
 
     const urlShooter = "http://127.0.0.1:5000/shooter";
     const urlMoba = "http://127.0.0.1:5000/moba";
@@ -37,13 +37,17 @@ const CarouselCard = ({ AvatarUsuario, NombreUsuario, InfoPerfil}) => {
     };
 
     return (
-        <div className="card">
-            <img style={{ height: "420px" }} src={AvatarUsuario} className="img-fluid rounded-circle" alt="Avatar del usuario" />
-            <div className="card-body bg-dark d-flex justify-content-center">
-                <h5 className="card-title">{NombreUsuario}</h5>
-                <p className="card-text">{InfoPerfil}</p>
-                <button type="button" onClick={handleClick} className="btn btn-dark mx-2"><AiOutlineClose /> </button>
-                <button type="button" onClick={handleClick} className="btn btn-dark mx-2"><AiOutlineCheck /> </button>
+        <div className="card" style={{ border: 'none' }}>
+            <img style={{ height: "200px", width: "200px", objectFit: 'cover', borderRadius: '50%' }} src={AvatarUsuario} className="img-fluid" alt="Avatar del usuario" />
+            <div className="card-body bg-light d-flex justify-content-center flex-column align-items-center">
+                <div>
+                    <h5 className="card-title text-center">{NombreUsuario}</h5>
+                    {/*  <p className="card-text text-center">{InfoPerfil}</p> */}
+                </div>
+                <div>
+                    <button type="button" onClick={handleClick} className="btn btn-light mx-2"><AiOutlineClose style={{ color: 'red' }} /> </button>
+                    <button type="button" onClick={handleClick} className="btn btn-light mx-2"><AiOutlineCheck style={{ color: 'green' }} /> </button>
+                </div>
             </div>
         </div>
 
