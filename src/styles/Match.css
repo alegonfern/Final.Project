@@ -1,0 +1,28 @@
+.match-screen {
+    text-align: center;
+  }
+  
+  .match-screen h1 {
+    color: red;
+  }
+  
+  .profile-pictures {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-pictures img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .profile-pictures img:nth-child(2) {
+    margin: 0 20px;
+  }
+  
+  .match-screen button {
+    margin: 10px;
+    padding: 10px 20px;
+  }
