@@ -1,10 +1,8 @@
-//import react into the bundle
 import React from "react";
 import ReactDOM from "react-dom";
 import { UserProvider } from "./store/UserContext";
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
 
 // include your styles into the webpack bundle
 import "../styles/index.css";
@@ -23,20 +21,28 @@ import Intereses from './component/Intereses';
 import Match from './component/Match';
 import MatchPreview from './component/MatchPreview';
 import Sidebar from './component/Sidebar';
-import Contacts from './component/contact list/Contacts'
-
+import Contacts from "./component/contact list/Contacts";
+import Navbar from "./component/NavBar";
 
 //render your react application
 ReactDOM.render(
   <UserProvider>
     <Router>
-      <div className="app">
-        <Sidebar />
-        <div className="content">
+      <div className="content">
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/login_google" element={<GoogleCallback />} />
+          <Route path="/Signup" element={<Signup />} />
+        </Routes>
+      </div>
+
+      <div className="app" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
+        <div>
+          <Navbar />
+          <Sidebar />
+        </div>
+        <div>
           <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/login_google" element={<GoogleCallback />} />
-            <Route path="/Signup" element={<Signup />} />
             <Route path="/Intereses" element={<Intereses />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/Group" element={<Group />} />
@@ -44,11 +50,11 @@ ReactDOM.render(
             <Route path="/match" element={<Match />} />
             <Route path="/Google" element={<Google_test />} />
             <Route path="/MatchPreview" element={<MatchPreview />} />
-            <Route path="/Contacts" element={<Contacts /> } />
+            <Route path="/Contacts" element={<Contacts />} />
           </Routes>
         </div>
       </div>
     </Router>
-  </UserProvider>,
+  </UserProvider >,
   document.querySelector('#app')
 );
