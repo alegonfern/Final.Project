@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import '../../styles/Sidebar.css';
 import { UserContext } from "../store/UserContext";
 
 function Sidebar() {
     const { theme, toggleTheme } = useContext(UserContext);
+    const [checked, setChecked] = useState(theme === 'dark');
+
+    useEffect(() => {
+        setChecked(theme === 'dark');
+    }, [theme]);
 
     return (
         <div className={`bg-dark text-white p-3 sidebar-container ${theme}`}>
@@ -31,11 +36,11 @@ function Sidebar() {
                 </li>
             </ul>
             <div>
-              <label className="switch">
-                <input type="checkbox" onClick={toggleTheme} />
-                <span className={`slider round ${theme === 'dark' ? 'dark' : ''}`}></span>
+                <label className="switch">
+                    <input type="checkbox" onClick={toggleTheme} checked={checked} />
+                    <span className={`slider round ${theme === 'dark' ? 'dark' : ''}`}></span>
 
-              </label>
+                </label>
             </div>
         </div>
     );

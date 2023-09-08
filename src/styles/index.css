@@ -1,31 +1,3 @@
-.app {
-    display: flex;
-}
-
-.content {
-    flex-grow: 1;
-    background-color: rgb(255, 255, 255);
-    margin-top: 56px;
-      
-}
-
-.app {
-    display: flex;
-    height: 100vh;
-}
-
-body {
-    color: white;
-}
-
-p {
-    color: white;
-}
-
-h1 {
-    color: white;
-}
-
 :root {
     --bg-color: #FFFFFF;
     --header-color: #D3D3D3;
@@ -54,4 +26,6 @@ h1 {
   button {
     background-color: var(--button-color);
   }
+  
+  /* Aquí puedes agregar más selectores y estilos para aplicar los colores a otros elementos de tu aplicación */
   

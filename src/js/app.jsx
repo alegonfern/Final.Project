@@ -27,7 +27,8 @@ import Navbar from "./component/NavBar";
 
 function App() {
     
-<UserProvider>
+    return(
+    <UserProvider>
     <Router>
       <Navbar />
       <div className="app" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
@@ -52,6 +53,7 @@ function App() {
       </div>
     </Router>
   </UserProvider >
+    )
 }
 
 export default App
