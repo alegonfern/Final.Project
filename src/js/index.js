@@ -22,25 +22,30 @@ import Google_test from "./component/test component/Google_test";
 import Intereses from './component/Intereses';
 import Match from './component/Match';
 import MatchPreview from './component/MatchPreview';
+import Sidebar from './component/Sidebar';
 
 //render your react application
-ReactDOM.render(<>
+ReactDOM.render(
   <UserProvider>
     <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/login_google" element={<GoogleCallback />} />
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/Intereses" element={<Intereses />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Group" element={<Group />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/match" element={<Match />} />
-        <Route path="/Google" element={<Google_test />} />
-        <Route path="/MatchPreview" element={<MatchPreview />} />
-      </Routes>
+      <div className="app">
+        <Sidebar />
+        <div className="content">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/login_google" element={<GoogleCallback />} />
+            <Route path="/Signup" element={<Signup />} />
+            <Route path="/Intereses" element={<Intereses />} />
+            <Route path="/Home" element={<Home />} />
+            <Route path="/Group" element={<Group />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/match" element={<Match />} />
+            <Route path="/Google" element={<Google_test />} />
+            <Route path="/MatchPreview" element={<MatchPreview />} />
+          </Routes>
+        </div>
+      </div>
     </Router>
-  </UserProvider>
-</>,
+  </UserProvider>,
   document.querySelector('#app')
 );

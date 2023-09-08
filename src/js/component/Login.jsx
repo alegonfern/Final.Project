@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDna as faSolidDna } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import googleIcon from '../../img/google-icon.png'
+import '../../styles/index.css';
 
 const Login = () => {
 
