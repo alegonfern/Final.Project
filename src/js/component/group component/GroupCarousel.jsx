@@ -7,7 +7,7 @@ const GroupCarousel = () => {
     useEffect(() => {
         const fetchImages = async () => {
             const newImages = [];
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 20; i++) {
                 newImages.push(`https://picsum.photos/200/300?random=${Math.random()}`);
             }
             setImages(newImages);
@@ -16,12 +16,12 @@ const GroupCarousel = () => {
     }, []);
 
     return (
-        <div className='box my-4' style={{ width: '100%' }}>
-            <div id="carouselExample" className="carousel slide" style={{ position: 'relative', width: '100%', transform: 'scaleY(0.65)' }}>
+        <div className='box my-4'>
+            <div id="carouselExample" className="carousel slide">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <div className='carousel-card d-flex justify-content-between'>
-                            {images.slice(0, 5).map((image, index) => (
+                            {images.slice(0, 10).map((image, index) => (
                                 <CarouselCard
                                     key={index}
                                     AvatarUsuario={image}
@@ -32,7 +32,7 @@ const GroupCarousel = () => {
                     </div>
                     <div className="carousel-item">
                         <div className='carousel-card d-flex justify-content-between'>
-                            {images.slice(5).map((image, index) => (
+                            {images.slice(10).map((image, index) => (
                                 <CarouselCard
                                     key={index}
                                     AvatarUsuario={image}

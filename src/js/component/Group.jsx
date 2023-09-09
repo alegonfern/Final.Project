@@ -20,7 +20,7 @@ const Group = () => {
             </div>
             <div className='container-fluid'>
                 <div className='row'>
-                    <div className='col-12'>
+                    <div className="group-carousel-container" style={{ width: "100%" }}>
                         <GroupCarousel />
                     </div>
                 </div></div>
@@ -33,7 +33,7 @@ const Group = () => {
                         <NewsCarousel />
                     </div>
                 </div></div>
-        </div>
+        </div >
     )
 }
 

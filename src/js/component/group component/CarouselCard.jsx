@@ -37,16 +37,18 @@ const CarouselCard = ({ AvatarUsuario, NombreUsuario /*, InfoPerfil */ }) => {
     };
 
     return (
-        <div className="card" style={{ border: 'none' }}>
-            <img style={{ height: "200px", width: "200px", objectFit: 'cover', borderRadius: '50%' }} src={AvatarUsuario} className="img-fluid" alt="Avatar del usuario" />
-            <div className="card-body bg-light d-flex justify-content-center flex-column align-items-center">
+        <div className="card" style={{ border: 'none', backgroundColor: 'rgba(0, 0, 0, 0)' }}>
+            <div className="text-center">
+                <img style={{ height: "100px", width: "100px", objectFit: 'cover', borderRadius: '50%' }} src={AvatarUsuario} className="img-fluid" alt="Avatar del usuario" />
+            </div>
+            <div className="card-body  d-flex justify-content-center flex-column align-items-center" >
                 <div>
-                    <h5 className="card-title text-center">{NombreUsuario}</h5>
+                    <h5 className="text-center" >{NombreUsuario}</h5>
                     {/*  <p className="card-text text-center">{InfoPerfil}</p> */}
                 </div>
-                <div>
-                    <button type="button" onClick={handleClick} className="btn btn-light mx-2"><AiOutlineClose style={{ color: 'red' }} /> </button>
-                    <button type="button" onClick={handleClick} className="btn btn-light mx-2"><AiOutlineCheck style={{ color: 'green' }} /> </button>
+                <div className="btn-group">
+                    <button type="button" onClick={handleClick} className="btn mx-2"><AiOutlineClose style={{ color: 'red' }} /> </button>
+                    <button type="button" onClick={handleClick} className="btn mx-2"><AiOutlineCheck style={{ color: 'green' }} /> </button>
                 </div>
             </div>
         </div>

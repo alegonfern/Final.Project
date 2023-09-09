@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
 }
 
 .switch {
@@ -49,26 +50,26 @@
   transition: .4s;
 }
 
-input:checked + .slider {
-    background-color:#21f33d; 
+input:checked+.slider {
+  background-color: #21f33d;
 }
 
-input:focus + .slider {
-    box-shadow:0px; 
+input:focus+.slider {
+  box-shadow: 0px;
 }
 
-input:checked + .slider:before {
-    transform : translateX(26px); 
+input:checked+.slider:before {
+  transform: translateX(26px);
 }
 
 .slider.round {
-    border-radius :34px; 
+  border-radius: 34px;
 }
 
 .slider.round:before {
-    border-radius :50%; 
+  border-radius: 50%;
 }
 
 .slider.dark {
-    background-color :#333; 
+  background-color: #333;
 }
