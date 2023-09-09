@@ -26,34 +26,35 @@ import Navbar from "./component/NavBar";
 
 
 function App() {
-    
-    return(
-    <UserProvider>
-    <Router>
-      <Navbar />
-      <div className="app" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
-        <div>
-          <Sidebar />
-        </div>
-        <div className="content">
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/login_google" element={<GoogleCallback />} />
-            <Route path="/Signup" element={<Signup />} />
-            <Route path="/Intereses" element={<Intereses />} />
-            <Route path="/Home" element={<Home />} />
-            <Route path="/Group" element={<Group />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/match" element={<Match />} />
-            <Route path="/Google" element={<Google_test />} />
-            <Route path="/MatchPreview" element={<MatchPreview />} />
-            <Route path="/Contacts" element={<Contacts />} />
-          </Routes>
-        </div>
-      </div>
-    </Router>
-  </UserProvider >
-    )
-}
 
+  return (
+    <UserProvider>
+      <Router>
+        <div style={{ position: 'relative' }}>
+          <Navbar />
+          <div className="app" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
+            <div>
+              <Sidebar />
+            </div>
+            <div className="content" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/login_google" element={<GoogleCallback />} />
+                <Route path="/Signup" element={<Signup />} />
+                <Route path="/Intereses" element={<Intereses />} />
+                <Route path="/Home" element={<Home />} />
+                <Route path="/Group" element={<Group />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/match" element={<Match />} />
+                <Route path="/Google" element={<Google_test />} />
+                <Route path="/MatchPreview" element={<MatchPreview />} />
+                <Route path="/Contacts" element={<Contacts />} />
+              </Routes>
+            </div>
+          </div>
+        </div>
+      </Router>
+    </UserProvider>
+  );
+}
 export default App
