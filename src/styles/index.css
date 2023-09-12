@@ -178,3 +178,9 @@ button {
 .row {
     width: 100%;
 }
+
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
