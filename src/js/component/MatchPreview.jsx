@@ -19,7 +19,7 @@ const MatchPreview = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container container-match">
       <div className="card profile-card">
         <img
           src="https://picsum.photos/150"
