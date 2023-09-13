@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import "../styles/index.css";
 import '../styles/Profile.css';
 
+
 //import your own components
 
 import Home from "./component/Home";
@@ -23,6 +24,7 @@ import MatchPreview from './component/MatchPreview';
 import Sidebar from './component/Sidebar';
 import Contacts from "./component/contact list/Contacts";
 import Navbar from "./component/NavBar";
+import OAuth2 from "./component/OAuth2";
 
 
 function App() {
@@ -46,7 +48,7 @@ function App() {
                 <Route path="/Group" element={<Group />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/match" element={<Match />} />
-                <Route path="/Google" element={<Google_test />} />
+                <Route path="/oauth" element={<OAuth2 />} />
                 <Route path="/MatchPreview" element={<MatchPreview />} />
                 <Route path="/Contacts" element={<Contacts />} />
               </Routes>
