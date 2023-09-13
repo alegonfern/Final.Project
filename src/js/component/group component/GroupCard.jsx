@@ -1,10 +1,10 @@
 import React from 'react'
 
-const GroupCard = ({imagen}) => {
+const GroupCard = ({ imagen }) => {
 
     return (
-        <div className="container m-2 pt-2">
-            <img src={imagen} />
+        <div className="imagen">
+            <img src={imagen} alt="Imagen del grupo" style={{ width: '100%', height: '50vh' }} />
         </div>
     )
 }

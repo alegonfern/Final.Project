@@ -17,7 +17,7 @@ const GroupCarousel = () => {
 
     return (
         <div className='box my-4'>
-            <div id="carouselExample" className="carousel slide">
+            <div id="groupCarousel" className="carousel slide">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <div className='carousel-card d-flex justify-content-between'>
@@ -43,11 +43,12 @@ const GroupCarousel = () => {
                     </div>
                 </div>
 
-                <button className="carousel-control-prev btn btn-dark" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style={{ position: 'absolute', top: '50%', left: '0', transform: 'translateY(-50%)', height: "40px", width: "40px" }}>
+
+                <button className="carousel-control-prev btn btn-dark" type="button" data-bs-target="#groupCarousel" data-bs-slide="prev" style={{ position: 'absolute', top: '50%', left: '0', transform: 'translateY(-50%)', height: "40px", width: "40px" }}>
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </button>
-                <button className="carousel-control-next btn btn-dark" type="button" data-bs-target="#carouselExample" data-bs-slide="next" style={{ position: 'absolute', top: '50%', right: '0', transform: 'translateY(-50%)', height: "40px", width: "40px" }}>
+                <button className="carousel-control-next btn btn-dark" type="button" data-bs-target="#groupCarousel" data-bs-slide="next" style={{ position: 'absolute', top: '50%', right: '0', transform: 'translateY(-50%)', height: "40px", width: "40px" }}>
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>
