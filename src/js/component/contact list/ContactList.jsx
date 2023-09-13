@@ -15,9 +15,9 @@ const ContactList = ({ contactos }) => {
                   height="50"
                   className="rounded-circle me-3"
                 />
-                <div>
-                  <h5 className="mb-0">{contacto.nombre} {contacto.apellido}</h5>
-                </div>
+                <button className="btn btn-dark" style={{ display: 'block', width: '100%', marginBottom: '10px' }}>
+                  {contacto.nombre} {contacto.apellido}
+                </button>
               </li>
             ))}
           </ul>

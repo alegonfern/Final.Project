@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import ContactList from './ContactList';
+import React from 'react';
 import ChatWindow from './ChatWindow ';
+import ContactList from './ContactList';
 
 const Contacts = () => {
   const contactos = [
@@ -22,12 +22,14 @@ const Contacts = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <div style={{ width: '50%', height: '100%' }}>
-        <ContactList contactos={contactos} />
-      </div>
-      <div style={{ width: '50%', height: '100%' }}>
-        <ChatWindow />
+    <div className="container-fluid match-view" style={{ marginTop: '50px' }}>
+      <div className="row">
+        <div className="col-lg-6 col-md-12">
+          <ContactList contactos={contactos} />
+        </div>
+        <div className="col-lg-6 col-md-12">
+          <ChatWindow />
+        </div>
       </div>
     </div>
   );  
