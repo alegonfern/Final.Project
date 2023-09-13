@@ -45,7 +45,7 @@ const Intereses = () => {
     }
 
     return (
-        <div>
+        <div className="mt-5 pt-5">
             <h2>Selecciona tu ADN gamer</h2>
             <p>Haz clic en los cromosomas que te representan. Haz clic de nuevo para eliminar los que no te gustan.</p>
             <div className='genres'>

@@ -3,8 +3,9 @@ import React, { createContext, useEffect, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [userName, setUserName] = useState('Nombre Usuario');
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -76,7 +77,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme }}>
+    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName }}>
       {children}
     </UserContext.Provider>
   );
