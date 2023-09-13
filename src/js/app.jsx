@@ -19,7 +19,7 @@ import GoogleCallback from './component/GoogleCallback';
 import Google_test from "./component/test component/Google_test";
 import Intereses from './component/Intereses';
 import Match from './component/Match';
-import MatchPreview from './component/MatchPreview';
+import MatchPreview from './component/match preview component/MatchPreview';
 import Sidebar from './component/Sidebar';
 import Contacts from "./component/contact list/Contacts";
 import Navbar from "./component/NavBar";
