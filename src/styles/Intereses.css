@@ -26,10 +26,32 @@
     0% {
         transform: translateY(0px);
     }
+
     50% {
         transform: translateY(-20px);
     }
+
     100% {
         transform: translateY(0px);
     }
+}
+
+/* Estilo para el botón "Guardar Intereses" */
+.submit-button {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.submit-button button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.submit-button button:hover {
+    transform: scale(1.1);
 }

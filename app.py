@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from models import User, Profile
+from models import User, Profile, Interest
 import requests
 from models import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -8,6 +8,8 @@ from flask_migrate import Migrate
 from flask_admin.contrib.sqla import ModelView
 from flask_cors import CORS
 import logging
+from datetime import datetime
+from flask import make_response
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -99,6 +101,68 @@ def get_users():
         {"users": user_list}
     )  # Devuelve la lista de usuarios en formato JSON
 
+@app.route("/signup", methods=["POST"])
+def signup():
+    data = request.get_json()
+    username = data.get("username")
+    first_name = data.get("first_name")
+    last_name = data.get("last_name")
+    email = data.get("email")
+    password = data.get("password")
+    
+    # Parsear la cadena de fecha a un objeto datetime
+    birth_date_str = data.get("birth_date")
+    birth_date = datetime.strptime(birth_date_str, "%Y-%m-%d")
+
+    gender = data.get("gender")
+    suscription_date = datetime.utcnow()
+  
+    # Verifica si el usuario o el correo ya existen en la base de datos
+    existing_user = User.query.filter_by(username=username).first()
+    existing_email = User.query.filter_by(mail=email).first()
+
+    if existing_user:
+        return jsonify({"message": "El nombre de usuario ya existe"}), 400
+    if existing_email:
+        return jsonify({"message": "El correo electrónico ya está registrado"}), 400
+
+    # Crea un nuevo usuario y almacena la contraseña en formato hash
+    new_user = User(
+        username=username,
+        mail=email,
+        first_name=first_name,
+        last_name=last_name,
+        birth_date=birth_date,
+        gender=gender,
+        suscription_date=suscription_date
+    )
+    new_user.set_password(password) 
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "Usuario creado con éxito"}), 201
+
+#Endpoint guardar intereses
+@app.route('/guardar_intereses', methods=['POST'])
+def guardar_intereses():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        interes = data.get('interest')
+        favorite_games = data.get('favorite_games')
+
+        nuevo_interes = Interest(user_id=user_id, interest=interes, favorite_games=favorite_games)
+        db.session.add(nuevo_interes)
+        db.session.commit()
+
+        return jsonify({'message': 'Intereses guardados correctamente'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+
+
 # Rutas provisorias para grupos
 @app.route("/group/survival", methods=['GET'])
 def get_shooter():
@@ -153,6 +217,7 @@ def get_terror():
     return jsonify(
         {"group": "terror"}
     )
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     with app.app_context():

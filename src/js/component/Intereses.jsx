@@ -27,6 +27,14 @@ const Intereses = () => {
 
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedGames, setSelectedGames] = useState([]);
+    const userData = {
+        user_id: 1,
+        interest: selectedGenres,
+        favorite_games: selectedGames
+    };
+
+
+
 
     const handleGenreClick = (genre) => {
         if (selectedGenres.includes(genre)) {
@@ -43,6 +51,35 @@ const Intereses = () => {
             setSelectedGames([...selectedGames, game]);
         }
     }
+
+    const urlInt = "http://127.0.0.1:5000//guardar_intereses";
+
+    const postIOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+    };
+
+    const handleSaveInterests = async () => {
+
+        try {
+            const response = await fetch(urlInt, postIOptions);
+
+            if (response.ok) {
+
+                window.location.href = '/profile';
+            } else {
+                console.error('Revisa los intereses seleccionados', error);
+            }
+        } catch (error) {
+            console.error('Error al enviar la solicitud de guardar intereses', error);
+        }
+    };
+
+
+
 
     return (
         <div className="mt-5 pt-5">
@@ -70,6 +107,9 @@ const Intereses = () => {
                         {game}
                     </div>
                 ))}
+            </div>
+            <div className="submit-button">
+                <button onClick={handleSaveInterests}>Guardar Intereses</button>
             </div>
         </div>
     );

@@ -1,35 +1,50 @@
 import React, { useState } from 'react';
 
 const Signup = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const url = "http://127.0.0.1:5000/signup";
+    const [userData, setUserData] = useState({
+        username: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        birth_date: '',
+        gender: 'Non binary',
+    });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const url = "http://127.0.0.1:5000/signup"; // URL del servidor Flask
 
         const postOptions = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Access-Control-Request-Method': 'POST'
             },
-            body: JSON.stringify({ firstName, lastName, email }),
+            body: JSON.stringify(userData),
         };
 
-        fetch(url, postOptions)
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = '/profile';
-                } else {
-                    console.error('Revisa los datos ingresados');
-                }
-            })
-            .catch((error) => {
-                console.error('Error al enviar la solicitud', error);
-            });
+        try {
+            const response = await fetch(url, postOptions);
+
+            if (response.ok) {
+                // Usuario creado con éxito, redirigo a la página de perfil.
+                window.location.href = '/profile';
+            } else {
+                console.error('Revisa los datos ingresados');
+            }
+        } catch (error) {
+            console.error('Error al enviar la solicitud', error);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setUserData({
+            ...userData,
+            [name]: value,
+        });
     };
 
     return (
@@ -39,51 +54,79 @@ const Signup = () => {
 
                 <form className="row g-3 m-2" onSubmit={handleSubmit}>
                     <div className="col-md-6">
-                        <label for="first_name" className="form-label">Nombre</label>
-                        <input type="text" className="form-control" id="first_name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
+                        <label htmlFor="username" className="form-label">Nombre de Usuario:</label>
+                        <input type="text" className="form-control" id="username" name="username" value={userData.username} onChange={handleInputChange} required />
                     </div>
                     <div className="col-md-6">
-                        <label for="last_name" className="form-label">Apellido</label>
-                        <input type="text" className="form-control" id="last_name" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
+                        <label htmlFor="first_name" className="form-label">Nombre</label>
+                        <input type="text" className="form-control" id="first_name" name="first_name" value={userData.first_name} onChange={handleInputChange} required />
                     </div>
                     <div className="col-md-6">
-                        <label for="email" className="form-label">Email</label>
-                        <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                        <label htmlFor="last_name" className="form-label">Apellido</label>
+                        <input type="text" className="form-control" id="last_name" name="last_name" value={userData.last_name} onChange={handleInputChange} required />
                     </div>
                     <div className="col-md-6">
-                        <label for="confirm_email" className="form-label">Confirmar email</label>
-                        <input type="email" className="form-control" id="confirm_email" value={email} />
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input type="email" className="form-control" id="email" name="email" value={userData.email} onChange={handleInputChange} required />
                     </div>
                     <div className="col-md-6">
-                        <label for="password" className="form-label">Contraseña</label>
-                        <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <label htmlFor="confirm_email" className="form-label">Confirmar email</label>
+                        <input type="email" className="form-control" id="confirm_email" value={userData.email} disabled />
                     </div>
                     <div className="col-md-6">
-                        <label for="confirm_password" className="form-label">Confirmar contraseña</label>
-                        <input type="password" className="form-control" id="confirm_password" value={password} />
+                        <label htmlFor="password" className="form-label">Contraseña</label>
+                        <input type="password" className="form-control" id="password" name="password" value={userData.password} onChange={handleInputChange} required />
+                    </div>
+                    <div className="col-md-6">
+                        <label htmlFor="confirm_password" className="form-label">Confirmar contraseña</label>
+                        <input type="password" className="form-control" id="confirm_password" value={userData.password} disabled />
                     </div>
                     <div className='col-md-6 offset-md-3'>
-                      <label for='birth_date' class='form-label'>Fecha de nacimiento</label>
-                      <input type='date' class='form-control' id='birth_date' required />
+                        <label htmlFor='birth_date' className='form-label'>Fecha de nacimiento</label>
+                        <input type='date' className='form-control' id='birth_date' name='birth_date' value={userData.birth_date} onChange={handleInputChange} required />
                     </div>
 
-                    <label for="" class='form-label'>Sexo</label>
-                    <div class='col-12'>
-                      <div class='form-check form-check-inline'>
-                          <input class='select_gender_radio' type='radio' name='gender_radio' id='male_radio' value='Male' />
-                          <label class='form-check-label' for='male_radio'>Hombre</label>
-                      </div>
-                      <div class='form-check form-check-inline'>
-                          <input class='select_gender_radio' type='radio' name='gender_radio' id='female_radio' value='Female' />
-                          <label class='form-check-label' for='female_radio'>Mujer</label>
-                      </div>
-                      <div class='form-check form-check-inline'>
-                          <input class='select_gender_radio' type='radio' name='gender_radio' id='non_binary' value='Non binary' checked />
-                          <label class='form-check-label' for='non_binary'>No binario</label>
-                      </div>
+                    <label htmlFor="" className='form-label'>Sexo</label>
+                    <div className='col-12'>
+                        <div className='form-check form-check-inline'>
+                            <input
+                                className='select_gender_radio'
+                                type='radio'
+                                name='gender'
+                                id='male_radio'
+                                value='Male'
+                                checked={userData.gender === 'Male'}
+                                onChange={handleInputChange}
+                            />
+                            <label className='form-check-label' htmlFor='male_radio'>Hombre</label>
+                        </div>
+                        <div className='form-check form-check-inline'>
+                            <input
+                                className='select_gender_radio'
+                                type='radio'
+                                name='gender'
+                                id='female_radio'
+                                value='Female'
+                                checked={userData.gender === 'Female'}
+                                onChange={handleInputChange}
+                            />
+                            <label className='form-check-label' htmlFor='female_radio'>Mujer</label>
+                        </div>
+                        <div className='form-check form-check-inline'>
+                            <input
+                                className='select_gender_radio'
+                                type='radio'
+                                name='gender'
+                                id='non_binary'
+                                value='Non binary'
+                                checked={userData.gender === 'Non binary'}
+                                onChange={handleInputChange}
+                            />
+                            <label className='form-check-label' htmlFor='non_binary'>No binario</label>
+                        </div>
                     </div>
-                    <div class='col-md-6 offset-md-3'>
-                      <button type='submit' class='btn btn-dark d-grid gap-2 mx-auto'>¡M4tchiemos!</button>
+                    <div className='col-md-6 offset-md-3'>
+                        <button type='submit' className='btn btn-dark d-grid gap-2 mx-auto'>¡M4tchiemos!</button>
                     </div>
                 </form>
             </div>

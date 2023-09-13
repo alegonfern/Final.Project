@@ -164,3 +164,7 @@ Abre un navegador web y ve a la URL donde se ejecuta tu aplicación Flask, "http
 
 - Creacion de migraciones: `alembic revision -m "Nombre Migracion"`
 - Aplicar migracion a Base de datos: `alembic upgrade head`
+- Creacion de migraciones: `flask db migrate -m "nombre_de_la_migracion"`
+- Aplicar migracion a Base de datos:  `flask db upgrade`
+
+

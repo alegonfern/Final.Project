@@ -6,8 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-# Definicion del modelo de datos:
-
+# Definicion del modelo de base de datos:
 
 class User(db.Model):
     __tablename__ = "user"
@@ -29,88 +28,33 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
-
+# Tabla Perfil
 class Profile(db.Model):
-    __tablename__ = 'profile'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),nullable=False)
-    profile_picture = db.Column(db.String(250), nullable=True, default="")
-    profile_interests = db.Column(db.String(250), nullable=True, default="")
-    profile_groups = db.Column(db.String(250), nullable=True, default="")
-    interests = db.relationship('Interests', backref='profile', lazy=True)
-    matches = db.relationship('Match', secondary='profile_matches', lazy='subquery', backref=db.backref('profiles', lazy=True))
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    profile_picture = db.Column(db.String(255))
+    description = db.Column(db.String(255))
+    social_media = db.Column(db.String(255))
+    rating = db.Column(db.Integer)
+    registration_date = db.Column(db.Date)
 
-class Interests(db.Model):
-    __tablename__ = 'interests'
+# Tabla Intereses
+class Interest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)
-    game_id = db.Column(db.Integer, db.ForeignKey('game.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    interest = db.Column(db.String(255))
+    favorite_games = db.Column(db.String(255))
 
-
-game_interests = db.Table('game_interests', db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True), db.Column('interests_id', db.Integer, db.ForeignKey('interests.id'), primary_key=True))
-
-
-class Game(db.Model):
-    __tablename__ = 'game'
+# tabla Solicitudes de Amistad
+class FriendRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), nullable=False)
-    interests = db.relationship('Interests', secondary=game_interests, lazy='subquery', backref=db.backref('games', lazy=True))
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    status = db.Column(db.String(50))
 
-
-gender_games = db.Table('gender_games', db.Column('gender_id', db.Integer, db.ForeignKey('gender.id'), primary_key=True), db.Column('game_id', db.Integer, db.ForeignKey('game.id'), primary_key=True))
-
-
-class Gender(db.Model):
-    __tablename__ = 'gender'
-    id = db.Column(db.Integer, primary_key=True)
-    gender = db.Column(db.String(250), nullable=False)
-    games = db.relationship('Game', secondary=gender_games, lazy='subquery', backref=db.backref('genders', lazy=True))
-
-
-""" class InteractionAchievements(db.Model):
-    __tablename__ = 'interaction_achievements'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), nullable=False)
-    achievements_id = db.Column(db.Integer, db.ForeignKey('achievements.id'), primary_key=True) """
-
-
-profile_matches = db.Table('profile_matches', db.Column('profile_id', db.Integer, db.ForeignKey('profile.id'), primary_key=True), db.Column('match_id', db.Integer, db.ForeignKey('match.id'), primary_key=True))
-
-
+# Tabla Matches
 class Match(db.Model):
-    __tablename__ = 'match'
     id = db.Column(db.Integer, primary_key=True)
-    # Columns of match table
-
-
-""" class Home(db.Model):
-    __tablename__ = 'home'
-    id = db.Column(db.Integer, primary_key=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)
-    profile_post_id = db.Column(db.Integer, db.ForeignKey('personal_post.id'), primary_key=True)
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
-    personal_posts = db.relationship('PersonalPost', backref='home', lazy=True)
-    groups = db.relationship('Group', backref='home', lazy=True)
-    
-class PersonalPost(db.Model):
-    __tablename__ = 'personal_post'
-    id = db.Column(db.Integer, primary_key=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)
-    home_id = db.Column(db.Integer, db.ForeignKey('home.id'), primary_key=True)
- """
-""" 
-class Group(db.Model):
-    __tablename__ = 'group'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250), nullable=False)
-    home_id = db.Column(db.Integer, db.ForeignKey('home.id'), primary_key=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True)
-    group_post_id = db.Column(db.Integer, db.ForeignKey('group_post.id'), primary_key=True)
-    group_posts = db.relationship('GroupPost', backref='group', lazy=True) """
-
-""" class GroupPost(db.Model):
-    __tablename__ = 'group_post'
-    id = db.Column(db.Integer, primary_key=True)
-    group_id = db.Column(db.Integer, db.ForeignKey('group.id'), primary_key=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), primary_key=True) """
+    user_id_1 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id_2 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    connection_date = db.Column(db.Date)
