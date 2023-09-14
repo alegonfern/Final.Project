@@ -107,7 +107,7 @@ def signup():
     email = data.get("email")
     password = data.get("password")
     
-    # Parsear la cadena de fecha a un objeto datetime
+    # Formato datetime
     birth_date_str = data.get("birth_date")
     birth_date = datetime.strptime(birth_date_str, "%Y-%m-%d")
 
