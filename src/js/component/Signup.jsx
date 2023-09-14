@@ -69,6 +69,18 @@ const Signup = () => {
                         <label htmlFor="email" className="form-label">Email</label>
                         <input type="email" className="form-control" id="email" name="email" value={userData.email} onChange={handleInputChange} required />
                     </div>
+                    <div className="col-md-6">
+                        <label htmlFor="confirm_email" className="form-label">Confirmar email</label>
+                        <input type="email" className="form-control" id="confirm_email" value={userData.email} disabled />
+                    </div>
+                    <div className="col-md-6">
+                        <label htmlFor="password" className="form-label">Contraseña</label>
+                        <input type="password" className="form-control" id="password" name="password" value={userData.password} onChange={handleInputChange} required />
+                    </div>
+                    <div className="col-md-6">
+                        <label htmlFor="confirm_password" className="form-label">Confirmar contraseña</label>
+                        <input type="password" className="form-control" id="confirm_password" value={userData.password} disabled />
+                    </div>
                     <div className='col-md-6 offset-md-3'>
                         <label htmlFor='birth_date' className='form-label'>Fecha de nacimiento</label>
                         <input type='date' className='form-control' id='birth_date' name='birth_date' value={userData.birth_date} onChange={handleInputChange} required />
