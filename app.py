@@ -1,29 +1,52 @@
 from flask import Flask, jsonify, request
-from models import Planet, Character, User, Favorite
+from models import User, Profile, Interest
 import requests
 from models import db
-from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_admin import Admin
+from flask_migrate import Migrate
 from flask_admin.contrib.sqla import ModelView
 from flask_cors import CORS
-from flask_bcrypt import Bcrypt
-from flask_migrate import Migrate
+import logging
+from datetime import datetime
+from flask import make_response
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
+logging.basicConfig(filename="app.log", level=logging.INFO)
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
 app.config["SECRET_KEY"] = "123456"  # Mi propia clave secreta
 db.init_app(app)
 
-# Configura CORS para permitir solicitudes desde cualquier origen "*"
-CORS(app, resources={r"/login": {"origins": "*"}})
 
 # Configura migraciones
 migrate = Migrate(app, db)  # Configura las migraciones
 
+
 # Configuracion Flask-Admin
 admin = Admin(app, name="Admin", template_mode="bootstrap3")
-admin.add_view(ModelView(User, db.session))
 
+
+# Modifico la clase UserAdmin para manejar la contraseña
+class UserAdminView(ModelView):
+    column_exclude_list = [
+        "password_hash"
+    ]  # Excluir el campo de contraseña en la vista
+    
+    def create_model(self,form):
+        user=User()
+        form.populate_obj(user) # Aplicar cambio password hash.
+        profile=Profile()
+        user.password_hash=generate_password_hash(form.password_hash.data)
+        user.profile=profile
+        self.session.add(user)
+        self.session.commit()
+        return True
+
+# Agrego la vista personalizada de UserAdmin al admin
+admin.add_view(UserAdminView(User, db.session))
+admin.add_view(ModelView(Profile, db.session))
 
 # validacion de Inicio de Sesion con metodo POST.
 @app.route("/login", methods=["POST"])
@@ -34,311 +57,149 @@ def login():
 
     user = User.query.filter_by(username=username).first()
 
-    if user and bcrypt.check_password_hash(user.password_hash, password):
-        # Autenticación exitosa
-        return jsonify({"message": "Autenticación exitosa"})
-    else:
-        # Autenticación fallida, devuelve un mensaje de error
-        return jsonify({"message": "Credenciales incorrectas"}), 401
-
-
-# Creacion de Endpoint GET personajes y Planetas.
-
-
-# GET para obtener datos personajes desde Api Externa y alimentar mi Base de datos.
-@app.route("/external-character", methods=["GET"])
-def get_external_character():
-    response = requests.get("https://www.swapi.tech/api/people/")
-    external_character_data = response.json()
-
-    character_list = external_character_data["results"]
-    num_characters_added = 0  # Contador para el número de personajes agregados
-
-    for character_data in character_list:
-        character_url = character_data["url"]
-        character_uid = character_data["uid"]
-        character_response = requests.get(character_url)
-        character_details = character_response.json()["result"]["properties"]
-
-        new_character = Character(
-            name=character_details["name"],
-            id=int(character_uid),
-            eye_color=character_details["eye_color"],
-            gender=character_details["gender"],
-            heigth=int(character_details["height"]),
-            weight=int(character_details["mass"]),
-        )
-
-        db.session.add(new_character)
-        db.session.commit()
-        num_characters_added += 1
-
-    message = f"{num_characters_added} characters created from external API source"
-    return jsonify({"message": message}), 201
-
-
-# GET para obtener datos planetas desde Api Externa y alimentar mi Base de datos.
-@app.route("/external-planet", methods=["GET"])
-def get_external_planet():
-    response = requests.get("https://www.swapi.tech/api/planets/")
-    external_planet_data = response.json()
-
-    planet_list = external_planet_data["results"]
-    num_planets_added = 0  # Contador para el número de planetas agregados
-
-    for planet_data in planet_list:
-        planet_url = planet_data["url"]
-        planet_uid = planet_data["uid"]
-        planet_response = requests.get(planet_url)
-        planet_details = planet_response.json()["result"]["properties"]
-
-        population = planet_details["population"]
-        if population.lower() == "unknown":
-            population_int = None  # Asigno None para indicar un valor desconocido
+    if user:
+        if check_password_hash(user.password_hash, password):
+            # Autenticación exitosa
+            logging.info(f"Autenticación exitosa para el usuario: {username}")
+            return jsonify({"message": "Autenticación exitosa"})
         else:
-            population_int = int(population)
-
-        new_planet = Planet(
-            name=planet_details["name"],
-            id=int(planet_uid),
-            climate=planet_details["climate"],
-            terrain=planet_details["terrain"],
-            population=population_int,
+            # Autenticación fallida, contraseña incorrecta
+            logging.warning(
+                f"Autenticación fallida para el usuario: {username} (contraseña incorrecta)"
+            )
+    else:
+        # Autenticación fallida, usuario no encontrado
+        logging.warning(
+            f"Autenticación fallida para el usuario: {username} (usuario no encontrado)"
         )
 
-        db.session.add(new_planet)
-        db.session.commit()
-        num_planets_added += 1
-
-    message = f"{num_planets_added} planets created from external API source"
-    return jsonify({"message": message}), 201
+    # Devuelve un mensaje de error
+    return jsonify({"message": "Credenciales incorrectas"}), 401
 
 
-# Método GET para listar todos los personajes, solo Nombre e ID.
-@app.route("/characters", methods=["GET"])
-def get_all_characters():
-    characters = Character.query.all()
-    character_list = []
-    for character in characters:
-        character_data = {
-            "id": character.id,
-            "name": character.name,
-        }
-        character_list.append(character_data)
-    return jsonify(character_list)
-
-
-# Método GET para obtener el detalle de un personaje en particular segun id.
-@app.route("/character/<int:character_id>", methods=["GET"])
-def get_character_details(character_id):
-    character = Character.query.get(character_id)
-    if character is None:
-        return jsonify({"message": "Character id not found"}), 404
-
-    character_details = {
-        "id": character.id,
-        "name": character.name,
-        "eye_color": character.eye_color,
-        "gender": character.gender,
-        "heigth": character.heigth,
-        "weight": character.weight,
-    }
-
-    return jsonify(character_details)
-
-
-# Método GET para listar todos los planetas, solo Nombre e ID.
-@app.route("/planets", methods=["GET"])
-def get_all_planets():
-    planets = Planet.query.all()
-    planet_list = []
-    for planet in planets:
-        planet_data = {
-            "id": planet.id,
-            "name": planet.name,
-        }
-        planet_list.append(planet_data)
-    return jsonify(planet_list)
-
-
-# Método GET para listar todos los favoritos de un Usuario mediante relaciones de tabla.
-@app.route("/favorite/<int:user_id>", methods=["GET"])
-def get_all_favorites(user_id):
-    favorites = Favorite.query.filter_by(user_id=user_id).all()
-    favorite_list = []
-    for favorite in favorites:
-        favorite_data = {}
-
-        if favorite.planet:  # Verifico si favorite.planet no es None
-            favorite_data["planet"] = {
-                "id": favorite.planet.id,
-                "name": favorite.planet.name,
-            }
-
-        if favorite.character:  # Verifico si favorite.character no es None
-            favorite_data["character"] = {
-                "id": favorite.character.id,
-                "name": favorite.character.name,
-            }
-
-        favorite_list.append(favorite_data)
-    return jsonify(favorite_list)
-
-
-# Método GET para obtener el detalle de un planeta en particular segun id.
-@app.route("/planet/<int:planet_id>", methods=["GET"])
-def get_planet_details(planet_id):
-    planet = Planet.query.get(planet_id)
-    if planet is None:
-        return jsonify({"message": "Planet id not found"}), 404
-
-    planet_details = {
-        "id": planet.id,
-        "name": planet.name,
-        "climate": planet.climate,
-        "terrain": planet.terrain,
-        "population": planet.population,
-    }
-
-    return jsonify(planet_details)
-
-
-# Metodo GET users para Listar todos los usuarios
+# Ruta para obtener la lista de usuarios en formato JSON
 @app.route("/users", methods=["GET"])
-def get_all_users():
-    users = User.query.all()
-    user_list = []
+def get_users():
+    users = User.query.all()  # Obtén todos los usuarios de la base de datos
+    user_list = []  # Crea una lista para almacenar los usuarios en formato JSON
+
+    # Itera sobre los usuarios y crea un diccionario JSON para cada uno
     for user in users:
         user_data = {
             "id": user.id,
             "username": user.username,
             "mail": user.mail,
-            "suscription_date": user.suscription_date,
+            "subscription_date": user.suscription_date.strftime("%Y-%m-%d %H:%M:%S")
+            # Asegúrate de formatear la fecha como desees
         }
-        user_list.append(user_data)
-    return jsonify(user_list)
+        user_list.append(user_data)  # Agrega el usuario a la lista
 
+    return jsonify(
+        {"users": user_list}
+    )  # Devuelve la lista de usuarios en formato JSON
 
-# Metodo Post para anadir un nuevo planeta favorito al usuario actual.
-@app.route("/favorite/planet/<int:planet_id>", methods=["POST"])
-def add_planet_favorite(planet_id):
-    user_id = request.args.get("user_id")
-    print("user_id:", user_id)
-    if user_id is None:
-        return jsonify({"message": "User id missing"}), 400
+@app.route("/signup", methods=["POST"])
+def signup():
+    data = request.get_json()
+    username = data.get("username")
+    first_name = data.get("first_name")
+    last_name = data.get("last_name")
+    email = data.get("email")
+    password = data.get("password")
+    
+    # Formato datetime
+    birth_date_str = data.get("birth_date")
+    birth_date = datetime.strptime(birth_date_str, "%Y-%m-%d")
 
-    user = User.query.get(user_id)
-    if user is None:
-        return jsonify({"message": "User id not found"}), 404
+    gender = data.get("gender")
+    suscription_date = datetime.utcnow()
+  
+    # Verifica si el usuario o el correo ya existen en la base de datos
+    existing_user = User.query.filter_by(username=username).first()
+    existing_email = User.query.filter_by(mail=email).first()
 
-    planet = Planet.query.get(planet_id)
-    if planet is None:
-        return jsonify({"message": "Planet id not found"}), 404
+    if existing_user:
+        return jsonify({"message": "El nombre de usuario ya existe"}), 400
+    if existing_email:
+        return jsonify({"message": "El correo electrónico ya está registrado"}), 400
 
-    new_favorite = Favorite(user_id=user_id, planet_id=planet_id)
-    db.session.add(new_favorite)
-    db.session.commit()
-
-    return jsonify({"message": "Planet added successfully toa Favorite"}), 201
-
-
-# Metodo Post para anadir un nuevo Character favorito al usuario actual.
-@app.route("/favorite/character/<int:character_id>", methods=["POST"])
-def add_character_favorite(character_id):
-    user_id = request.args.get("user_id")
-    print("user_id:", user_id)
-    if user_id is None:
-        return jsonify({"message": "User id missing"}), 400
-
-    user = User.query.get(user_id)
-    if user is None:
-        return jsonify({"message": "User id not found"}), 404
-
-    character = Character.query.get(character_id)
-    if character is None:
-        return jsonify({"message": "Character id not found"}), 404
-
-    new_favorite = Favorite(user_id=user_id, character_id=character_id)
-    db.session.add(new_favorite)
-    db.session.commit()
-
-    return jsonify({"message": "Character added successfully toa Favorite "}), 201
-
-
-# Metodo [DELETE] para eliminar planeta de favorito. (ejemplo:..favorite/planet/5?user_id=1)
-@app.route("/favorite/planet/<int:planet_id>", methods=["DELETE"])
-def delete_planet_favorite(planet_id):
-    user_id = request.args.get(
-        "user_id"
-    )  # Obtengo ID de la cadena URL después del signo ("?").
-    if user_id is None:
-        return jsonify({"message": "User id missing"}), 400
-
-    favorite = Favorite.query.filter_by(user_id=user_id, planet_id=planet_id).first()
-    if favorite is None:
-        return jsonify({"message": "Favorite not found"}), 404
-
-    planet = Planet.query.get(
-        planet_id
-    )  # consulta a la base de datos para obtener un registro de la tabla "Planet" utilizando el ID del planeta como criterio de búsqueda.
-
-    if planet is None:
-        return jsonify({"message": "Planet id not found"}), 404
-
-    planet_info = {
-        "id": planet.id,
-        "name": planet.name,
-        "climate": planet.climate,
-        "terrain": planet.terrain,
-        "population": planet.population,
-    }
-    db.session.delete(favorite)
-    db.session.commit()
-
-
-# Metodo [DELETE] para eliminar Character favorito. (ejemplo:..favorite/character/5?user_id=1)
-@app.route("/favorite/character/<int:character_id>", methods=["DELETE"])
-def delete_character_favorite(character_id):
-    user_id = request.args.get(
-        "user_id"
-    )  # Obtengo ID de la cadena URL después del signo ("?").
-    if user_id is None:
-        return jsonify({"message": "User id missing"}), 400
-
-    favorite = Favorite.query.filter_by(
-        user_id=user_id, character_id=character_id
-    ).first()
-    if favorite is None:
-        return jsonify({"message": "Favorite not found"}), 404
-
-    character = Character.query.get(
-        character_id
-    )  # consulta a la base de datos para obtener un registro de la tabla "Planet" utilizando el ID del planeta como criterio de búsqueda.
-
-    if character is None:
-        return jsonify({"message": "Character id not found"}), 404
-
-    character_info = {
-        "id": character.id,
-        "name": character.name,
-        "eye_color": character.eye_color,
-        "gender": character.gender,
-        "heigth": character.heigth,
-        "weight": character.weight,
-    }
-    db.session.delete(favorite)
-    db.session.commit()
-
-    return (
-        jsonify(
-            {
-                "message": f"The following Character: {character_info} was removed from favorites"
-            }
-        ),
-        200,
+    # Crea un nuevo usuario y almacena la contraseña en formato hash
+    new_user = User(
+        username=username,
+        mail=email,
+        first_name=first_name,
+        last_name=last_name,
+        birth_date=birth_date,
+        gender=gender,
+        suscription_date=suscription_date
     )
+    new_user.set_password(password) 
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "Usuario creado con éxito"}), 201
+
+#Enpoint usuario por ID
+@app.route("/user/<int:user_id>/profile", methods=["GET"])
+def get_user_profile(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    profile_data = {
+        "nombre": user.first_name,
+        "apellido": user.last_name,
+        "fecha_de_nacimiento": user.birth_date.strftime("%Y-%m-%d")
+    }
+
+    return jsonify(profile_data)
+
+#Enpoint para actualizar nombre y apellido
+@app.route('/user/<int:user_id>/profile', methods=['PUT'])
+def update_user_profile(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({'error': 'User not found'}), 404
+
+    data = request.get_json()
+
+    # Validación del nombre
+    first_name = data.get('first_name', user.first_name)
+    if not first_name.isalpha():
+        return jsonify({'error': 'El nombre solo puede contener letras'}), 400
+
+    # Validación del apellido
+    last_name = data.get('last_name', user.last_name)
+    if not last_name.isalpha():
+        return jsonify({'error': 'El apellido solo puede contener letras'}), 400
+
+    user.first_name = first_name
+    user.last_name = last_name
+
+    db.session.commit()
+
+    return jsonify({'message': 'Profile updated successfully'})
 
 
+
+#Endpoint guardar intereses
+@app.route('/guardar_intereses', methods=['POST'])
+def guardar_intereses():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        intereses = data.get('interests')  
+
+        for interes in intereses:
+            nuevo_interes = Interest(user_id=user_id, interest=interes['interest'], favorite_games=interes['favorite_games'])
+            db.session.add(nuevo_interes)
+
+        db.session.commit()
+
+        return jsonify({'message': 'Intereses guardados correctamente'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     with app.app_context():

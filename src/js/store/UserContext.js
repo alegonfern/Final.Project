@@ -3,167 +3,81 @@ import React, { createContext, useEffect, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [charactersData, setCharactersData] = useState([]);
-  const [characterData, setCharacterData] = useState([]);
-  const [planetsData, setPlanetsData] = useState([]);
-  const [planetData, setPlanetData] = useState([]);
-  const [favorites, setFavorites] = useState(() => {
-    const storedFavorites = localStorage.getItem("favorites");
-    return storedFavorites ? JSON.parse(storedFavorites) : [];
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [userName, setUserName] = useState('Nombre Usuario');
 
-  const getCharacters = () => {
-    const url = "https://www.swapi.tech/api/people/";
-
-    const getOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-    fetch(url, getOptions)
-      .then(getResponse => {
-        if (getResponse.status >= 200 && getResponse.status < 300) {
-          console.log("GET: Characters cargados exitosamente");
-          return getResponse.json();
-        } else {
-          console.log(`Error en la solicitud GET ${getResponse.status}`);
-        }
-      })
-      .then(data => {
-        if (Array.isArray(data.results)) {
-          console.log("Characters obtenidos de la primera llamada GET:", data);
-          setCharactersData(data.results);
-
-          // Realizar llamadas GET para cada URL de personaje
-          const characterUrls = data.results.map(character => character.url);
-          const characterPromises = characterUrls.map(characterUrl =>
-            fetch(characterUrl, getOptions)
-              .then(characterResponse => {
-                if (characterResponse.status >= 200 && characterResponse.status < 300) {
-                  return characterResponse.json();
-                } else {
-                  console.log(`Error en la solicitud GET ${characterResponse.status}`);
-                  throw new Error("Error en la solicitud GET");
-                }
-              })
-          );
-
-          // Procesar los resultados de las llamadas GET individuales
-          Promise.all(characterPromises)
-            .then(characterDataArray => {
-              console.log("Detalles de los personajes:", characterDataArray);
-// Modificar los IDs de los personajes con el prefijo "C_"
-    const modifiedCharacterDataArray = characterDataArray.map(character => ({
-      ...character,
-      uid: "C_" + character.uid
-    }));
-
-    // Almacenar la información de los personajes en el estado characterData
-    setCharacterData(modifiedCharacterDataArray);
-  })
-              .catch(error => {
-              console.error("Error en la solicitud GET:", error);
-            });
-        } else {
-          console.log("Error: Data.results no es un array.");
-        }
-      })
-      .catch(error => {
-        console.error("Error en la solicitud GET:", error);
-      });
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
   };
-
-  const getPlanets = () => {
-    const url = "https://www.swapi.tech/api/planets";
-
-    const getOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
-    fetch(url, getOptions)
-      .then(getResponse => {
-        if (getResponse.status >= 200 && getResponse.status < 300) {
-          console.log("GET: Planets cargados exitosamente");
-          return getResponse.json();
-        } else {
-          console.log(`Error en la solicitud GET ${getResponse.status}`);
-        }
-      })
-      .then(data => {
-        if (Array.isArray(data.results)) {
-          console.log("Planets obtenida de la primera llamada GET:", data);
-          setPlanetsData(data.results);
-
-          // Realizar llamadas GET para cada URL de planetas
-          const planetUrls = data.results.map(planet => planet.url);
-          const planetPromises = planetUrls.map(planetUrl =>
-            fetch(planetUrl, getOptions)
-              .then(planetResponse => {
-                if (planetResponse.status >= 200 && planetResponse.status < 300) {
-                  return planetResponse.json();
-                } else {
-                  console.log(`Error en la solicitud GET ${planetResponse.status}`);
-                  throw new Error("Error en la solicitud GET");
-                }
-              })
-          );
-
-          // Procesar los resultados de las llamadas GET individuales
-          Promise.all(planetPromises)
-            .then(planetDataArray => {
-              console.log("Detalles de los planetas:", planetDataArray);
-             // Modificar los IDs de los Planetas con el prefijo "P_"
-    const modifiedplanetDataArray = planetDataArray.map(planet => ({
-      ...planet,
-      uid: "P_" + planet.uid
-    }));
-
-    // Almacenar la información de los planetas en el estado planetData
-    setPlanetData(modifiedplanetDataArray);
-  })
-            .catch(error => {
-              console.error("Error en la solicitud GET:", error);
-            });
-        } else {
-          console.log("Error: Data.results no es un array.");
-        }
-      })
-      .catch(error => {
-        console.error("Error en la solicitud GET:", error);
-      });
-  };
-
 
   useEffect(() => {
-    getCharacters();
-    getPlanets();
-  }, []);
+      document.body.setAttribute('data-theme', theme);
+    }, [theme]);
 
-  const addFavorite = (item) => {
-    setFavorites((prevFavorites) => {
-      const newFavorites = [...prevFavorites, item];
-      localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
-      return newFavorites;
-    });
+  const flogin = (username, password) => {
+    const url = "http://127.0.0.1:5000/login";
+
+    const postOptions = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    }
+
+    return fetch(url, postOptions)
+      .then(response => {
+        if (response.ok) {
+          setIsLoggedIn(true);
+          return true;
+        } else {
+          console.error('Credenciales incorrectas');
+          return false;
+        }
+      })
+      .catch((error) => {
+        console.error('Error al enviar la solicitud', error);
+        return false;
+      });
   };
 
-  const removeFavorite = (itemToRemove) => {
-    setFavorites((prevFavorites) => {
-      const newFavorites = prevFavorites.filter((item) => item.id !== itemToRemove.id);
-      localStorage.setItem("favorites", JSON.stringify(newFavorites)); // Guardar en localStorage
-      return newFavorites;
-    });
-  };
+  const handleGoogleCallback = async (code) => {
+    const key = 'AIzaSyDvHtJsPXyQX7k91Ppo4GSvms0gt0HlXJw';
+    const tokenRequestUrl = 'https://accounts.google.com/o/oauth2/token';
 
-  const isFavorite = (itemId) => {
-    return favorites.some((item) => item.id === itemId);
-  };
+    const tokenRequestBody = {
+      code: key,
+      client_id: '538564562238-jsduha69drfedvhe9kmhqos83nrsm8ga.apps.googleusercontent.com',
+      client_secret: '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',
+      redirect_uri: 'http://127.0.0.1:5000/login',
+      grant_type: authorization_code,
+    };
+
+    // Realizo una solicitud POST para obtener el token de acceso
+    fetch(tokenRequestUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(tokenRequestBody),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Aquí obtengo el token de acceso de Google
+        const accessToken = data.access_token;
+        // Utilizo el token de acceso para autenticar al usuario en tu aplicación
+      })
+      .catch((error) => {
+        console.error('Error al obtener el token de acceso de Google', error);
+      });
+  }
 
   return (
-    <UserContext.Provider value={{ charactersData, characterData, planetsData, planetData, favorites, addFavorite, removeFavorite, isFavorite }}>
+    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName }}>
       {children}
     </UserContext.Provider>
   );

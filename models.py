@@ -2,51 +2,57 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
-from flask_bcrypt import Bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
 
-bcrypt = Bcrypt()
 db = SQLAlchemy()
-
-# Definicion del modelo de datos:
-
 
 class User(db.Model):
     __tablename__ = "user"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) 
     username = db.Column(db.String(250), nullable=False)
     mail = db.Column(db.String(250), nullable=False, unique=True)
     password_hash = db.Column(db.String(250), nullable=False)
     suscription_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    first_name = db.Column(db.String(250), nullable=False)
+    last_name = db.Column(db.String(250), nullable=False)
+    birth_date = db.Column(db.DateTime, nullable=False)
+    gender = db.Column(db.String(250), nullable=False)
+    profile = db.relationship("Profile",uselist=False)
+    interests = relationship("Interest", back_populates="user")
+
 
     def set_password(self, password):
-        self.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+        self.password_hash = generate_password_hash(password)
+        print(f"Contraseña almacenada: {self.password_hash}")
 
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
-class Character(db.Model):
-    __tablename__ = "character"
+class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250))
-    eye_color = db.Column(db.String(250), nullable=True, default="Unknown")
-    gender = db.Column(db.String(250), nullable=True, default="Unknown")
-    heigth = db.Column(db.Integer, nullable=True, default="Unknown")
-    weight = db.Column(db.Integer, nullable=True, default="Unknown")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    profile_picture = db.Column(db.String(255))
+    description = db.Column(db.String(255))
+    social_media = db.Column(db.String(255))
+    rating = db.Column(db.Integer)
+    registration_date = db.Column(db.Date)
 
-
-class Planet(db.Model):
-    __tablename__ = "planet"
+class Interest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(250))
-    climate = db.Column(db.String(250), nullable=True, default="Unknown")
-    terrain = db.Column(db.String(250), nullable=True, default="Unknown")
-    population = db.Column(db.Integer, nullable=True, default="Unknown")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    interest = db.Column(db.String(255))
+    favorite_games = db.Column(db.String(255))
+    user = relationship("User", back_populates="interests")
 
 
-class Favorite(db.Model):
-    __tablename__ = "favorite"
+class FriendRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    planet_id = db.Column(db.Integer, db.ForeignKey("planet.id"))
-    character_id = db.Column(db.Integer, db.ForeignKey("character.id"))
-    user = db.relationship("User")
-    planet = db.relationship("Planet")
-    character = db.relationship("Character")
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    status = db.Column(db.String(50))
+
+class Match(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id_1 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id_2 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    connection_date = db.Column(db.Date)

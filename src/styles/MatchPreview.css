@@ -1,0 +1,50 @@
+.container-match {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin-top: 100px;
+}
+
+.profile-card {
+    width: 18rem;
+    background-color: #222;
+    color: #ddd;
+}
+
+.profile-image {
+    border-radius: 50%;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-info {
+    font-size: 16px;
+}
+
+.game-stats {
+    font-size: 14px;
+}
+
+.dna-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: expandFadeOut 1s ease-in-out forwards;
+}
+
+@keyframes expandFadeOut {
+    from {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+    }
+}

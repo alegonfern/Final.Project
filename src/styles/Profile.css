@@ -1,0 +1,93 @@
+
+@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700");
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i");
+
+.cards {
+  width: 100%;
+}
+
+.card--1 .card__img,
+.card--1 .card__img--hover {
+  background-image: url("https://sm.ign.com/t/ign_es/news/r/riot-games/riot-games-promises-to-pay-staff-who-leave-amid-new-company_hbes.1200.jpg");
+}
+
+.card--2 .card__img,
+.card--2 .card__img--hover {
+  background-image: url("https://s1.eestatic.com/2022/08/25/elandroidelibre/698190591_226662650_1706x960.jpg");
+}
+
+.card--3 .card__img,
+.card--3 .card__img--hover {
+  background-image: url("https://www.softzone.es/app/uploads-softzone.es/2020/10/Amazon-games.jpg");
+}
+
+.card--4 .card__img,
+.card--4 .card__img--hover {
+  background-image: url("https://i.blogs.es/e636e7/epic/1366_2000.jpeg");
+}
+
+.card--5 .card__img,
+.card--5 .card__img--hover {
+  background-image: url("https://www.somosxbox.com/wp-content/uploads/2022/06/%C2%BFQue-juego-podria-anunciar-Rockstar-Games_-SomosXbox.jpg");
+}
+
+.card--6 .card__img,
+.card--6 .card__img--hover {
+  background-image: url("https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2023/01/ubisoft-skull-bones-2926606.jpg?tf=3840x");
+}
+
+.card__img {
+  visibility: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 235px;
+}
+
+.card__img--hover {
+  transition: 0.2s all ease-out;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  position: absolute;
+  height: 235px;
+  top: 0;
+}
+
+.card__info {
+  z-index: 2;
+  background-color: #fff;
+
+  padding: 16px 24px 24px 24px;
+}
+
+.card__category {
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 2px;
+  font-weight: 500;
+  color: #868686;
+}
+
+.card__title {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-family: sans-serif;
+}
+
+p {
+  color: #808080;
+}
+
+.card:hover .card__img--hover {
+  height: 100%;
+  opacity: 0.3;
+}
+.credit a {
+  text-decoration: none;
+  color: #330000;
+  font-weight: bold;
+}
