@@ -30,7 +30,7 @@ const Signup = () => {
 
             if (response.ok) {
                 // Usuario creado con éxito, redirigo a la página de perfil.
-                window.location.href = '/profile';
+                window.location.href = '/login';
             } else {
                 console.error('Revisa los datos ingresados');
             }
