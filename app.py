@@ -139,23 +139,22 @@ def signup():
 
     return jsonify({"message": "Usuario creado con éxito"}), 201
 
-#Endpoint guardar intereses
-@app.route('/guardar_intereses', methods=['POST'])
+@app.route('/guardar_intereses', methods=['POST']) #cambio para guardar mas de un interés 
 def guardar_intereses():
     try:
         data = request.get_json()
         user_id = data.get('user_id')
-        interes = data.get('interest')
-        favorite_games = data.get('favorite_games')
+        intereses = data.get('interests')  
 
-        nuevo_interes = Interest(user_id=user_id, interest=interes, favorite_games=favorite_games)
-        db.session.add(nuevo_interes)
+        for interes in intereses:
+            nuevo_interes = Interest(user_id=user_id, interest=interes['interest'], favorite_games=interes['favorite_games'])
+            db.session.add(nuevo_interes)
+
         db.session.commit()
 
         return jsonify({'message': 'Intereses guardados correctamente'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     with app.app_context():
