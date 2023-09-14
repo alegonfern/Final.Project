@@ -44,9 +44,6 @@ class UserAdminView(ModelView):
         self.session.commit()
         return True
 
-        
-        
- 
 # Agrego la vista personalizada de UserAdmin al admin
 admin.add_view(UserAdminView(User, db.session))
 admin.add_view(ModelView(Profile, db.session))
@@ -158,65 +155,6 @@ def guardar_intereses():
         return jsonify({'message': 'Intereses guardados correctamente'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-
-
-
-
-# Rutas provisorias para grupos
-@app.route("/group/survival", methods=['GET'])
-def get_shooter():
-
-    pass
-
-    return jsonify(
-        {"group": "shooter"}
-    ) 
-
-""" @app.route("/group/moba", methods=['GET'])
-def get_moba():
-
-    pass
-
-    return jsonify(
-        {"group": "moba"}
-    ) """
-
-@app.route("/group/mmorpg", methods=['GET'])
-def get_mmorpg():
-
-    pass
-
-    return jsonify(
-        {"group": "mmorpg"}
-    )
-
-@app.route("/group/survival", methods=['GET'])
-def get_survival():
-
-    pass
-
-    return jsonify(
-        {"group": "survival"}
-    )
-
-@app.route("/group/roguelike", methods=['GET'])
-def get_roguelike():
-
-    pass
-
-    return jsonify(
-        {"group": "roguelike"}
-    )
-
-@app.route("/group/terror", methods=['GET'])
-def get_terror():
-
-    pass
-
-    return jsonify(
-        {"group": "terror"}
-    )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

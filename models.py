@@ -6,8 +6,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-# Definicion del modelo de base de datos:
-
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True) 
@@ -20,15 +18,15 @@ class User(db.Model):
     birth_date = db.Column(db.DateTime, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
     profile = db.relationship("Profile",uselist=False)
-    
+    interests = db.relationship('Interest', backref='user', lazy=True)
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
         print(f"Contraseña almacenada: {self.password_hash}")
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
-# Tabla Perfil
+
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -38,21 +36,18 @@ class Profile(db.Model):
     rating = db.Column(db.Integer)
     registration_date = db.Column(db.Date)
 
-# Tabla Intereses
 class Interest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     interest = db.Column(db.String(255))
     favorite_games = db.Column(db.String(255))
 
-# tabla Solicitudes de Amistad
 class FriendRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     status = db.Column(db.String(50))
 
-# Tabla Matches
 class Match(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id_1 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

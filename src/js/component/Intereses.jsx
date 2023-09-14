@@ -23,8 +23,6 @@ const Intereses = () => {
         'Acción-aventura': ['The Legend of Zelda: Breath of the Wild', 'God of War', 'Spider-Man: Miles Morales']
     };
 
-
-
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedGames, setSelectedGames] = useState([]);
     const userData = {
@@ -32,9 +30,6 @@ const Intereses = () => {
         interest: selectedGenres,
         favorite_games: selectedGames
     };
-
-
-
 
     const handleGenreClick = (genre) => {
         if (selectedGenres.includes(genre)) {
@@ -52,7 +47,7 @@ const Intereses = () => {
         }
     }
 
-    const urlInt = "http://127.0.0.1:5000//guardar_intereses";
+    const urlInt = "http://127.0.0.1:5000/guardar_intereses";
 
     const postIOptions = {
         method: 'POST',
@@ -63,22 +58,18 @@ const Intereses = () => {
     };
 
     const handleSaveInterests = async () => {
-
         try {
             const response = await fetch(urlInt, postIOptions);
 
             if (response.ok) {
-
                 window.location.href = '/profile';
             } else {
-                console.error('Revisa los intereses seleccionados', error);
+                console.error('Revisa los intereses seleccionados');
             }
         } catch (error) {
             console.error('Error al enviar la solicitud de guardar intereses', error);
         }
     };
-
-
 
 
     return (
