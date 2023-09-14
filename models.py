@@ -18,7 +18,8 @@ class User(db.Model):
     birth_date = db.Column(db.DateTime, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
     profile = db.relationship("Profile",uselist=False)
-    interests = db.relationship('Interest', backref='user', lazy=True)
+    interests = relationship("Interest", back_populates="user")
+
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -41,6 +42,8 @@ class Interest(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     interest = db.Column(db.String(255))
     favorite_games = db.Column(db.String(255))
+    user = relationship("User", back_populates="interests")
+
 
 class FriendRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)

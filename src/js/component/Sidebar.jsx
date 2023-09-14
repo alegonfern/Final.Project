@@ -2,6 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import '../../styles/Sidebar.css';
 import { UserContext } from "../store/UserContext";
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faHeart, faComments, faList, faUserFriends, faBell, faStar } from '@fortawesome/free-solid-svg-icons';
+
+
+
+
+
 function Sidebar() {
     const { theme, toggleTheme } = useContext(UserContext);
     const [checked, setChecked] = useState(theme === 'dark');
@@ -19,32 +27,55 @@ function Sidebar() {
         <div className={`bg-dark text-white p-3 sidebar-container ${theme}`}>
             <ul className="nav flex-column">
                 <li className="nav-item">
-                    <a className="nav-link active" href="#">Ajustes/Configuración</a>
+                    <Link to="/Home" className="nav-link">
+                        <FontAwesomeIcon icon={faUser} /> Mi Perfil
+                    </Link>
                 </li>
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#">General</a>
+                    <Link to="/Intereses" className="nav-link">
+                        <FontAwesomeIcon icon={faHeart} /> Mis Intereses
+                    </Link>
                 </li>
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#">Conversaciones</a>
+                    <Link to="/Group" className="nav-link">
+                        <FontAwesomeIcon icon={faList} /> Salas de Interés
+                    </Link>
                 </li>
+
+
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#">Información</a>
+                    <Link to="/match" className="nav-link">
+                        <FontAwesomeIcon icon={faUserFriends} /> Mis M4tch's
+                    </Link>
+
                 </li>
+
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#">Privacidad</a>
+                    <Link to="/chat" className="nav-link">
+                        <FontAwesomeIcon icon={faComments} /> Chats
+                    </Link>
                 </li>
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#">Notificaciones</a>
+                    <Link to="/calendar" className="nav-link">
+                        <FontAwesomeIcon icon={faBell} /> Eventos
+                    </Link>
                 </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="#">Ayuda</a>
+                { /* <li className="nav-item">
+                    <a className="nav-link" href="#">
+                        <FontAwesomeIcon icon={faStar} /> Valoración
+                    </a>
                 </li>
+              */}
             </ul>
             <div>
                 <label className="switch">
                     <input type="checkbox" onChange={handleChange} checked={checked} />
                     <span className={`slider round ${theme === 'dark' ? 'dark' : ''}`}></span>
-
                 </label>
             </div>
         </div>
