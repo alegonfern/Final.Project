@@ -159,15 +159,27 @@ def get_user_profile(user_id):
 def update_user_profile(user_id):
     user = User.query.get(user_id)
     if user is None:
-        return jsonify({'error': 'Usuario no encontrado'}), 404
+        return jsonify({'error': 'User not found'}), 404
 
     data = request.get_json()
-    user.first_name = data.get('first_name', user.first_name)
-    user.last_name = data.get('last_name', user.last_name)
+
+    # Validación del nombre
+    first_name = data.get('first_name', user.first_name)
+    if not first_name.isalpha():
+        return jsonify({'error': 'El nombre solo puede contener letras'}), 400
+
+    # Validación del apellido
+    last_name = data.get('last_name', user.last_name)
+    if not last_name.isalpha():
+        return jsonify({'error': 'El apellido solo puede contener letras'}), 400
+
+    user.first_name = first_name
+    user.last_name = last_name
 
     db.session.commit()
 
-    return jsonify({'message': 'Perfil actualizado de forma correcta'})
+    return jsonify({'message': 'Profile updated successfully'})
+
 
 
 #Endpoint guardar intereses
