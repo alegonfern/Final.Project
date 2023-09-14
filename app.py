@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from models import User, Profile, Genero
+from models import User, Profile, Genero, Game
 import requests
 from models import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -215,7 +215,32 @@ def agregar_generos():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/game', methods=['POST'])
+def agregar_games():
+    try:
+        data = request.json
+
+        # Obtén el ID de usuario proporcionado en los datos (DEBE SER POR CONTEXT)
+        user_id = data["user_id"]
+
+        # Obtén los juegos del arreglo en los datos
+        juegos = data["games"] 
+
+        # Agrega los nuevos juegos seleccionados por el usuario
+        for juego_nombre in juegos: 
+            juego = Game(games=juego_nombre, user_id=user_id)  # Debe ir por context
+            db.session.add(juego)
+
+        # Guarda los cambios en la base de datos
+        db.session.commit()
+
+        return jsonify({"message": "Juegos almacenados exitosamente"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
     
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     with app.app_context():

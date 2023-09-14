@@ -83,6 +83,42 @@ const Intereses = () => {
             console.error('Error al enviar la solicitud', error);
         }
 
+        const urlGames = "http://127.0.0.1:5000/game"; // URL del servidor Flask
+        try {
+            // El usuario haya seleccionado al menos un género
+            if (selectedGames.length === 0) {
+                alert('Debes seleccionar al menos un Juego');
+                return;
+            }
+
+            // Objeto Contiene ID de usuario y los géneros seleccionados
+            const userData = {
+                user_id: 1, // Debe venir desde Context
+                games: selectedGames,
+            };
+
+            const postGameOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Request-Method': 'POST'
+                },
+                body: JSON.stringify(userData),
+            };
+
+            const response = await fetch(urlGames, postGameOptions);
+
+            if (response.ok) {
+                alert('Juegos almacenados exitosamente');
+
+            } else {
+                alert('Error al almacenar los juegos', userData);
+            }
+        } catch (error) {
+            console.error('Error al enviar la solicitud', error);
+        }
+
+
     };
 
 

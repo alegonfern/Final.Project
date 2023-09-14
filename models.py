@@ -19,6 +19,7 @@ class User(db.Model):
     gender = db.Column(db.String(250), nullable=False)
     profile = db.relationship("Profile",uselist=False)
     generos= relationship("Genero", back_populates="user")
+    games= relationship("Game", back_populates="user")
    
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -41,6 +42,12 @@ class Genero(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     genero = db.Column(db.String(255))
     user = relationship("User", back_populates="generos")
+
+class Game(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    games = db.Column(db.String(255))
+    user = relationship("User", back_populates="games")
 
 
 class FriendRequest(db.Model):
