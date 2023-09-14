@@ -10,6 +10,11 @@ function Sidebar() {
         setChecked(theme === 'dark');
     }, [theme]);
 
+    const handleChange = () => {
+        setChecked(!checked);
+        toggleTheme();
+    };
+
     return (
         <div className={`bg-dark text-white p-3 sidebar-container ${theme}`}>
             <ul className="nav flex-column">
@@ -37,7 +42,7 @@ function Sidebar() {
             </ul>
             <div>
                 <label className="switch">
-                    <input type="checkbox" onClick={toggleTheme} checked={checked} />
+                    <input type="checkbox" onChange={handleChange} checked={checked} />
                     <span className={`slider round ${theme === 'dark' ? 'dark' : ''}`}></span>
 
                 </label>
