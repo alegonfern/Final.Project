@@ -21,6 +21,9 @@ import MatchPreview from './component/match preview component/MatchPreview';
 import Sidebar from './component/Sidebar';
 import Contacts from "./component/contact list/Contacts";
 import Navbar from "./component/Navbar";
+import { Calendar } from "react-big-calendar";
+import MyCalendar from "./component/Calendar";
+import Chat from "./component/Chat";
 
 function App() {
   return (
@@ -47,11 +50,13 @@ function App() {
                     <Route path="/Google" element={<Google_test />} />
                     <Route path="/MatchPreview" element={<MatchPreview />} />
                     <Route path="/Contacts" element={<Contacts />} />
+                    <Route path="/calendar" element={<MyCalendar />} />
+                    <Route path="/chat" element={<Chat />} />
                   </Routes>
                 </div>
               </div>
             </>
-          }/>
+          } />
         </Routes>
       </Router>
     </UserProvider>

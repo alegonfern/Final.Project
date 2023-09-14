@@ -31,36 +31,41 @@ function Sidebar() {
                     <Link to="/Intereses" className="nav-link">
                         <FontAwesomeIcon icon={faHeart} /> Mis Intereses
                     </Link>
-
                 </li>
 
-
-
                 <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link to="/Group" className="nav-link">
                         <FontAwesomeIcon icon={faList} /> Salas de Interés
-                    </a>
+                    </Link>
                 </li>
+
+
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link to="/match" className="nav-link">
                         <FontAwesomeIcon icon={faUserFriends} /> Mis M4tch's
-                    </a>
+                    </Link>
+
                 </li>
+
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link to="/chat" className="nav-link">
                         <FontAwesomeIcon icon={faComments} /> Chats
-                    </a>
+                    </Link>
                 </li>
+
                 <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link to="/calendar" className="nav-link">
                         <FontAwesomeIcon icon={faBell} /> Eventos
-                    </a>
+                    </Link>
                 </li>
-                <li className="nav-item">
+                { /* <li className="nav-item">
                     <a className="nav-link" href="#">
                         <FontAwesomeIcon icon={faStar} /> Valoración
                     </a>
                 </li>
+              */}
             </ul>
             <div>
                 <label className="switch">
