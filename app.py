@@ -107,7 +107,7 @@ def signup():
     email = data.get("email")
     password = data.get("password")
     
-    # Parsear la cadena de fecha a un objeto datetime
+    # Formato datetime
     birth_date_str = data.get("birth_date")
     birth_date = datetime.strptime(birth_date_str, "%Y-%m-%d")
 
@@ -139,7 +139,51 @@ def signup():
 
     return jsonify({"message": "Usuario creado con éxito"}), 201
 
-@app.route('/guardar_intereses', methods=['POST']) #cambio para guardar mas de un interés 
+#Enpoint usuario por ID
+@app.route("/user/<int:user_id>/profile", methods=["GET"])
+def get_user_profile(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    profile_data = {
+        "nombre": user.first_name,
+        "apellido": user.last_name,
+        "fecha_de_nacimiento": user.birth_date.strftime("%Y-%m-%d")
+    }
+
+    return jsonify(profile_data)
+
+#Enpoint para actualizar nombre y apellido
+@app.route('/user/<int:user_id>/profile', methods=['PUT'])
+def update_user_profile(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({'error': 'User not found'}), 404
+
+    data = request.get_json()
+
+    # Validación del nombre
+    first_name = data.get('first_name', user.first_name)
+    if not first_name.isalpha():
+        return jsonify({'error': 'El nombre solo puede contener letras'}), 400
+
+    # Validación del apellido
+    last_name = data.get('last_name', user.last_name)
+    if not last_name.isalpha():
+        return jsonify({'error': 'El apellido solo puede contener letras'}), 400
+
+    user.first_name = first_name
+    user.last_name = last_name
+
+    db.session.commit()
+
+    return jsonify({'message': 'Profile updated successfully'})
+
+
+
+#Endpoint guardar intereses
+@app.route('/guardar_intereses', methods=['POST'])
 def guardar_intereses():
     try:
         data = request.get_json()
@@ -155,6 +199,7 @@ def guardar_intereses():
         return jsonify({'message': 'Intereses guardados correctamente'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
     with app.app_context():
