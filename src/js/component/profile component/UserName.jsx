@@ -3,18 +3,18 @@ import { UserContext } from '../../store/UserContext';
 
 const UserName = () => {
     const { userName, setUserName } = useContext(UserContext);
-    const [lastName, setLastName] = useState(localStorage.getItem('lastName') || 'Apellido'); // Estado para el apellido
+    const [lastName, setLastName] = useState('Apellido'); // Estado para el apellido
+    const [birthDate, setBirthDate] = useState('Fecha de Nacimiento'); // Estado para la fecha de nacimiento
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        const storedUserName = localStorage.getItem('userName');
-        const storedLastName = localStorage.getItem('lastName');
-        if (storedUserName) {
-            setUserName(storedUserName);
-        }
-        if (storedLastName) {
-            setLastName(storedLastName);
-        }
+        fetch('/user/<int:user_id>/profile')
+            .then(response => response.json())
+            .then(data => {
+                setUserName(data.nombre);
+                setLastName(data.apellido);
+                setBirthDate(data.fecha_de_nacimiento);
+            });
     }, []);
 
     const handleEdit = () => {
@@ -32,6 +32,9 @@ const UserName = () => {
         } else if (event.target.name === 'lastName') {
             setLastName(event.target.value);
             localStorage.setItem('lastName', event.target.value); // Guarda el apellido en el almacenamiento local
+        } else if (event.target.name === 'birthDate') {
+            setBirthDate(event.target.value);
+            localStorage.setItem('birthDate', event.target.value); // Guarda la fecha de nacimiento en el almacenamiento local
         }
     }
 
@@ -43,9 +46,14 @@ const UserName = () => {
         setLastName('');
     }
 
+    const handleInputClickBirthDate = () => {
+        setBirthDate('');
+    }
+
     return (
         <div className='container-fluid mb-5 pb-5'>
             <h2 className="text-center" style={{ fontSize: '50px' }}>{`${userName} ${lastName}`}</h2>
+            <h3 className="text-center" style={{ fontSize: '30px' }}>{`Fecha de Nacimiento: ${birthDate}`}</h3>
             <div className="d-flex justify-content-center">
                 <button onClick={handleEdit} className="btn btn-dark">Editar</button>
             </div>

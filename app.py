@@ -139,6 +139,37 @@ def signup():
 
     return jsonify({"message": "Usuario creado con éxito"}), 201
 
+#Enpoint usuario por ID
+@app.route("/user/<int:user_id>/profile", methods=["GET"])
+def get_user_profile(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    profile_data = {
+        "nombre": user.first_name,
+        "apellido": user.last_name,
+        "fecha_de_nacimiento": user.birth_date.strftime("%Y-%m-%d")
+    }
+
+    return jsonify(profile_data)
+
+#Enpoint para actualizar nombre y apellido
+@app.route('/user/<int:user_id>/profile', methods=['PUT'])
+def update_user_profile(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({'error': 'Usuario no encontrado'}), 404
+
+    data = request.get_json()
+    user.first_name = data.get('first_name', user.first_name)
+    user.last_name = data.get('last_name', user.last_name)
+
+    db.session.commit()
+
+    return jsonify({'message': 'Perfil actualizado de forma correcta'})
+
+
 #Endpoint guardar intereses
 @app.route('/guardar_intereses', methods=['POST'])
 def guardar_intereses():
