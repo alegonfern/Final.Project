@@ -25,11 +25,7 @@ const Intereses = () => {
 
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedGames, setSelectedGames] = useState([]);
-    const userData = {
-        user_id: 1,
-        interest: selectedGenres,
-        favorite_games: selectedGames
-    };
+
 
     const handleGenreClick = (genre) => {
         if (selectedGenres.includes(genre)) {
@@ -46,7 +42,11 @@ const Intereses = () => {
             setSelectedGames([...selectedGames, game]);
         }
     }
-
+    const userData = {
+        user_id: 1,
+        interest: selectedGenres,
+        favorite_games: selectedGames
+    };
     const urlInt = "http://127.0.0.1:5000/guardar_intereses";
 
     const postIOptions = {
