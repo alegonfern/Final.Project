@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 
-const conversations = [
-    {
-        id: 1,
-        username: "Usuario1",
-        avatar: "avatar1.png",
-        messages: [
-            { text: "Hola, ¿cómo estás?", timestamp: "10:00 AM" },
-            { text: "¡Bien, gracias!", timestamp: "10:05 AM" },
-        ],
-    },
-    {
-        id: 2,
-        username: "Usuario2",
-        avatar: "avatar2.png",
-        messages: [
-            { text: "¡Hola! ¿Qué tal?", timestamp: "11:00 AM" },
-            { text: "Todo bien por aquí.", timestamp: "11:05 AM" },
-        ],
-    },
-];
-
 function Chat() {
-    const [activeConversation, setActiveConversation] = useState(conversations[0]);
+    const [conversations, setConversations] = useState([
+        {
+            id: 1,
+            username: "Usuario1",
+            avatar: "avatar1.png",
+            messages: [
+                { text: "Hola, ¿cómo estás?", timestamp: "10:00 AM" },
+                { text: "¡Bien, gracias!", timestamp: "10:05 AM" },
+            ],
+        },
+        {
+            id: 2,
+            username: "Usuario2",
+            avatar: "avatar2.png",
+            messages: [
+                { text: "¡Hola! ¿Qué tal?", timestamp: "11:00 AM" },
+                { text: "Todo bien por aquí.", timestamp: "11:05 AM" },
+            ],
+        },
+    ]);
+    const [activeConversation, setActiveConversation] = useState(
+        conversations[0]
+    );
     const [newMessage, setNewMessage] = useState("");
 
     const handleSendMessage = () => {
@@ -42,7 +43,7 @@ function Chat() {
             return conversation;
         });
 
-        conversations = updatedConversations;
+        setConversations(updatedConversations);
         setNewMessage("");
     };
 
@@ -70,7 +71,10 @@ function Chat() {
                 {activeConversation.messages.map((message, index) => (
                     <div key={index} className="message">
                         <div className="avatar">
-                            <img src={activeConversation.avatar} alt={activeConversation.username} />
+                            <img
+                                src={activeConversation.avatar}
+                                alt={activeConversation.username}
+                            />
                         </div>
                         <div className="message-content">
                             <span className="timestamp">{message.timestamp}</span>
