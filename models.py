@@ -18,9 +18,8 @@ class User(db.Model):
     birth_date = db.Column(db.DateTime, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
     profile = db.relationship("Profile",uselist=False)
-    interests = relationship("Interest", back_populates="user")
-
-
+    generos= relationship("Genero", back_populates="user")
+   
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
         print(f"Contraseña almacenada: {self.password_hash}")
@@ -37,12 +36,11 @@ class Profile(db.Model):
     rating = db.Column(db.Integer)
     registration_date = db.Column(db.Date)
 
-class Interest(db.Model):
+class Genero(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    interest = db.Column(db.String(255))
-    favorite_games = db.Column(db.String(255))
-    user = relationship("User", back_populates="interests")
+    genero = db.Column(db.String(255))
+    user = relationship("User", back_populates="generos")
 
 
 class FriendRequest(db.Model):

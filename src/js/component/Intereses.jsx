@@ -42,34 +42,50 @@ const Intereses = () => {
             setSelectedGames([...selectedGames, game]);
         }
     }
-    const userData = {
-        user_id: 1,
-        interest: selectedGenres,
-        favorite_games: selectedGames
-    };
-    const urlInt = "http://127.0.0.1:5000/guardar_intereses";
 
-    const postIOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-    };
+
+
 
     const handleSaveInterests = async () => {
+
+        const url = "http://127.0.0.1:5000/generos"; // URL del servidor Flask
         try {
-            const response = await fetch(urlInt, postIOptions);
+            // El usuario haya seleccionado al menos un género
+            if (selectedGenres.length === 0) {
+                alert('Debes seleccionar al menos un género');
+                return;
+            }
+
+            // Objeto Contiene ID de usuario y los géneros seleccionados
+            const userData = {
+                user_id: 1, // Debe venir desde Context
+                generos: selectedGenres,
+            };
+
+            const postOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Request-Method': 'POST'
+                },
+                body: JSON.stringify(userData),
+            };
+
+            const response = await fetch(url, postOptions);
 
             if (response.ok) {
-                window.location.href = '/profile';
+                alert('Géneros almacenados exitosamente');
+
             } else {
-                console.error('Revisa los intereses seleccionados');
+                alert('Error al almacenar los géneros', userData);
             }
         } catch (error) {
-            console.error('Error al enviar la solicitud de guardar intereses', error);
+            console.error('Error al enviar la solicitud', error);
         }
+
     };
+
+
 
 
     return (

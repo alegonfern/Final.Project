@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from models import User, Profile, Interest
+from models import User, Profile, Genero
 import requests
 from models import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -12,6 +12,8 @@ from datetime import datetime
 from flask import make_response
 
 app = Flask(__name__)
+app.config['DEBUG'] = True 
+app.config['ENV'] = "development"
 CORS(app, resources={r"/*": {"origins": "*"}})
 logging.basicConfig(filename="app.log", level=logging.INFO)
 
@@ -100,12 +102,17 @@ def get_users():
 
 @app.route("/signup", methods=["POST"])
 def signup():
+    user=User()
     data = request.get_json()
     username = data.get("username")
     first_name = data.get("first_name")
     last_name = data.get("last_name")
     email = data.get("email")
     password = data.get("password")
+    profile=Profile()
+    user.profile=profile
+    genero=Genero()
+    user.genero=genero
     
     # Formato datetime
     birth_date_str = data.get("birth_date")
@@ -182,23 +189,32 @@ def update_user_profile(user_id):
 
 
 
-#Endpoint guardar intereses
-@app.route('/guardar_intereses', methods=['POST'])
-def guardar_intereses():
+#End point guardar intereses
+@app.route('/generos', methods=['POST'])
+def agregar_generos():
     try:
-        data = request.get_json()
-        user_id = data.get('user_id')
-        intereses = data.get('interests')  
+        data = request.json
 
-        for interes in intereses:
-            nuevo_interes = Interest(user_id=user_id, interest=interes['interest'], favorite_games=interes['favorite_games'])
-            db.session.add(nuevo_interes)
+        # Obtén el ID de usuario proporcionado en los datos (DEBE SER POR CONTEXT)
+        user_id = data["user_id"]
 
+        # Obténgo los géneros del arreglo en los datos
+        genero = data["genero"]
+
+        
+        # Agrego los nuevos géneros seleccionados por el usuario
+        for genero_nombre in genero:
+            genero = Genero(genero=genero_nombre, user_id=user_id)  # Asigno el user_id directamente
+            db.session.add(genero)
+
+        # Guardo los cambios en la base de datos
         db.session.commit()
 
-        return jsonify({'message': 'Intereses guardados correctamente'}), 200
+        return jsonify({"message": "Géneros almacenados exitosamente"}), 200
+
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
+
     
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
