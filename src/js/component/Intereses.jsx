@@ -59,7 +59,7 @@ const Intereses = () => {
             // Objeto Contiene ID de usuario y los géneros seleccionados
             const userData = {
                 user_id: 1, // Debe venir desde Context
-                generos: selectedGenres,
+                genero: selectedGenres,
             };
 
             const postOptions = {
