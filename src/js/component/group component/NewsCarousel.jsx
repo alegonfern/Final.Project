@@ -2,34 +2,49 @@ import React, { useState, useEffect } from 'react';
 import NewsCard from './NewsCard';
 
 const NewsCarousel = () => {
-    const [images, setImages] = useState([]);
+    const [news, setNews] = useState([]);
 
     useEffect(() => {
-        const fetchImages = async () => {
-            const newImages = [];
-            for (let i = 0; i < 18; i++) {
-                const randomImage = `https://picsum.photos/500/700?random=${Math.random()}`;
-                newImages.push({url: randomImage, name: randomImage.split('=')[1]});
+        const apiKey = 'ffdcba9b98msh1bb62aa2526dd83p19c70cjsn222b3b374c5a';
+
+        // Realiza la solicitud HTTP a la API "Diablo 4 - Smartable"
+        fetch('https://diablo4-smartable.p.rapidapi.com/news/page/1/', {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': apiKey,
+                'X-RapidAPI-Host': 'diablo4-smartable.p.rapidapi.com',
+            },
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Error al cargar noticias');
             }
-            setImages(newImages);
-        }
-        fetchImages();
+            return response.json();
+        })
+        .then((data) => {
+            // Verifica que 'data.value' sea un arreglo antes de establecerlo como el estado 'news'
+            if (Array.isArray(data.value)) {
+                setNews(data.value); // Actualiza el estado 'news' con los datos de las noticias.
+            } else {
+                console.error('La respuesta de la API no es un arreglo:', data);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }, []);
 
     return (
         <div className='box my-4'>
             <div id="newsCarousel" className="carousel slide">
                 <div className="carousel-inner">
-                    {Array.from({length: 6}, (_, i) => i * 3).map((start, index) => (
-                        <div className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                    {news.map((article, index) => (
+                        <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
                             <div className='carousel-card d-flex justify-content-between'>
-                                {images.slice(start, start + 3).map((image, index) => (
-                                    <NewsCard
-                                        key={index}
-                                        AvatarGrupo={image.url}
-                                        NombreGrupo={image.name}
-                                    />
-                                ))}
+                                <NewsCard
+                                    AvatarGrupo={article.images[0].url} // URL de la imagen
+                                    NombreGrupo={article.title} // Título de la noticia
+                                />
                             </div>
                         </div>
                     ))}
@@ -44,7 +59,7 @@ const NewsCarousel = () => {
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
-        </div >
+        </div>
     );
 }
 
