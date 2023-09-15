@@ -28,6 +28,7 @@ const Intereses = () => {
 
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedGames, setSelectedGames] = useState([]);
+    const { userId } = useContext(UserContext);
 
 
     const handleGenreClick = (genre) => {
@@ -61,7 +62,7 @@ const Intereses = () => {
 
             // Objeto Contiene ID de usuario y los géneros seleccionados
             const userData = {
-                user_id: 1, // Debe venir desde Context
+                user_id: userId, // Debe venir desde Context
                 genero: selectedGenres,
             };
 

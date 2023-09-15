@@ -4,7 +4,7 @@ import { UserContext } from "../store/UserContext";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faHeart, faComments, faList, faUserFriends, faBell, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faHeart, faComments, faList, faUserFriends, faBell, faStar, faHouse } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -27,8 +27,14 @@ function Sidebar() {
         <div className={`bg-dark text-white p-3 sidebar-container ${theme}`}>
             <ul className="nav flex-column">
                 <li className="nav-item">
+                    <Link to="/Profile" className="nav-link">
+                        <FontAwesomeIcon icon={faUser} /> Profile
+                    </Link>
+                </li>
+
+                <li className="nav-item">
                     <Link to="/Home" className="nav-link">
-                        <FontAwesomeIcon icon={faUser} /> Home
+                        <FontAwesomeIcon icon={faHouse} /> Home
                     </Link>
                 </li>
 

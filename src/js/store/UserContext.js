@@ -6,6 +6,7 @@ export const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [userName, setUserName] = useState('Nombre Usuario');
+  const [userId, setUserId] = useState(null);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -41,8 +42,9 @@ export const UserProvider = ({ children }) => {
       .then(data => {
         if (data) {
           setIsLoggedIn(true);
+          setUserId(data.user_id);
           const token = data.token;
-          console.log('El inicio de sesión fue exitoso y el token es:', token);
+          console.log('El inicio de sesión fue exitoso y el token es:', token, 'Id;', userId);
           localStorage.setItem('jwtToken', token);
           return true;
         } else {
@@ -87,7 +89,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName }}>
+    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName, userId }}>
       {children}
     </UserContext.Provider>
   );

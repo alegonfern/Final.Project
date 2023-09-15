@@ -63,7 +63,7 @@ const Group = () => {
             <div className='row'>
                 <div className='col-12 mt-5 pt-5'>
                     <GroupCard
-                        imagen={'https://bitwares.net/wp-content/uploads/2021/08/Shooters-Gratuitos-Competitivos-Bitwares-735x400.jpg?crop=1'} />
+                        imagen={'https://bnetcmsus-a.akamaihd.net/cms/blog_thumbnail/bu/BUFGGI7J1OM11676573306055.jpg'} />
                 </div>
             </div>
 

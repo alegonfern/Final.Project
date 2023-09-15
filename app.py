@@ -69,7 +69,8 @@ def login():
             # Autenticación exitosa
             logging.info(f"Autenticación exitosa para el usuario: {username}")
             token = create_access_token(identity=user.id)  # Genera el token JWT
-            return jsonify({"token": token, "message": "Autenticación exitosa"})
+            user_id = user.id
+            return jsonify({"token": token, "message": "Autenticación exitosa", "user_id": user_id})
         else:
             # Autenticación fallida, contraseña incorrecta
             logging.warning(
@@ -105,6 +106,24 @@ def get_users():
     return jsonify(
         {"users": user_list}
     )  # Devuelve la lista de usuarios en formato JSON
+
+@app.route("/users/<int:user_id>", methods=["GET"])
+def get_user(user_id):
+    user = User.query.get(user_id)  # Obtén el usuario por su ID
+    if not user:
+        return jsonify({"message": "Usuario no encontrado"}), 404  # Retorna un mensaje de error si el usuario no se encuentra
+
+    # Crear un diccionario con los datos del usuario
+    user_data = {
+        "id": user.id,
+        "username": user.username,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "birth_date": user.birth_date.strftime("%Y-%m-%d")  # Formatea la fecha como desees
+    }
+
+    return jsonify(user_data)  # Retorna los datos del usuario en formato JSON
+
 
 @app.route("/signup", methods=["POST"])
 def signup():
@@ -153,7 +172,7 @@ def signup():
     return jsonify({"message": "Usuario creado con éxito"}), 201
 
 #Enpoint usuario por ID
-@app.route("/user/<int:user_id>/profile", methods=["GET"])
+@app.route("/user/<int:user_id>", methods=["GET"])
 def get_user_profile(user_id):
     user = User.query.get(user_id)
     if user is None:
@@ -287,6 +306,60 @@ def calendar():
     
     return jsonify({"message": "Bienvenido a la ruta privada Eventos"})
 
+@app.route("/genero/<int:user_id>", methods=["GET"])
+def get_generos_by_user_id(user_id):
+    generos = Genero.query.filter_by(user_id=user_id).all()
+
+    generos_data = [
+        {
+            "id": genero.id,
+            "user_id": genero.user_id,
+            "genero": genero.genero,
+        }
+        for genero in generos
+    ]
+
+    return jsonify(generos_data)
+
+@app.route("/genero/<int:user_id>/<int:genero_id>", methods=["DELETE"])
+def delete_genero(user_id, genero_id):
+    genero = Genero.query.filter_by(user_id=user_id, id=genero_id).first()
+
+    if not genero:
+        return jsonify({"error": "Género no encontrado"}), 404
+
+    db.session.delete(genero)
+    db.session.commit()
+
+    return jsonify({"message": "Género eliminado exitosamente"})
+
+@app.route("/game/<int:user_id>", methods=["GET"])
+def get_games_by_user_id(user_id):
+    games = Game.query.filter_by(user_id=user_id).all()
+
+    games_data = [
+        {
+            "id": game.id,
+            "user_id": game.user_id,
+            "game": game.games,
+        }
+        for game in games
+    ]
+
+    return jsonify(games_data)
+
+
+@app.route("/game/<int:user_id>/<int:game_id>", methods=["DELETE"])
+def delete_game(user_id, game_id):
+    game = Game.query.filter_by(user_id=user_id, id=game_id).first()
+
+    if not game:
+        return jsonify({"error": "Juego no encontrado"}), 404
+
+    db.session.delete(game)
+    db.session.commit()
+
+    return jsonify({"message": "Juego eliminado exitosamente"}) 
 
 
 if __name__ == "__main__":

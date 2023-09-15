@@ -6,16 +6,15 @@ const UserName = () => {
     const [lastName, setLastName] = useState('Apellido'); // Estado para el apellido
     const [birthDate, setBirthDate] = useState('Fecha de Nacimiento'); // Estado para la fecha de nacimiento
     const [isEditing, setIsEditing] = useState(false);
+    const { userId } = useContext(UserContext);
+    const [profileData, setProfileData] = useState({});
 
     useEffect(() => {
-        fetch('/user/<int:user_id>/profile')
-            .then(response => response.json())
-            .then(data => {
-                setUserName(data.nombre);
-                setLastName(data.apellido);
-                setBirthDate(data.fecha_de_nacimiento);
-            });
-    }, []);
+        fetch(`http://127.0.0.1:5000/user/${userId}`)
+        .then(response => response.json())
+        .then(data => setProfileData(data))
+        .catch(error => console.error('Error al obtener el perfil del usuario', error));
+    }, [userId]);
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -52,13 +51,13 @@ const UserName = () => {
 
     return (
         <div className='container-fluid mb-5 pb-5'>
-            <h2 className="text-center" style={{ fontSize: '50px' }}>{`${userName} ${lastName}`}</h2>
-            <h3 className="text-center" style={{ fontSize: '30px' }}>{`Fecha de Nacimiento: ${birthDate}`}</h3>
+            <h2 className="text-center" style={{ fontSize: '50px' }}>{`${profileData.nombre} ${profileData.apellido}`}</h2>
+            <h3 className="text-center" style={{ fontSize: '30px' }}>{`Fecha de Nacimiento: ${profileData.fecha_de_nacimiento}`}</h3>
             <div className="d-flex justify-content-center">
-                <button onClick={handleEdit} className="btn btn-dark">Editar</button>
+            {/*     <button onClick={handleEdit} className="btn btn-dark">Editar</button> */}
             </div>
 
-            <div className={`modal ${isEditing ? 'show d-block' : ''}`} tabIndex="-1">
+           {/*  <div className={`modal ${isEditing ? 'show d-block' : ''}`} tabIndex="-1">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -66,16 +65,16 @@ const UserName = () => {
                             <button type="button" className="btn-close" onClick={handleSave}></button>
                         </div>
                         <div className="modal-body">
-                            <input type="text" name="firstName" value={userName} onChange={handleChangeName} onClick={handleInputClickFirstName} placeholder="Nombre" className="form-control" />
-                            <input type="text" name="lastName" value={lastName} onChange={handleChangeName} onClick={handleInputClickLastName} placeholder="Apellido" className="form-control mt-2" />
+                            <input type="text" name="firstName"  onChange={handleChangeName} onClick={handleInputClickFirstName} placeholder="Nombre" className="form-control" />
+                            <input type="text" name="lastName"  onChange={handleChangeName} onClick={handleInputClickLastName} placeholder="Apellido" className="form-control mt-2" />
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={handleSave}>Guardar</button>
                         </div>
                     </div>
                 </div>
-            </div>
-            {isEditing && <div className="modal-backdrop show"></div>}
+            </div> */}
+     {/*        {isEditing && <div className="modal-backdrop show"></div>} */}
         </div>
     );
 }
