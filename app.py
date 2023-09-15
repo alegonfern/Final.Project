@@ -10,6 +10,9 @@ from flask_cors import CORS
 import logging
 from datetime import datetime
 from flask import make_response
+from flask_jwt_extended import JWTManager
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required
 
 app = Flask(__name__)
 app.config['DEBUG'] = True 
@@ -17,8 +20,10 @@ app.config['ENV'] = "development"
 CORS(app, resources={r"/*": {"origins": "*"}})
 logging.basicConfig(filename="app.log", level=logging.INFO)
 
+jwt = JWTManager(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydatabase.db"
 app.config["SECRET_KEY"] = "123456"  # Mi propia clave secreta
+app.config["JWT_SECRET_KEY"] = "123456"
 db.init_app(app)
 
 
@@ -63,7 +68,8 @@ def login():
         if check_password_hash(user.password_hash, password):
             # Autenticación exitosa
             logging.info(f"Autenticación exitosa para el usuario: {username}")
-            return jsonify({"message": "Autenticación exitosa"})
+            token = create_access_token(identity=user.id)  # Genera el token JWT
+            return jsonify({"token": token, "message": "Autenticación exitosa"})
         else:
             # Autenticación fallida, contraseña incorrecta
             logging.warning(
@@ -239,7 +245,17 @@ def agregar_games():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route("/Home", methods=["GET"])
+@jwt_required()  # Protege la ruta con autenticación JWT
+def home():
     
+    return jsonify({"message": "Bienvenido a la ruta privada Home"})  
+
+@app.route("/Intereses", methods=["GET"])
+@jwt_required()  # Protege la ruta con autenticación JWT
+def intereses():
+    
+    return jsonify({"message": "Bienvenido a la ruta privada Intereses"})  
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

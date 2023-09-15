@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [userName, setUserName] = useState('Nombre Usuario');
 
@@ -15,8 +15,8 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-      document.body.setAttribute('data-theme', theme);
-    }, [theme]);
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const flogin = (username, password) => {
     const url = "http://127.0.0.1:5000/login";
@@ -32,10 +32,20 @@ export const UserProvider = ({ children }) => {
     return fetch(url, postOptions)
       .then(response => {
         if (response.ok) {
-          setIsLoggedIn(true);
-          return true;
+          return response.json(); // Parsea la respuesta JSON
         } else {
           console.error('Credenciales incorrectas');
+          return false;
+        }
+      })
+      .then(data => {
+        if (data) {
+          setIsLoggedIn(true);
+          const token = data.token;
+          console.log('El inicio de sesión fue exitoso y el token es:', token);
+          localStorage.setItem('jwtToken', token);
+          return true;
+        } else {
           return false;
         }
       })

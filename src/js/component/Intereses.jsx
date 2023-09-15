@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../../styles/Intereses.css';
+import { useContext, useState } from "react";
+import { UserContext } from "../store/UserContext";
+import { useEffect } from 'react';
 
 const Intereses = () => {
     const genres = ['Acción', 'Aventura', 'Estrategia', 'Deportes', 'Carreras', 'Simulación', 'RPG', 'Plataformas', 'Lucha', 'Shooter', 'Sandbox', 'Estrategia en tiempo real (RTS)', 'Multijugador en línea Battle Arena (MOBA)', 'Juegos de rol (RPG, ARPG y más)', 'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura'];
@@ -120,6 +123,56 @@ const Intereses = () => {
 
 
     };
+
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState(null);
+    const { isLoggedIn } = useContext(UserContext);
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            // Leer el token del localStorage
+            const token = localStorage.getItem('jwtToken');
+            console.log('Token JWT:', token);
+
+            if (token) {
+                // Si el usuario está autenticado y hay un token en el localStorage, realiza una solicitud HTTP a una ruta privada
+                fetch('http://127.0.0.1:5000/Intereses', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error al cargar datos privados.');
+                        }
+                    })
+                    .then((data) => {
+                        setData(data);
+                        setIsLoading(false);
+                    })
+                    .catch((error) => {
+                        console.error('Error al cargar datos privados:', error);
+                        setIsLoading(false);
+                    });
+            } else {
+                setIsLoading(false);
+            }
+        } else {
+            setIsLoading(false);
+        }
+    }, [isLoggedIn]);
+
+    if (isLoading) {
+        return <p>Cargando...</p>;
+    }
+
+    if (!data) {
+        return <p>Error al cargar datos privados.</p>;
+    }
 
 
 

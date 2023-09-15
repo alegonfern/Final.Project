@@ -36,7 +36,7 @@ const Login = () => {
         flogin(username, password)
             .then((isAuthenticated) => {
                 if (isAuthenticated) {
-                    window.location.href = '/Home';
+                    navigate("/Home");
                 }
             });
     };
@@ -62,7 +62,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-center mt-3">
-                            <button type="submit" className="btn btn-dark">Iniciar sesión   
+                            <button type="submit" className="btn btn-dark">Iniciar sesión
                                 <FontAwesomeIcon icon={faSolidDna} rotation={90} style={{ color: "#05ff09" }} />
                             </button>
                         </div>
@@ -74,7 +74,7 @@ const Login = () => {
                         <a href="#">Crear nuevo usuario</a>
                     </div>
                     <div className="d-flex justify-content-center mt-3">
-                        <button className="google-login-button mx-auto my-3" onClick={handleGoogleSignIn}> 
+                        <button className="google-login-button mx-auto my-3" onClick={handleGoogleSignIn}>
                             <img src={googleIcon} className="google-icon img-fluid"></img>Iniciar sesión con Google
                         </button>
                     </div>
