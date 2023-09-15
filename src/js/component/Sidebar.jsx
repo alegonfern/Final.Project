@@ -28,7 +28,7 @@ function Sidebar() {
             <ul className="nav flex-column">
                 <li className="nav-item">
                     <Link to="/Home" className="nav-link">
-                        <FontAwesomeIcon icon={faUser} /> Mi Perfil
+                        <FontAwesomeIcon icon={faUser} /> Home
                     </Link>
                 </li>
 

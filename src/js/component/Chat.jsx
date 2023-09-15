@@ -96,47 +96,49 @@ function Chat() {
     }
 
     return (
-        <div className="chat-room">
-            <div className="chat-sidebar">
-                <h3>Conversaciones</h3>
-                <ul>
-                    {conversations.map((conversation) => (
-                        <li
-                            key={conversation.id}
-                            onClick={() => setActiveConversation(conversation)}
-                            className={
-                                conversation.id === activeConversation.id
-                                    ? 'active'
-                                    : ''
-                            }
-                        >
-                            {conversation.username}
-                        </li>
-                    ))}
-                </ul>
+        <div style={{ marginTop: "200px" }}>
+            <div className="chat-room">
+                <div className="chat-sidebar">
+                    <h3>Conversaciones</h3>
+                    <ul>
+                        {conversations.map((conversation) => (
+                            <li
+                                key={conversation.id}
+                                onClick={() => setActiveConversation(conversation)}
+                                className={
+                                    conversation.id === activeConversation.id
+                                        ? 'active'
+                                        : ''
+                                }
+                            >
+                                {conversation.username}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="chat-main">
+                    <div className="chat-header">
+                        <h3>{activeConversation.username}</h3>
+                    </div>
+                    <div className="chat-messages">
+                        {activeConversation.messages.map((message, index) => (
+                            <div key={index} className="message">
+                                <p>{message.text}</p>
+                                <span>{message.timestamp}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="chat-footer">
+                        <input
+                            type="text"
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                        />
+                        <button onClick={handleSendMessage}>Enviar</button>
+                    </div>
+                </div>
             </div>
-            <div className="chat-main">
-                <div className="chat-header">
-                    <h3>{activeConversation.username}</h3>
-                </div>
-                <div className="chat-messages">
-                    {activeConversation.messages.map((message, index) => (
-                        <div key={index} className="message">
-                            <p>{message.text}</p>
-                            <span>{message.timestamp}</span>
-                        </div>
-                    ))}
-                </div>
-                <div className="chat-footer">
-                    <input
-                        type="text"
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                    />
-                    <button onClick={handleSendMessage}>Enviar</button>
-                </div>
             </div>
-        </div>
     );
 }
 
