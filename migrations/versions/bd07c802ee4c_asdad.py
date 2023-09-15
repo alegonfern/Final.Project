@@ -1,8 +1,8 @@
-"""BD Genero
+"""asdad
 
-Revision ID: 063fd9240de9
+Revision ID: bd07c802ee4c
 Revises: 
-Create Date: 2023-09-14 13:23:13.193720
+Create Date: 2023-09-15 00:37:04.384762
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '063fd9240de9'
+revision = 'bd07c802ee4c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,10 +40,17 @@ def upgrade():
     sa.ForeignKeyConstraint(['sender_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('game',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('games', sa.String(length=255), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('genero',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('interest', sa.String(length=255), nullable=True),
+    sa.Column('genero', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -75,6 +82,7 @@ def downgrade():
     op.drop_table('profile')
     op.drop_table('match')
     op.drop_table('genero')
+    op.drop_table('game')
     op.drop_table('friend_request')
     op.drop_table('user')
     # ### end Alembic commands ###

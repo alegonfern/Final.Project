@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
+import { useContext, useState, useEffect } from "react";
+import { UserContext } from "../store/UserContext";
 
 function Chat() {
+    const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState(null);
+    const { isLoggedIn } = useContext(UserContext);
     const [conversations, setConversations] = useState([
         {
             id: 1,
@@ -26,6 +31,41 @@ function Chat() {
     );
     const [newMessage, setNewMessage] = useState("");
 
+    useEffect(() => {
+        if (isLoggedIn) {
+            const token = localStorage.getItem('jwtToken');
+            console.log('Token JWT:', token);
+
+            if (token) {
+                fetch('http://127.0.0.1:5000/Chat', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error al cargar datos privados.');
+                        }
+                    })
+                    .then((data) => {
+                        setData(data);
+                        setIsLoading(false);
+                    })
+                    .catch((error) => {
+                        console.error('Error al cargar datos privados:', error);
+                        setIsLoading(false);
+                    });
+            } else {
+                setIsLoading(false);
+            }
+        } else {
+            setIsLoading(false);
+        }
+    }, [isLoggedIn]);
+
     const handleSendMessage = () => {
         if (newMessage.trim() === "") return;
 
@@ -47,6 +87,14 @@ function Chat() {
         setNewMessage("");
     };
 
+    if (isLoading) {
+        return <p>Cargando...</p>;
+    }
+
+    if (!data) {
+        return <p>Error al cargar datos privados.</p>;
+    }
+
     return (
         <div className="chat-room">
             <div className="chat-sidebar">
@@ -57,40 +105,36 @@ function Chat() {
                             key={conversation.id}
                             onClick={() => setActiveConversation(conversation)}
                             className={
-                                conversation.id === activeConversation.id ? "active" : ""
+                                conversation.id === activeConversation.id
+                                    ? 'active'
+                                    : ''
                             }
                         >
-                            <img src={conversation.avatar} alt={conversation.username} />
                             {conversation.username}
                         </li>
                     ))}
                 </ul>
             </div>
-            <div className="chat-messages">
-                <h3>Chat con {activeConversation.username}</h3>
-                {activeConversation.messages.map((message, index) => (
-                    <div key={index} className="message">
-                        <div className="avatar">
-                            <img
-                                src={activeConversation.avatar}
-                                alt={activeConversation.username}
-                            />
-                        </div>
-                        <div className="message-content">
-                            <span className="timestamp">{message.timestamp}</span>
+            <div className="chat-main">
+                <div className="chat-header">
+                    <h3>{activeConversation.username}</h3>
+                </div>
+                <div className="chat-messages">
+                    {activeConversation.messages.map((message, index) => (
+                        <div key={index} className="message">
                             <p>{message.text}</p>
+                            <span>{message.timestamp}</span>
                         </div>
-                    </div>
-                ))}
-            </div>
-            <div className="chat-input">
-                <input
-                    type="text"
-                    placeholder="Escribe un mensaje..."
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                />
-                <button onClick={handleSendMessage}>Enviar</button>
+                    ))}
+                </div>
+                <div className="chat-footer">
+                    <input
+                        type="text"
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                    />
+                    <button onClick={handleSendMessage}>Enviar</button>
+                </div>
             </div>
         </div>
     );

@@ -47,7 +47,7 @@ function Sidebar() {
 
 
                 <li className="nav-item">
-                    <Link to="/match" className="nav-link">
+                    <Link to="/MatchPreview" className="nav-link">
                         <FontAwesomeIcon icon={faUserFriends} /> Mis M4tch's
                     </Link>
 

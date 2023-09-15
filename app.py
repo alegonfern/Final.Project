@@ -256,6 +256,38 @@ def home():
 def intereses():
     
     return jsonify({"message": "Bienvenido a la ruta privada Intereses"})  
+    
+@app.route("/Group", methods=["GET"])
+@jwt_required()  # Protege la ruta con autenticación JWT
+def group():
+    
+    return jsonify({"message": "Bienvenido a la ruta privada Group"})  
+
+@app.route("/Matchpreview", methods=["GET"])
+@jwt_required()  # Protege la ruta con autenticación JWT
+def matchpreview():
+    
+    return jsonify({"message": "Bienvenido a la ruta privada Matchpreview"}) 
+
+@app.route("/Match", methods=["GET"])
+@jwt_required()  # Protege la ruta con autenticación JWT
+def match():
+    
+    return jsonify({"message": "Bienvenido a la ruta privada Match"})  
+
+@app.route("/Chat", methods=["GET"])
+@jwt_required()  # Protege la ruta con autenticación JWT
+def chat():
+    
+    return jsonify({"message": "Bienvenido a la ruta privada Chat"})
+
+@app.route("/Calendar", methods=["GET"])
+@jwt_required()  # Protege la ruta con autenticación JWT
+def calendar():
+    
+    return jsonify({"message": "Bienvenido a la ruta privada Eventos"})
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

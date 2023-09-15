@@ -106,6 +106,8 @@ Dentro del entorno virtual activado, instala las siguientes bibliotecas necesari
    - flas-cors: `pip install Flask-Cors`
    - react-icons: `npm install react-icons`
    - react-google-login: `npm install gapi-script react-google-login`
+   - JWT: `pipenv install flask-jwt-extended`
+
 
    Para instalar todas las librerias recomiendo usar:
 
@@ -164,6 +166,7 @@ Abre un navegador web y ve a la URL donde se ejecuta tu aplicación Flask, "http
 
 - Creacion de migraciones: `alembic revision -m "Nombre Migracion"`
 - Aplicar migracion a Base de datos: `alembic upgrade head`
+- inicializar flask db: `flask db init`
 - Creacion de migraciones: `flask db migrate -m "nombre_de_la_migracion"`
 - Aplicar migracion a Base de datos:  `flask db upgrade`
 
