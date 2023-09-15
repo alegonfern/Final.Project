@@ -1,34 +1,31 @@
-import React from 'react'
-import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
+import React, { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../../store/UserContext';
+import { AiOutlineClose, AiOutlineCheck } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
-const CarouselCard = ({ AvatarUsuario, NombreUsuario /*, InfoPerfil */ }) => {
+const CarouselCard = ({ AvatarUsuario, NombreUsuario, receiverId }) => {
 
-    const urlShooter = "http://127.0.0.1:5000/shooter";
-    const urlMoba = "http://127.0.0.1:5000/moba";
-    const urlMmorpg = "http://127.0.0.1:5000/mmorpg";
-    const urlSurvival = "http://127.0.0.1:5000/survival";
-    const urlRoguelike = "http://127.0.0.1:5000/roguelike";
-    const urlTerror = "http://127.0.0.1:5000/terror";
+    const { userId } = useContext(UserContext);
 
     const handleClick = async (e) => {
         e.preventDefault();
 
-        const getOptions = {
-            method: 'GET',
+        const postOptions = {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ group }),
+            body: JSON.stringify({ senderId:2, receiverId: 1, status: 'Pendiente' }),
         };
 
-        fetch(url, getOptions)
+        fetch(`http://127.0.0.1:5000/friend-request`, postOptions)
             .then(response => {
                 if (response.ok) {
-                    // Creación de usuario exitosa, redirige a creación de perfil
-                    window.location.href = '/profile';
+                    // Creación de solicitud de amistad exitosa
+                    console.log('Solicitud de amistad enviada con éxito');
                 } else {
-                    // Creación fallida por algún motivo
-                    console.error('Revisa los datos ingresados');
+                    // Error al enviar la solicitud
+                    console.error('Error al enviar la solicitud de amistad');
                 }
             })
             .catch((error) => {
@@ -36,24 +33,35 @@ const CarouselCard = ({ AvatarUsuario, NombreUsuario /*, InfoPerfil */ }) => {
             });
     };
 
+    const linkTo = '/MatchPreview';
+
     return (
         <div className="card" style={{ border: 'none', backgroundColor: 'rgba(0, 0, 0, 0)' }}>
             <div className="text-center">
-                <img style={{ height: "100px", width: "100px", objectFit: 'cover', borderRadius: '50%' }} src={AvatarUsuario} className="img-fluid" alt="Avatar del usuario" />
+                <Link to={linkTo}>
+                    <img
+                        style={{ height: '100px', width: '100px', objectFit: 'cover', borderRadius: '50%' }}
+                        src={AvatarUsuario}
+                        className="img-fluid"
+                        alt="Avatar del usuario"
+                    />
+                </Link>
             </div>
-            <div className="card-body  d-flex justify-content-center flex-column align-items-center" >
+            <div className="card-body d-flex justify-content-center flex-column align-items-center">
                 <div>
-                    <h5 className="text-center" >{NombreUsuario}</h5>
-                    {/*  <p className="card-text text-center">{InfoPerfil}</p> */}
+                    <h5 className="text-center">{NombreUsuario}</h5>
                 </div>
                 <div className="btn-group">
-                    <button type="button" onClick={handleClick} className="btn mx-2"><AiOutlineClose style={{ color: 'red' }} /> </button>
-                    <button type="button" onClick={handleClick} className="btn mx-2"><AiOutlineCheck style={{ color: 'green' }} /> </button>
+                    <button type="button" onClick={handleClick} className="btn mx-2">
+                        <AiOutlineClose style={{ color: 'red' }} />
+                    </button>
+                    <button type="button" onClick={handleClick} className="btn mx-2">
+                        <AiOutlineCheck style={{ color: 'green' }} />
+                    </button>
                 </div>
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default CarouselCard
+export default CarouselCard;

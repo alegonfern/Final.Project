@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from models import User, Profile, Genero, Game
+from models import User, Profile, Genero, Game, FriendRequest, Match
 import requests
 from models import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -98,7 +98,9 @@ def get_users():
             "id": user.id,
             "username": user.username,
             "mail": user.mail,
-            "subscription_date": user.suscription_date.strftime("%Y-%m-%d %H:%M:%S")
+            "subscription_date": user.suscription_date.strftime("%Y-%m-%d %H:%M:%S"),
+            "last_name": user.last_name,
+            "first_name": user.first_name
             # Asegúrate de formatear la fecha como desees
         }
         user_list.append(user_data)  # Agrega el usuario a la lista
@@ -361,6 +363,47 @@ def delete_game(user_id, game_id):
 
     return jsonify({"message": "Juego eliminado exitosamente"}) 
 
+@app.route('/friend-request', methods=['POST'])
+def send_friend_request():
+    data = request.get_json()
+
+    sender_id = data.get('senderId')
+    receiver_id = data.get('receiverId')
+
+    # Verifica que los campos requeridos estén presentes
+    if sender_id is None or receiver_id is None:
+        return jsonify({"error": "Campos senderId y receiverId requeridos"}), 400
+
+    # Verifica si existe una solicitud de amistad recíproca
+    if has_mutual_friend_request(sender_id, receiver_id):
+        # Si existe una solicitud mutua, crea una entrada en la tabla Match
+        create_match(sender_id, receiver_id)
+
+    # Crea una nueva solicitud de amistad
+    friend_request = FriendRequest(sender_id=sender_id, receiver_id=receiver_id, status='Aceptada')
+
+    try:
+        db.session.add(friend_request)
+        db.session.commit()
+        return jsonify({"message": "Solicitud de amistad creada con éxito"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "Error al crear la solicitud de amistad", "details": str(e)}), 500
+
+def has_mutual_friend_request(sender_id, receiver_id):
+    # Comprueba si hay una solicitud mutua en la base de datos
+    mutual_request = FriendRequest.query.filter_by(sender_id=receiver_id, receiver_id=sender_id, status='Aceptada').first()
+    return mutual_request is not None
+
+def create_match(user_id_1, user_id_2):
+    # Crea una nueva entrada en la tabla Match
+    match = Match(user_id_1=user_id_1, user_id_2=user_id_2)
+
+    try:
+        db.session.add(match)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

@@ -66,7 +66,6 @@ const Group = () => {
                         imagen={'https://bnetcmsus-a.akamaihd.net/cms/blog_thumbnail/bu/BUFGGI7J1OM11676573306055.jpg'} />
                 </div>
             </div>
-
             <div className="group-carousel-container mt-5 pt-5" style={{ width: "100%" }}>
                 <GroupCarousel />
             </div>
