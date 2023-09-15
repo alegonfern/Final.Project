@@ -50,15 +50,11 @@ function Sidebar() {
                     </Link>
                 </li>
 
-
-
                 <li className="nav-item">
-                    <Link to="/MatchPreview" className="nav-link">
+                    <Link to="/Contacts" className="nav-link">
                         <FontAwesomeIcon icon={faUserFriends} /> Mis M4tch's
                     </Link>
-
                 </li>
-
 
                 <li className="nav-item">
                     <Link to="/chat" className="nav-link">
@@ -71,6 +67,12 @@ function Sidebar() {
                         <FontAwesomeIcon icon={faBell} /> Eventos
                     </Link>
                 </li>
+
+                <li className="nav-item">
+                    <Link to="/MatchPreview" className="nav-link">
+                    </Link>
+                </li>
+                
                 { /* <li className="nav-item">
                     <a className="nav-link" href="#">
                         <FontAwesomeIcon icon={faStar} /> Valoración

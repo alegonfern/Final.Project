@@ -48,11 +48,11 @@ function App() {
                     <Route path="/login_google" element={<GoogleCallback />} />
                     <Route path="/Intereses" element={<Intereses />} />
                     <Route path="/Home" element={<Home />} />
+                    <Route path="/MatchPreview" element={<MatchPreview />} />
                     <Route path="/Group" element={<Group />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/match" element={<Match />} />
                     <Route path="/Google" element={<Google_test />} />
-                    <Route path="/MatchPreview" element={<MatchPreview />} />
                     <Route path="/Contacts" element={<Contacts />} />
                     <Route path="/calendar" element={<MyCalendar />} />
                     <Route path="/chat" element={<Chat />} />
