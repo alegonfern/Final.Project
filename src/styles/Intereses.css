@@ -1,9 +1,11 @@
+/* Estilos para el componente Intereses */
+
 .genres {
     display: flex;
     flex-wrap: wrap;
-}
-
-.genre {
+  }
+  
+  .genre {
     background-color: red;
     color: white;
     padding: 10px 20px;
@@ -11,38 +13,48 @@
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-}
-
-.genre:hover {
+  }
+  
+  .genre:hover {
     transform: scale(1.1);
-}
-
-.genre.selected {
+  }
+  
+  .genre.selected {
     background-color: darkred;
     animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
+  }
+  
+  .sub-genres {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+  }
+  
+  .sub-genres .genre {
+    margin-right: 5px;
+  }
+  
+  @keyframes float {
     0% {
-        transform: translateY(0px);
+      transform: translateY(0px);
     }
-
+  
     50% {
-        transform: translateY(-20px);
+      transform: translateY(-20px);
     }
-
+  
     100% {
-        transform: translateY(0px);
+      transform: translateY(0px);
     }
-}
-
-/* Estilo para el botón "Guardar Intereses" */
-.submit-button {
+  }
+  
+  /* Estilo para el botón "Guardar Intereses" */
+  .submit-button {
     text-align: center;
     margin: 20px 0;
-}
-
-.submit-button button {
+  }
+  
+  .submit-button button {
     background-color: var(--button-bg-color);
     color: var(--button-text-color);
     padding: 10px 20px;
@@ -50,8 +62,67 @@
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-}
-
-.submit-button button:hover {
+  }
+  
+  .submit-button button:hover {
     transform: scale(1.1);
-}
+  }
+  
+  /* Estilos para el selector de edades */
+  .age-selector {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .age-selector input[type="range"] {
+    width: 50px;
+    height: 30px;
+    text-align: center;
+    margin: 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .age-selector span {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  /* Estilos para el menú desplegable de género */
+  .gender-selector {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .gender-selector select {
+    width: 100%;
+    padding: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .gender-selector select:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Estilo para el selector de plataforma de juego */
+  .platform-selector {
+    width: 100%;
+    padding: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .platform-selector:hover {
+    transform: scale(1.05);
+  }
+  

@@ -1,215 +1,329 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import '../../styles/Intereses.css';
-import { useContext, useState } from "react";
-import { UserContext } from "../store/UserContext";
-import { useEffect } from 'react';
+import { UserContext } from '../store/UserContext';
 
 const Intereses = () => {
-    const genres = ['Acción', 'Aventura', 'Estrategia', 'Deportes', 'Carreras', 'Simulación', 'RPG', 'Plataformas', 'Lucha', 'Shooter', 'Sandbox', 'Estrategia en tiempo real (RTS)', 'Multijugador en línea Battle Arena (MOBA)', 'Juegos de rol (RPG, ARPG y más)', 'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura'];
-    const gamesByGenre = {
-        'Acción': ['Call of Duty', 'Battlefield', 'Doom'],
-        'Aventura': ['The Legend of Zelda', 'Uncharted', 'Tomb Raider'],
-        'Estrategia': ['Civilization', 'Starcraft', 'Age of Empires'],
-        'Deportes': ['FIFA', 'NBA 2K', 'Madden NFL'],
-        'Carreras': ['Mario Kart', 'Need for Speed', 'Forza Horizon'],
-        'Simulación': ['The Sims', 'SimCity', 'RollerCoaster Tycoon'],
-        'RPG': ['The Elder Scrolls V: Skyrim', 'The Witcher 3: Wild Hunt', 'Final Fantasy VII Remake'],
-        'Plataformas': ['Super Mario Bros.', 'Sonic the Hedgehog', 'Donkey Kong Country'],
-        'Lucha': ['Street Fighter V', 'Mortal Kombat 11', 'Super Smash Bros. Ultimate'],
-        'Shooter': ['Call of Duty: Warzone', 'Overwatch', 'Counter-Strike: Global Offensive'],
-        'Sandbox': ['Minecraft', 'Grand Theft Auto V', 'Red Dead Redemption 2'],
-        'Estrategia en tiempo real (RTS)': ['Starcraft II', 'Age of Empires II', 'Warcraft III'],
-        'Multijugador en línea Battle Arena (MOBA)': ['League of Legends', 'Dota 2', 'Smite'],
-        'Juegos de rol (RPG, ARPG y más)': ['The Witcher 3: Wild Hunt', 'Skyrim', 'Dark Souls III'],
-        'Simulación y deportes': ['FIFA 22', 'NBA 2K22', 'Football Manager 2022'],
-        'Rompecabezas y juegos de fiesta': ['Tetris Effect: Connected', 'Overcooked! All You Can Eat', 'Mario Party Superstars'],
-        'Acción-aventura': ['The Legend of Zelda: Breath of the Wild', 'God of War', 'Spider-Man: Miles Morales']
+  // Definición de géneros de videojuegos y juegos relacionados
+  const genres = [
+    'Acción', 'Aventura', 'Estrategia', 'Deportes', 'Carreras', 'Simulación',
+    'RPG', 'Plataformas', 'Lucha', 'Shooter', 'Sandbox', 'Estrategia en tiempo real (RTS)',
+    'Multijugador en línea Battle Arena (MOBA)', 'Juegos de rol (RPG, ARPG y más)',
+    'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura'
+  ];
+
+  const gamesByGenre = {
+    'Acción': ['Call of Duty', 'Battlefield', 'Doom'],
+    'Aventura': ['The Legend of Zelda', 'Uncharted', 'Tomb Raider'],
+    'Estrategia': ['Civilization', 'Starcraft', 'Age of Empires'],
+    // Agrega más juegos para otros géneros aquí...
+  };
+
+  // Definición de géneros de películas y películas relacionadas
+  const movieGenres = [
+    'Acción', 'Aventura', 'Catástrofe', 'Ciencia Ficción', 'Comedia', 'Documentales',
+    'Drama', 'Fantasía'
+  ];
+
+  const moviesByGenre = {
+    'Acción': ['Mad Max: Fury Road', 'Die Hard', 'John Wick'],
+    'Aventura': ['Indiana Jones and the Last Crusade', 'Pirates of the Caribbean', 'The Revenant'],
+    // Agrega más películas para otros géneros aquí...
+  };
+
+  // Definición de géneros musicales y artistas relacionados
+  const musicGenres = ['Rock', 'Pop', 'Hip-Hop', 'Electronic', 'Jazz', 'Blues', 'Country'];
+  const artistsByGenre = {
+    'Rock': ['The Beatles', 'Led Zeppelin', 'Pink Floyd'],
+    'Pop': ['Michael Jackson', 'Madonna', 'Beyoncé'],
+    // Agrega más artistas para otros géneros aquí...
+  };
+
+  const platforms = ['Nintendo', 'PlayStation', 'Xbox', 'PC', 'Celular'];
+
+  const { userId } = useContext(UserContext);
+
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedGames, setSelectedGames] = useState({});
+  const [selectedMoviesGenres, setSelectedMoviesGenres] = useState([]);
+  const [selectedMovies, setSelectedMovies] = useState({});
+  const [selectedMusicGenres, setSelectedMusicGenres] = useState([]);
+  const [selectedArtists, setSelectedArtists] = useState({});
+  const [selectedPlatforms, setSelectedPlatforms] = useState([]);
+  const [agePreference, setAgePreference] = useState({ min: 16, max: 99 });
+  const [genderPreference, setGenderPreference] = useState('');
+
+  const handleGenreClick = (genre) => {
+    if (selectedGenres.includes(genre)) {
+      setSelectedGenres(selectedGenres.filter((g) => g !== genre));
+    } else {
+      setSelectedGenres([...selectedGenres, genre]);
+    }
+  };
+
+  const handleGameClick = (genre, game) => {
+    if (selectedGames[genre]?.includes(game)) {
+      const updatedGames = { ...selectedGames };
+      updatedGames[genre] = selectedGames[genre].filter((g) => g !== game);
+      setSelectedGames(updatedGames);
+    } else {
+      setSelectedGames({ ...selectedGames, [genre]: [...(selectedGames[genre] || []), game] });
+    }
+  };
+
+  const handleMovieGenreClick = (genre) => {
+    if (selectedMoviesGenres.includes(genre)) {
+      setSelectedMoviesGenres(selectedMoviesGenres.filter((g) => g !== genre));
+    } else {
+      setSelectedMoviesGenres([...selectedMoviesGenres, genre]);
+    }
+  };
+
+  const handleMovieClick = (genre, movie) => {
+    if (selectedMovies[genre]?.includes(movie)) {
+      const updatedMovies = { ...selectedMovies };
+      updatedMovies[genre] = selectedMovies[genre].filter((m) => m !== movie);
+      setSelectedMovies(updatedMovies);
+    } else {
+      setSelectedMovies({ ...selectedMovies, [genre]: [...(selectedMovies[genre] || []), movie] });
+    }
+  };
+
+  const handleMusicGenreClick = (genre) => {
+    if (selectedMusicGenres.includes(genre)) {
+      setSelectedMusicGenres(selectedMusicGenres.filter((g) => g !== genre));
+    } else {
+      setSelectedMusicGenres([...selectedMusicGenres, genre]);
+    }
+  };
+
+  const handleArtistClick = (genre, artist) => {
+    if (selectedArtists[genre]?.includes(artist)) {
+      const updatedArtists = { ...selectedArtists };
+      updatedArtists[genre] = selectedArtists[genre].filter((a) => a !== artist);
+      setSelectedArtists(updatedArtists);
+    } else {
+      setSelectedArtists({ ...selectedArtists, [genre]: [...(selectedArtists[genre] || []), artist] });
+    }
+  };
+
+  const handlePlatformClick = (platform) => {
+    if (selectedPlatforms.includes(platform)) {
+      setSelectedPlatforms(selectedPlatforms.filter((p) => p !== platform));
+    } else {
+      setSelectedPlatforms([...selectedPlatforms, platform]);
+    }
+  };
+
+  const handleAgeChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    setAgePreference({ ...agePreference, min: value });
+  };
+
+  const handleMaxAgeChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    setAgePreference({ ...agePreference, max: value });
+  };
+
+  const handleGenderChange = (event) => {
+    setGenderPreference(event.target.value);
+  };
+
+  const handleSaveInterests = async () => {
+    // Crear un objeto con los datos de interés para enviar al backend
+    const userData = {
+      userId: userId, // Aquí debes establecer el ID de usuario adecuado
+      selectedGenres: selectedGenres,
+      selectedGames: selectedGames,
+      selectedMoviesGenres: selectedMoviesGenres,
+      selectedMovies: selectedMovies,
+      selectedMusicGenres: selectedMusicGenres,
+      selectedArtists: selectedArtists,
+      selectedPlatforms: selectedPlatforms,
+      agePreference: agePreference,
+      genderPreference: genderPreference,
     };
-
-    const [selectedGenres, setSelectedGenres] = useState([]);
-    const [selectedGames, setSelectedGames] = useState([]);
-    const { userId } = useContext(UserContext);
-
-
-    const handleGenreClick = (genre) => {
-        if (selectedGenres.includes(genre)) {
-            setSelectedGenres(selectedGenres.filter(g => g !== genre));
-        } else {
-            setSelectedGenres([...selectedGenres, genre]);
-        }
+  
+    // URL del endpoint en tu backend para guardar los datos de interés
+    const saveInterestsUrl = 'http://tu-backend.com/api/guardar-intereses';
+  
+    try {
+      const response = await fetch(saveInterestsUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+  
+      if (response.ok) {
+        // Los datos se guardaron exitosamente
+        alert('Datos guardados exitosamente');
+      } else {
+        // Hubo un error al guardar los datos
+        alert('Error al guardar los datos. Por favor, intenta nuevamente.');
+      }
+    } catch (error) {
+      console.error('Error al enviar la solicitud al servidor:', error);
+      alert('Error al conectar con el servidor. Por favor, intenta nuevamente más tarde.');
     }
+  };
+  
 
-    const handleGameClick = (game) => {
-        if (selectedGames.includes(game)) {
-            setSelectedGames(selectedGames.filter(g => g !== game));
-        } else {
-            setSelectedGames([...selectedGames, game]);
-        }
-    }
+  return (
+    <div className="mt-5 pt-5">
+      <h2>Selecciona tus intereses</h2>
+      <p>Haz clic en los géneros que te interesen y selecciona tus preferencias.</p>
 
+      {/* Sección de géneros de videojuegos */}
+      <h3>Géneros de videojuegos</h3>
+      <div className="genres">
+        {genres.map((genre, index) => (
+          <div
+            key={index}
+            className={`genre ${selectedGenres.includes(genre) ? 'selected' : ''}`}
+            onClick={() => handleGenreClick(genre)}
+          >
+            {genre}
+          </div>
+        ))}
+      </div>
 
-
-
-    const handleSaveInterests = async () => {
-
-        const url = "http://127.0.0.1:5000/generos"; // URL del servidor Flask
-        try {
-            // El usuario haya seleccionado al menos un género
-            if (selectedGenres.length === 0) {
-                alert('Debes seleccionar al menos un género');
-                return;
-            }
-
-            // Objeto Contiene ID de usuario y los géneros seleccionados
-            const userData = {
-                user_id: userId, // Debe venir desde Context
-                genero: selectedGenres,
-            };
-
-            const postOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Request-Method': 'POST'
-                },
-                body: JSON.stringify(userData),
-            };
-
-            const response = await fetch(url, postOptions);
-
-            if (response.ok) {
-                alert('Géneros almacenados exitosamente');
-
-            } else {
-                alert('Error al almacenar los géneros', userData);
-            }
-        } catch (error) {
-            console.error('Error al enviar la solicitud', error);
-        }
-
-        const urlGames = "http://127.0.0.1:5000/game"; // URL del servidor Flask
-        try {
-            // El usuario haya seleccionado al menos un género
-            if (selectedGames.length === 0) {
-                alert('Debes seleccionar al menos un Juego');
-                return;
-            }
-
-            // Objeto Contiene ID de usuario y los géneros seleccionados
-            const userData = {
-                user_id: 1, // Debe venir desde Context
-                games: selectedGames,
-            };
-
-            const postGameOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Request-Method': 'POST'
-                },
-                body: JSON.stringify(userData),
-            };
-
-            const response = await fetch(urlGames, postGameOptions);
-
-            if (response.ok) {
-                alert('Juegos almacenados exitosamente');
-
-            } else {
-                alert('Error al almacenar los juegos', userData);
-            }
-        } catch (error) {
-            console.error('Error al enviar la solicitud', error);
-        }
-
-
-    };
-
-
-    const [isLoading, setIsLoading] = useState(true);
-    const [data, setData] = useState(null);
-    const { isLoggedIn } = useContext(UserContext);
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            // Leer el token del localStorage
-            const token = localStorage.getItem('jwtToken');
-            console.log('Token JWT:', token);
-
-            if (token) {
-                // Si el usuario está autenticado y hay un token en el localStorage, realiza una solicitud HTTP a una ruta privada
-                fetch('http://127.0.0.1:5000/Intereses', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                    .then((response) => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            throw new Error('Error al cargar datos privados.');
-                        }
-                    })
-                    .then((data) => {
-                        setData(data);
-                        setIsLoading(false);
-                    })
-                    .catch((error) => {
-                        console.error('Error al cargar datos privados:', error);
-                        setIsLoading(false);
-                    });
-            } else {
-                setIsLoading(false);
-            }
-        } else {
-            setIsLoading(false);
-        }
-    }, [isLoggedIn]);
-
-    if (isLoading) {
-        return <p>Cargando...</p>;
-    }
-
-    if (!data) {
-        return <p>Error al cargar datos privados.</p>;
-    }
-
-
-
-
-    return (
-        <div className="mt-5 pt-5">
-            <h2>Selecciona tu ADN gamer</h2>
-            <p>Haz clic en los cromosomas que te representan. Haz clic de nuevo para eliminar los que no te gustan.</p>
-            <div className='genres'>
-                {genres.map((genre, index) => (
-                    <div
-                        key={index}
-                        className={`genre ${selectedGenres.includes(genre) ? 'selected' : ''}`}
-                        onClick={() => handleGenreClick(genre)}
-                    >
-                        {genre}
-                    </div>
-                ))}
-            </div>
-            <h3>Videojuegos relacionados:</h3>
-            <div className='genres'>
-                {selectedGenres.flatMap(genre => gamesByGenre[genre]).map((game, index) => (
-                    <div
-                        key={index}
-                        className={`genre ${selectedGames.includes(game) ? 'selected' : ''}`}
-                        onClick={() => handleGameClick(game)}
-                    >
-                        {game}
-                    </div>
-                ))}
-            </div>
-            <div className="submit-button">
-                <button onClick={handleSaveInterests}>Guardar Intereses</button>
-            </div>
+      {/* Sección de juegos relacionados con los géneros seleccionados */}
+      <h3>Videojuegos relacionados:</h3>
+      {selectedGenres.map((genre) => (
+        <div key={genre}>
+          <h4>{genre}</h4>
+          <div className="genres">
+            {gamesByGenre[genre]?.map((game, index) => (
+              <div
+                key={index}
+                className={`genre ${selectedGames[genre]?.includes(game) ? 'selected' : ''}`}
+                onClick={() => handleGameClick(genre, game)}
+              >
+                {game}
+              </div>
+            ))}
+          </div>
         </div>
-    );
-}
+      ))}
+
+      {/* Sección de géneros de películas */}
+      <h3>Géneros de películas</h3>
+      <div className="genres">
+        {movieGenres.map((genre, index) => (
+          <div
+            key={index}
+            className={`genre ${selectedMoviesGenres.includes(genre) ? 'selected' : ''}`}
+            onClick={() => handleMovieGenreClick(genre)}
+          >
+            {genre}
+          </div>
+        ))}
+      </div>
+
+      {/* Sección de películas relacionadas con los géneros seleccionados */}
+      <h3>Películas relacionadas:</h3>
+      {selectedMoviesGenres.map((genre) => (
+        <div key={genre}>
+          <h4>{genre}</h4>
+          <div className="genres">
+            {moviesByGenre[genre]?.map((movie, index) => (
+              <div
+                key={index}
+                className={`genre ${selectedMovies[genre]?.includes(movie) ? 'selected' : ''}`}
+                onClick={() => handleMovieClick(genre, movie)}
+              >
+                {movie}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* Sección de géneros musicales */}
+      <h3>Géneros musicales</h3>
+      <div className="genres">
+        {musicGenres.map((genre, index) => (
+          <div
+            key={index}
+            className={`genre ${selectedMusicGenres.includes(genre) ? 'selected' : ''}`}
+            onClick={() => handleMusicGenreClick(genre)}
+          >
+            {genre}
+          </div>
+        ))}
+      </div>
+
+      {/* Sección de artistas relacionados con los géneros musicales seleccionados */}
+      <h3>Artistas relacionados:</h3>
+      {selectedMusicGenres.map((genre) => (
+        <div key={genre}>
+          <h4>{genre}</h4>
+          <div className="genres">
+            {artistsByGenre[genre]?.map((artist, index) => (
+              <div
+                key={index}
+                className={`genre ${selectedArtists[genre]?.includes(artist) ? 'selected' : ''}`}
+                onClick={() => handleArtistClick(genre, artist)}
+              >
+                {artist}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* Sección de plataformas de juego */}
+      <h3>Plataformas de juego</h3>
+      <div className="genres">
+        {platforms.map((platform, index) => (
+          <div
+            key={index}
+            className={`genre ${selectedPlatforms.includes(platform) ? 'selected' : ''}`}
+            onClick={() => handlePlatformClick(platform)}
+          >
+            {platform}
+          </div>
+        ))}
+      </div>
+
+      {/* Sección de preferencias de edad y género */}
+      <h3>Preferencias de edad y género</h3>
+      <div className="age-gender">
+        <div className="age">
+          <label>Rango de edad: {agePreference.min} - {agePreference.max}+</label>
+          <input
+            type="range"
+            min="16"
+            max="99"
+            value={agePreference.min}
+            onChange={handleAgeChange}
+          />
+          <input
+            type="range"
+            min="16"
+            max="99"
+            value={agePreference.max}
+            onChange={handleMaxAgeChange}
+          />
+        </div>
+        <div className="gender">
+          <label>Género preferido:</label>
+          <select value={genderPreference} onChange={handleGenderChange}>
+            <option value="">Selecciona</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="No binario">No binario</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Botón para guardar intereses */}
+      <div className="submit-button">
+        <button onClick={handleSaveInterests}>Guardar Intereses</button>
+      </div>
+    </div>
+  );
+};
 
 export default Intereses;
