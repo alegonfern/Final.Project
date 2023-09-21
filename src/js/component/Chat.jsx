@@ -6,6 +6,8 @@ function Chat() {
     const [isLoading, setIsLoading] = useState(true);
     const [data, setData] = useState(null);
     const { isLoggedIn } = useContext(UserContext);
+
+
     const [conversations, setConversations] = useState([
         {
             id: 1,
@@ -31,40 +33,40 @@ function Chat() {
     );
     const [newMessage, setNewMessage] = useState("");
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            const token = localStorage.getItem('jwtToken');
-            console.log('Token JWT:', token);
-
-            if (token) {
-                fetch('http://127.0.0.1:5000/Chat', {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                    .then((response) => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            throw new Error('Error al cargar datos privados.');
-                        }
-                    })
-                    .then((data) => {
-                        setData(data);
-                        setIsLoading(false);
-                    })
-                    .catch((error) => {
-                        console.error('Error al cargar datos privados:', error);
-                        setIsLoading(false);
-                    });
-            } else {
-                setIsLoading(false);
-            }
-        } else {
-            setIsLoading(false);
-        }
-    }, [isLoggedIn]);
+    /*  useEffect(() => {
+         if (isLoggedIn) {
+             const token = localStorage.getItem('jwtToken');
+             console.log('Token JWT:', token);
+ 
+             if (token) {
+                 fetch('http://127.0.0.1:5000/Chat', {
+                     method: 'GET',
+                     headers: {
+                         Authorization: `Bearer ${token}`,
+                     },
+                 })
+                     .then((response) => {
+                         if (response.ok) {
+                             return response.json();
+                         } else {
+                             throw new Error('Error al cargar datos privados.');
+                         }
+                     })
+                     .then((data) => {
+                         setData(data);
+                         setIsLoading(false);
+                     })
+                     .catch((error) => {
+                         console.error('Error al cargar datos privados:', error);
+                         setIsLoading(false);
+                     });
+             } else {
+                 setIsLoading(false);
+             }
+         } else {
+             setIsLoading(false);
+         }
+     }, [isLoggedIn]); */
 
     const handleSendMessage = () => {
         if (newMessage.trim() === "") return;
@@ -138,7 +140,7 @@ function Chat() {
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     );
 }
 
