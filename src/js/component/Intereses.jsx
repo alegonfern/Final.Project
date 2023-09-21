@@ -5,8 +5,8 @@ import { UserContext } from '../store/UserContext';
 const Intereses = () => {
     // Definición de géneros de videojuegos y juegos relacionados
     const genres = ['Acción', 'Aventura', 'Estrategia', 'Deportes', 'Carreras', 'Simulación', 'RPG', 'Plataformas', 'Lucha',
-    'Shooter', 'Sandbox', 'Estrategia en tiempo real (RTS)', 'Multijugador en línea Battle Arena (MOBA)', 'Juegos de rol (RPG, ARPG y más)',
-    'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura'];
+        'Shooter', 'Sandbox', 'Estrategia en tiempo real (RTS)', 'Multijugador en línea Battle Arena (MOBA)', 'Juegos de rol (RPG, ARPG y más)',
+        'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura'];
 
     const gamesByGenre = {
         'Acción': ['Call of Duty', 'Battlefield', 'Doom'],
@@ -33,7 +33,7 @@ const Intereses = () => {
         'Rock', 'Pop', 'Hip-Hop', 'Electronic', 'Jazz', 'Blues', 'Country',
         'R&B', 'Reggae', 'Metal', 'Classical', 'Folk', 'Indie', 'Soul', 'Punk'
     ];
-    
+
     const artistsByGenre = {
         'Rock': ['The Beatles', 'Led Zeppelin', 'Queen'],
         'Pop': ['Michael Jackson', 'Madonna', 'Taylor Swift'],
@@ -56,7 +56,7 @@ const Intereses = () => {
         'Acción', 'Aventura', 'Catástrofe', 'Ciencia Ficción', 'Comedia', 'Documentales',
         'Drama', 'Fantasía'
     ];
-    
+
     const moviesByGenre = {
         'Acción': ['Mad Max: Fury Road', 'Die Hard', 'Gladiator'],
         'Aventura': ['Indiana Jones and the Last Crusade', 'Pirates of the Caribbean', 'The Lord of the Rings: The Fellowship of the Ring'],
@@ -80,7 +80,7 @@ const Intereses = () => {
     const [selectedArtists, setSelectedArtists] = useState({});
     const [selectedPlatforms, setSelectedPlatforms] = useState([]);
     const [agePreference, setAgePreference] = useState({ min: 16, max: 99 });
-    const [genderPreference, setGenderPreference] = useState('');
+    const [genderPreference, setGenderPreference] = useState('De todo');
 
     // Nueva función para actualizar la edad mínima
     const handleAgeChange = (event) => {
@@ -217,9 +217,10 @@ const Intereses = () => {
     };
 
     return (
+
         <div className="mt-5 pt-5">
-            <h2>Selecciona tus intereses</h2>
-            <p>Haz clic en los géneros que te interesen y selecciona tus preferencias.</p>
+            <h2>¡Ven jugador, vamos a seleccionar tu genoma gamer!</h2>
+            <p>Haz clic en los géneros que te interesen y selecciona las preferencias que formarán parte de tu ADN.</p>
 
             {/* Sección de géneros de videojuegos */}
             <h3>Géneros de videojuegos</h3>
@@ -236,9 +237,9 @@ const Intereses = () => {
             </div>
 
             {/* Sección de juegos relacionados con los géneros seleccionados */}
-            <h3>Videojuegos relacionados:</h3>
             {selectedGenres.map((genre) => (
                 <div key={genre}>
+                    <h3>Videojuegos relacionados: {genre}</h3>
                     <h4>{genre}</h4>
                     <div className="genres">
                         {gamesByGenre[genre]?.map((game, index) => (
@@ -248,72 +249,6 @@ const Intereses = () => {
                                 onClick={() => handleGameClick(genre, game)}
                             >
                                 {game}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            ))}
-
-            {/* Sección de géneros de películas */}
-            <h3>Géneros de películas</h3>
-            <div className="genres">
-                {movieGenres.map((genre, index) => (
-                    <div
-                        key={index}
-                        className={`genre ${selectedMoviesGenres.includes(genre) ? 'selected' : ''}`}
-                        onClick={() => handleMovieGenreClick(genre)}
-                    >
-                        {genre}
-                    </div>
-                ))}
-            </div>
-
-            {/* Sección de películas relacionadas con los géneros seleccionados */}
-            <h3>Películas relacionadas:</h3>
-            {selectedMoviesGenres.map((genre) => (
-                <div key={genre}>
-                    <h4>{genre}</h4>
-                    <div className="genres">
-                        {moviesByGenre[genre]?.map((movie, index) => (
-                            <div
-                                key={index}
-                                className={`genre ${selectedMovies[genre]?.includes(movie) ? 'selected' : ''}`}
-                                onClick={() => handleMovieClick(genre, movie)}
-                            >
-                                {movie}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            ))}
-
-            {/* Sección de géneros musicales */}
-            <h3>Géneros musicales</h3>
-            <div className="genres">
-                {musicGenres.map((genre, index) => (
-                    <div
-                        key={index}
-                        className={`genre ${selectedMusicGenres.includes(genre) ? 'selected' : ''}`}
-                        onClick={() => handleMusicGenreClick(genre)}
-                    >
-                        {genre}
-                    </div>
-                ))}
-            </div>
-
-            {/* Sección de artistas relacionados con los géneros musicales seleccionados */}
-            <h3>Artistas relacionados:</h3>
-            {selectedMusicGenres.map((genre) => (
-                <div key={genre}>
-                    <h4>{genre}</h4>
-                    <div className="genres">
-                        {artistsByGenre[genre]?.map((artist, index) => (
-                            <div
-                                key={index}
-                                className={`genre ${selectedArtists[genre]?.includes(artist) ? 'selected' : ''}`}
-                                onClick={() => handleArtistClick(genre, artist)}
-                            >
-                                {artist}
                             </div>
                         ))}
                     </div>
@@ -334,8 +269,75 @@ const Intereses = () => {
                 ))}
             </div>
 
+            {/* Sección de géneros de películas */}
+            <h3>Géneros de películas</h3>
+            <div className="genres movie-genres">
+                {movieGenres.map((genre, index) => (
+                    <div
+                        key={index}
+                        className={`genre ${selectedMoviesGenres.includes(genre) ? 'selected' : ''}`}
+                        onClick={() => handleMovieGenreClick(genre)}
+                    >
+                        {genre}
+                    </div>
+                ))}
+            </div>
+
+            {/* Sección de películas relacionadas con los géneros seleccionados */}
+            {selectedMoviesGenres.map((genre) => (
+                <div key={genre}>
+                    <h3>Películas relacionadas: {genre}</h3>
+                    <h4>{genre}</h4>
+                    <div className="genres movie-genres">
+                        {moviesByGenre[genre]?.map((movie, index) => (
+                            <div
+                                key={index}
+                                className={`genre ${selectedMovies[genre]?.includes(movie) ? 'selected' : ''}`}
+                                onClick={() => handleMovieClick(genre, movie)}
+                            >
+                                {movie}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
+
+            {/* Sección de géneros musicales */}
+            <h3>Géneros musicales</h3>
+            <div className="genres music-genres">
+                {musicGenres.map((genre, index) => (
+                    <div
+                        key={index}
+                        className={`genre ${selectedMusicGenres.includes(genre) ? 'selected' : ''}`}
+                        onClick={() => handleMusicGenreClick(genre)}
+                    >
+                        {genre}
+                    </div>
+                ))}
+            </div>
+
+            {/* Sección de artistas relacionados con los géneros musicales seleccionados */}
+            {selectedMusicGenres.map((genre) => (
+                <div key={genre}>
+                    <h3>Artistas relacionados: {genre}</h3>
+                    <h4>{genre}</h4>
+                    <div className="genres music-genres">
+                        {artistsByGenre[genre]?.map((artist, index) => (
+                            <div
+                                key={index}
+                                className={`genre ${selectedArtists[genre]?.includes(artist) ? 'selected' : ''}`}
+                                onClick={() => handleArtistClick(genre, artist)}
+                            >
+                                {artist}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
+
             {/* Barra de selección de edad mínima */}
             <div className='age-selector'>
+                <h3>¿Con usuarios de qué edades quieres comparar tu ADN?</h3>
                 <label>Edad mínima:</label>
                 <input
                     type="range"
@@ -407,12 +409,25 @@ const Intereses = () => {
                     />
                     No binario
                 </label>
+                <label>
+                    <input
+                        type="radio"
+                        name="gender"
+                        value="De todo"
+                        checked={genderPreference === 'De todo'}
+                        onChange={handleGenderChange}
+                    />
+                    De todo
+                </label>
             </div>
 
             {/* Botón para guardar intereses */}
             <div className="submit-button">
-                <button onClick={handleSaveInterests}>Guardar Intereses</button>
+                <button className="btn btn-dark" onClick={handleSaveInterests}>
+                    Guardar Intereses
+                </button>
             </div>
+
         </div>
     );
 };

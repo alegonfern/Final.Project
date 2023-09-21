@@ -1,129 +1,167 @@
-/* Estilos para el componente Intereses */
-
+/* Estilo para los géneros y videojuegos relacionados */
 .genres {
     display: flex;
     flex-wrap: wrap;
-  }
-  
-  .genre {
+}
+
+.genre {
     background-color: red;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 25px; /* Ajusta el padding para hacer los géneros más grandes */
     margin: 5px;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-  }
-  
-  .genre:hover {
+}
+
+.genre:hover {
     transform: scale(1.1);
-  }
-  
-  .genre.selected {
+}
+
+.genre.selected {
     background-color: darkred;
     animation: float 3s ease-in-out infinite;
-  }
-  
-  .sub-genres {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 5px;
-  }
-  
-  .sub-genres .genre {
-    margin-right: 5px;
-  }
-  
-  @keyframes float {
+}
+
+/* Estilo para Géneros de películas */
+.movie-genres .genre {
+    background-color: blue; /* Cambia el color de fondo a azul */
+    color: white; /* Cambia el color del texto a blanco */
+}
+
+.movie-genres .genre.selected {
+    background-color: darkblue; /* Cambia el color de fondo al hacer clic */
+}
+
+/* Estilo para Películas relacionadas */
+.related-movies .genre {
+    background-color: blue; /* Cambia el color de fondo a azul */
+    color: white; /* Cambia el color del texto a blanco */
+}
+
+.related-movies .genre.selected {
+    background-color: darkblue; /* Cambia el color de fondo al hacer clic */
+}
+
+/* Estilo para Géneros musicales */
+.music-genres .genre {
+    background-color: green; /* Cambia el color de fondo a amarillo */
+    color: white; /* Cambia el color del texto a negro */
+}
+
+.music-genres .genre.selected {
+    background-color: darkgreen; /* Cambia el color de fondo al hacer clic */
+}
+
+/* Estilo para Artistas relacionados */
+.related-artists .genre {
+    background-color: green; /* Cambia el color de fondo a amarillo */
+    color: white; /* Cambia el color del texto a negro */
+}
+
+.related-artists .genre.selected {
+    background-color: darkgreen; /* Cambia el color de fondo al hacer clic */
+}
+
+
+@keyframes float {
     0% {
-      transform: translateY(0px);
+        transform: translateY(0px);
     }
-  
+
     50% {
-      transform: translateY(-20px);
+        transform: translateY(-20px);
     }
-  
+
     100% {
-      transform: translateY(0px);
+        transform: translateY(0px);
     }
-  }
-  
-  /* Estilo para el botón "Guardar Intereses" */
-  .submit-button {
+}
+
+/* Estilo para el botón "Guardar Intereses" */
+.submit-button {
     text-align: center;
     margin: 20px 0;
-  }
-  
-  .submit-button button {
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
+}
+
+.submit-button button {
     padding: 10px 20px;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-  }
-  
-  .submit-button button:hover {
+}
+
+.submit-button button:hover {
     transform: scale(1.1);
-  }
-  
-  /* Estilos para el selector de edades */
-  .age-selector {
+}
+
+/* Estilo para la barra de selección de edad */
+.age-selector {
+    margin-top: 20px;
+}
+
+.age-selector label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.age-selector input[type="range"] {
+   
+    height: 20px; /* Mantén el tamaño de la barra */
+    background-color: #ff6600; /* Cambia el color de fondo de la barra a uno llamativo */
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.age-selector input[type="number"] {
+    width: 50px;
+    height: 30px; /* Ajusta la altura del campo numérico */
+    margin-left: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Estilo para los géneros seleccionados */
+.selected-genres {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.selected-genre {
+    background-color: #0099cc; /* Cambia el color de fondo de los géneros seleccionados */
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
-    margin-top: 10px;
-  }
-  
-  .age-selector input[type="range"] {
-    width: 50px;
-    height: 30px;
-    text-align: center;
-    margin: 0 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    outline: none;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .age-selector span {
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
-  /* Estilos para el menú desplegable de género */
-  .gender-selector {
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  .gender-selector select {
-    width: 100%;
-    padding: 10px;
-    background-color: #ddd;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .gender-selector select:hover {
-    transform: scale(1.05);
-  }
-  
-  /* Estilo para el selector de plataforma de juego */
-  .platform-selector {
-    width: 100%;
-    padding: 10px;
-    background-color: #ddd;
-    border-radius: 5px;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .platform-selector:hover {
-    transform: scale(1.05);
-  }
+}
 
-  
+.selected-genre span {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Estilo para los checkbox de género */
+.gender-selector {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.gender-selector label {
+    font-size: 18px; /* Ajusta el tamaño de fuente de las etiquetas de género */
+}
+
+.gender-selector input[type="radio"] {
+    margin-right: 5px;
+    width: 20px; /* Ajusta el tamaño de los checkbox */
+    height: 20px; /* Ajusta el tamaño de los checkbox */
+    cursor: pointer;
+}
+
