@@ -70,7 +70,8 @@ const Intereses = () => {
 
     const platforms = ['Nintendo', 'PlayStation', 'Xbox', 'PC', 'Celular'];
 
-    const { userId } = useContext(UserContext);
+    const { userId, userPreferences, updateUserPreferences } = useContext(UserContext);
+
 
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedGames, setSelectedGames] = useState({});
@@ -81,6 +82,23 @@ const Intereses = () => {
     const [selectedPlatforms, setSelectedPlatforms] = useState([]);
     const [agePreference, setAgePreference] = useState({ min: 16, max: 99 });
     const [genderPreference, setGenderPreference] = useState('De todo');
+
+    useEffect(() => {
+        updateUserPreferences({
+            ...userPreferences,
+            selectedGenres,
+            selectedGames,
+            selectedMoviesGenres,
+            selectedMovies,
+            selectedMusicGenres,
+            selectedArtists,
+            selectedPlatforms,
+            agePreference,
+            genderPreference,
+        });
+    }, [selectedGenres, selectedGames, selectedMoviesGenres, selectedMovies, selectedMusicGenres, selectedArtists, selectedPlatforms, agePreference, genderPreference]);
+
+
 
     // Nueva función para actualizar la edad mínima
     const handleAgeChange = (event) => {
@@ -192,7 +210,7 @@ const Intereses = () => {
         };
 
         // URL del endpoint en tu backend para guardar los datos de interés
-        const saveInterestsUrl = 'http://tu-backend.com/api/guardar-intereses';
+        const saveInterestsUrl = "http://127.0.0.1:5000/generos";
 
         try {
             const response = await fetch(saveInterestsUrl, {

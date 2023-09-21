@@ -8,6 +8,12 @@ export const UserProvider = ({ children }) => {
   const [userName, setUserName] = useState('Nombre Usuario');
   const [userId, setUserId] = useState(null);
 
+  const [userPreferences, setUserPreferences] = useState({}); // Agrega el estado de preferencias de usuario
+
+  const updateUserPreferences = (preferences) => {
+    setUserPreferences(preferences);
+  };
+
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
@@ -89,7 +95,7 @@ export const UserProvider = ({ children }) => {
   }
 
   return (
-    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName, userId }}>
+    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName, userId, updateUserPreferences }}>
       {children}
     </UserContext.Provider>
   );
