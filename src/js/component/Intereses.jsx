@@ -235,227 +235,232 @@ const Intereses = () => {
     };
 
     return (
+        <div className='row'>
+            <div className='col-8'>
+                <div className="mt-5 pt-5">
+                    <h2>¡Ven jugador, vamos a seleccionar tu genoma gamer!</h2>
+                    <p>Haz clic en los géneros que te interesen y selecciona las preferencias que formarán parte de tu ADN.</p>
 
-        <div className="mt-5 pt-5">
-            <h2>¡Ven jugador, vamos a seleccionar tu genoma gamer!</h2>
-            <p>Haz clic en los géneros que te interesen y selecciona las preferencias que formarán parte de tu ADN.</p>
+                    {/* Sección de géneros de videojuegos */}
+                    <div className='div-videogames py-2'>
+                        <h3>¿Qué géneros te gustan?</h3>
+                        <div className="genres">
+                            {genres.map((genre, index) => (
+                                <div
+                                    key={index}
+                                    className={`genre ${selectedGenres.includes(genre) ? 'selected' : ''}`}
+                                    onClick={() => handleGenreClick(genre)}
+                                >
+                                    {genre}
+                                </div>
 
-            {/* Sección de géneros de videojuegos */}
-            <div className='div-videogames py-2'>
-                <h3>¿Qué géneros te gustan?</h3>
-                <div className="genres">
-                    {genres.map((genre, index) => (
-                        <div
-                            key={index}
-                            className={`genre ${selectedGenres.includes(genre) ? 'selected' : ''}`}
-                            onClick={() => handleGenreClick(genre)}
-                        >
-                            {genre}
+                            ))}
                         </div>
-                    ))}
+                    </div>
                 </div>
-            </div>
 
-            {/* Sección de juegos relacionados con los géneros seleccionados */}
-            {selectedGenres.map((genre) => (
-                <div key={genre}>
-                    <h3>Videojuegos de: {genre}</h3>
-                    <h4>{genre}</h4>
+
+                {/* Sección de juegos relacionados con los géneros seleccionados */}
+                {selectedGenres.map((genre) => (
+                    <div key={genre}>
+                        <h3>Videojuegos de: {genre}</h3>
+                        <h4>{genre}</h4>
+                        <div className="genres">
+                            {gamesByGenre[genre]?.map((game, index) => (
+                                <div
+                                    key={index}
+                                    className={`genre ${selectedGames[genre]?.includes(game) ? 'selected' : ''}`}
+                                    onClick={() => handleGameClick(genre, game)}
+                                >
+                                    {game}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+
+                {/* Sección de plataformas de juego */}
+                <div className='div-plataformas py-2'>
+                    <h3>¿Cuál prefieres para jugar?</h3>
                     <div className="genres">
-                        {gamesByGenre[genre]?.map((game, index) => (
+                        {platforms.map((platform, index) => (
                             <div
                                 key={index}
-                                className={`genre ${selectedGames[genre]?.includes(game) ? 'selected' : ''}`}
-                                onClick={() => handleGameClick(genre, game)}
+                                className={`genre ${selectedPlatforms.includes(platform) ? 'selected' : ''}`}
+                                onClick={() => handlePlatformClick(platform)}
                             >
-                                {game}
+                                {platform}
                             </div>
                         ))}
                     </div>
                 </div>
-            ))}
 
-            {/* Sección de plataformas de juego */}
-            <div className='div-plataformas py-2'>
-                <h3>¿Cuál prefieres para jugar?</h3>
-                <div className="genres">
-                    {platforms.map((platform, index) => (
-                        <div
-                            key={index}
-                            className={`genre ${selectedPlatforms.includes(platform) ? 'selected' : ''}`}
-                            onClick={() => handlePlatformClick(platform)}
-                        >
-                            {platform}
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Sección de géneros de películas */}
-            <div className='div-movie py-2'>
-                <h3>Vamos a la películas ¿de qué tipo te gustan?</h3>
-                <div className="genres movie-genres">
-                    {movieGenres.map((genre, index) => (
-                        <div
-                            key={index}
-                            className={`genre ${selectedMoviesGenres.includes(genre) ? 'selected' : ''}`}
-                            onClick={() => handleMovieGenreClick(genre)}
-                        >
-                            {genre}
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Sección de películas relacionadas con los géneros seleccionados */}
-            {selectedMoviesGenres.map((genre) => (
-                <div key={genre}>
-                    <h3>¿Alguna de estas?</h3>
-                    <h4>{genre}</h4>
+                {/* Sección de géneros de películas */}
+                <div className='div-movie py-2'>
+                    <h3>Vamos a la películas ¿de qué tipo te gustan?</h3>
                     <div className="genres movie-genres">
-                        {moviesByGenre[genre]?.map((movie, index) => (
+                        {movieGenres.map((genre, index) => (
                             <div
                                 key={index}
-                                className={`genre ${selectedMovies[genre]?.includes(movie) ? 'selected' : ''}`}
-                                onClick={() => handleMovieClick(genre, movie)}
+                                className={`genre ${selectedMoviesGenres.includes(genre) ? 'selected' : ''}`}
+                                onClick={() => handleMovieGenreClick(genre)}
                             >
-                                {movie}
+                                {genre}
                             </div>
                         ))}
                     </div>
                 </div>
-            ))}
 
-            {/* Sección de géneros musicales */}
-            <div className='div-musica py-2'>
-                <h3>¡Nada como jugar y escuchar tú música favorita!</h3>
-                <div className="genres music-genres">
-                    {musicGenres.map((genre, index) => (
-                        <div
-                            key={index}
-                            className={`genre ${selectedMusicGenres.includes(genre) ? 'selected' : ''}`}
-                            onClick={() => handleMusicGenreClick(genre)}
-                        >
-                            {genre}
+                {/* Sección de películas relacionadas con los géneros seleccionados */}
+                {selectedMoviesGenres.map((genre) => (
+                    <div key={genre}>
+                        <h3>¿Alguna de estas?</h3>
+                        <h4>{genre}</h4>
+                        <div className="genres movie-genres">
+                            {moviesByGenre[genre]?.map((movie, index) => (
+                                <div
+                                    key={index}
+                                    className={`genre ${selectedMovies[genre]?.includes(movie) ? 'selected' : ''}`}
+                                    onClick={() => handleMovieClick(genre, movie)}
+                                >
+                                    {movie}
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            </div>
+                    </div>
+                ))}
 
-            {/* Sección de artistas relacionados con los géneros musicales seleccionados */}
-            {selectedMusicGenres.map((genre) => (
-                <div key={genre}>
-                    <h3>Artistas o banda favorita?</h3>
-                    <h4>{genre}</h4>
+                {/* Sección de géneros musicales */}
+                <div className='div-musica py-2'>
+                    <h3>¡Nada como jugar y escuchar tú música favorita!</h3>
                     <div className="genres music-genres">
-                        {artistsByGenre[genre]?.map((artist, index) => (
+                        {musicGenres.map((genre, index) => (
                             <div
                                 key={index}
-                                className={`genre ${selectedArtists[genre]?.includes(artist) ? 'selected' : ''}`}
-                                onClick={() => handleArtistClick(genre, artist)}
+                                className={`genre ${selectedMusicGenres.includes(genre) ? 'selected' : ''}`}
+                                onClick={() => handleMusicGenreClick(genre)}
                             >
-                                {artist}
+                                {genre}
                             </div>
                         ))}
                     </div>
                 </div>
-            ))}
 
-            {/* Barra de selección de edad mínima */}
-            <div className='age-selector form-label py-2'>
-                <h3>¿Con usuarios de qué edades quieres comparar tu ADN?</h3>
-                <label>Edad mínima:</label>
-                <input
-                    type="range"
-                    className="form-range"
-                    min="16"
-                    max="98"
-                    value={agePreference.min}
-                    onChange={handleAgeChange}
-                />
-                <input
-                    type="number"
-                    min="16"
-                    max={agePreference.max - 1}
-                    value={agePreference.min}
-                    onChange={handleMinAgeInputChange}
-                />
-                <span>{agePreference.min}</span>
-            </div>
+                {/* Sección de artistas relacionados con los géneros musicales seleccionados */}
+                {selectedMusicGenres.map((genre) => (
+                    <div key={genre}>
+                        <h3>Artistas o banda favorita?</h3>
+                        <h4>{genre}</h4>
+                        <div className="genres music-genres">
+                            {artistsByGenre[genre]?.map((artist, index) => (
+                                <div
+                                    key={index}
+                                    className={`genre ${selectedArtists[genre]?.includes(artist) ? 'selected' : ''}`}
+                                    onClick={() => handleArtistClick(genre, artist)}
+                                >
+                                    {artist}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
 
-            {/* Barra de selección de edad máxima */}
-            <div className='age-selector form-label'>
-                <label>Edad máxima:</label>
-                <input
-                    type="range"
-                    className='form-range'
-                    min={agePreference.min + 1}
-                    max="99"
-                    value={agePreference.max}
-                    onChange={handleMaxAgeChange}
-                />
-                <input
-                    type="number"
-                    min={agePreference.min + 1}
-                    max="99"
-                    value={agePreference.max === 99 ? '' : agePreference.max}
-                    onChange={handleMaxAgeInputChange}
-                />
-                <span>{agePreference.max === 99 ? '99+' : agePreference.max}</span>
-            </div>
-
-            {/* Selección de género */}
-            <div className="gender-selector py-2">
-                <h3>Género:</h3>
-                <label>
+                {/* Barra de selección de edad mínima */}
+                <div className='age-selector form-label py-2'>
+                    <h3>¿Con usuarios de qué edades quieres comparar tu ADN?</h3>
+                    <label>Edad mínima:</label>
                     <input
-                        type="radio"
-                        name="gender"
-                        value="Masculino"
-                        checked={genderPreference === 'Masculino'}
-                        onChange={handleGenderChange}
+                        type="range"
+                        className="form-range"
+                        min="16"
+                        max="98"
+                        value={agePreference.min}
+                        onChange={handleAgeChange}
                     />
-                    Masculino
-                </label>
-                <label>
                     <input
-                        type="radio"
-                        name="gender"
-                        value="Femenino"
-                        checked={genderPreference === 'Femenino'}
-                        onChange={handleGenderChange}
+                        type="number"
+                        min="16"
+                        max={agePreference.max - 1}
+                        value={agePreference.min}
+                        onChange={handleMinAgeInputChange}
                     />
-                    Femenino
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        name="gender"
-                        value="No binario"
-                        checked={genderPreference === 'No binario'}
-                        onChange={handleGenderChange}
-                    />
-                    No binario
-                </label>
-                <label>
-                    <input
-                        type="radio"
-                        name="gender"
-                        value="De todo"
-                        checked={genderPreference === 'De todo'}
-                        onChange={handleGenderChange}
-                    />
-                    De todo
-                </label>
-            </div>
+                    <span>{agePreference.min}</span>
+                </div>
 
-            {/* Botón para guardar intereses */}
-            <div className="submit-button">
-                <button className="btn btn-dark" onClick={handleSaveInterests}>
-                    Guardar Intereses
-                </button>
-            </div>
+                {/* Barra de selección de edad máxima */}
+                <div className='age-selector form-label'>
+                    <label>Edad máxima:</label>
+                    <input
+                        type="range"
+                        className='form-range'
+                        min={agePreference.min + 1}
+                        max="99"
+                        value={agePreference.max}
+                        onChange={handleMaxAgeChange}
+                    />
+                    <input
+                        type="number"
+                        min={agePreference.min + 1}
+                        max="99"
+                        value={agePreference.max === 99 ? '' : agePreference.max}
+                        onChange={handleMaxAgeInputChange}
+                    />
+                    <span>{agePreference.max === 99 ? '99+' : agePreference.max}</span>
+                </div>
 
+                {/* Selección de género */}
+                <div className="gender-selector py-2">
+                    <h3>Género:</h3>
+                    <label>
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="Masculino"
+                            checked={genderPreference === 'Masculino'}
+                            onChange={handleGenderChange}
+                        />
+                        Masculino
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="Femenino"
+                            checked={genderPreference === 'Femenino'}
+                            onChange={handleGenderChange}
+                        />
+                        Femenino
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="No binario"
+                            checked={genderPreference === 'No binario'}
+                            onChange={handleGenderChange}
+                        />
+                        No binario
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="De todo"
+                            checked={genderPreference === 'De todo'}
+                            onChange={handleGenderChange}
+                        />
+                        De todo
+                    </label>
+                </div>
+
+                {/* Botón para guardar intereses */}
+                <div className="submit-button">
+                    <button className="btn btn-dark" onClick={handleSaveInterests}>
+                        Guardar Intereses
+                    </button>
+                </div>
+
+            </div>
         </div>
     );
 };
