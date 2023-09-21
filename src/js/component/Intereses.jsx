@@ -6,9 +6,6 @@ const Intereses = () => {
     // Definición de géneros de videojuegos y juegos relacionados
     const genres = ['Acción', 'Aventura', 'Estrategia', 'Deportes', 'Carreras', 'Simulación', 'RPG', 'Plataformas', 'Lucha',
         'Shooter', 'Sandbox', 'Estrategia en tiempo real (RTS)', 'Multijugador en línea Battle Arena (MOBA)', 'Juegos de rol (RPG, ARPG y más)',
-        'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura'];
-
-    const gamesByGenre = {
         'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura', 'Survival', 'Horror', 'Ciencia ficción', 'Fantasía', 'Misterio', 'Historia visual', 'Musical', 'Educativo', 'Casual'];
 
 
