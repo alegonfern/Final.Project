@@ -223,23 +223,25 @@ const Intereses = () => {
             <p>Haz clic en los géneros que te interesen y selecciona las preferencias que formarán parte de tu ADN.</p>
 
             {/* Sección de géneros de videojuegos */}
-            <h3>Géneros de videojuegos</h3>
-            <div className="genres">
-                {genres.map((genre, index) => (
-                    <div
-                        key={index}
-                        className={`genre ${selectedGenres.includes(genre) ? 'selected' : ''}`}
-                        onClick={() => handleGenreClick(genre)}
-                    >
-                        {genre}
-                    </div>
-                ))}
+            <div className='div-videogames py-2'>
+                <h3>¿Qué géneros te gustan?</h3>
+                <div className="genres">
+                    {genres.map((genre, index) => (
+                        <div
+                            key={index}
+                            className={`genre ${selectedGenres.includes(genre) ? 'selected' : ''}`}
+                            onClick={() => handleGenreClick(genre)}
+                        >
+                            {genre}
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Sección de juegos relacionados con los géneros seleccionados */}
             {selectedGenres.map((genre) => (
                 <div key={genre}>
-                    <h3>Videojuegos relacionados: {genre}</h3>
+                    <h3>Videojuegos de: {genre}</h3>
                     <h4>{genre}</h4>
                     <div className="genres">
                         {gamesByGenre[genre]?.map((game, index) => (
@@ -256,37 +258,41 @@ const Intereses = () => {
             ))}
 
             {/* Sección de plataformas de juego */}
-            <h3>Plataformas de juego</h3>
-            <div className="genres">
-                {platforms.map((platform, index) => (
-                    <div
-                        key={index}
-                        className={`genre ${selectedPlatforms.includes(platform) ? 'selected' : ''}`}
-                        onClick={() => handlePlatformClick(platform)}
-                    >
-                        {platform}
-                    </div>
-                ))}
+            <div className='div-plataformas py-2'>
+                <h3>¿Cuál prefieres para jugar?</h3>
+                <div className="genres">
+                    {platforms.map((platform, index) => (
+                        <div
+                            key={index}
+                            className={`genre ${selectedPlatforms.includes(platform) ? 'selected' : ''}`}
+                            onClick={() => handlePlatformClick(platform)}
+                        >
+                            {platform}
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Sección de géneros de películas */}
-            <h3>Géneros de películas</h3>
-            <div className="genres movie-genres">
-                {movieGenres.map((genre, index) => (
-                    <div
-                        key={index}
-                        className={`genre ${selectedMoviesGenres.includes(genre) ? 'selected' : ''}`}
-                        onClick={() => handleMovieGenreClick(genre)}
-                    >
-                        {genre}
-                    </div>
-                ))}
+            <div className='div-movie py-2'>
+                <h3>Vamos a la películas ¿de qué tipo te gustan?</h3>
+                <div className="genres movie-genres">
+                    {movieGenres.map((genre, index) => (
+                        <div
+                            key={index}
+                            className={`genre ${selectedMoviesGenres.includes(genre) ? 'selected' : ''}`}
+                            onClick={() => handleMovieGenreClick(genre)}
+                        >
+                            {genre}
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Sección de películas relacionadas con los géneros seleccionados */}
             {selectedMoviesGenres.map((genre) => (
                 <div key={genre}>
-                    <h3>Películas relacionadas: {genre}</h3>
+                    <h3>¿Alguna de estas?</h3>
                     <h4>{genre}</h4>
                     <div className="genres movie-genres">
                         {moviesByGenre[genre]?.map((movie, index) => (
@@ -303,23 +309,25 @@ const Intereses = () => {
             ))}
 
             {/* Sección de géneros musicales */}
-            <h3>Géneros musicales</h3>
-            <div className="genres music-genres">
-                {musicGenres.map((genre, index) => (
-                    <div
-                        key={index}
-                        className={`genre ${selectedMusicGenres.includes(genre) ? 'selected' : ''}`}
-                        onClick={() => handleMusicGenreClick(genre)}
-                    >
-                        {genre}
-                    </div>
-                ))}
+            <div className='div-musica py-2'>
+                <h3>¡Nada como jugar y escuchar tú música favorita!</h3>
+                <div className="genres music-genres">
+                    {musicGenres.map((genre, index) => (
+                        <div
+                            key={index}
+                            className={`genre ${selectedMusicGenres.includes(genre) ? 'selected' : ''}`}
+                            onClick={() => handleMusicGenreClick(genre)}
+                        >
+                            {genre}
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Sección de artistas relacionados con los géneros musicales seleccionados */}
             {selectedMusicGenres.map((genre) => (
                 <div key={genre}>
-                    <h3>Artistas relacionados: {genre}</h3>
+                    <h3>Artistas o banda favorita?</h3>
                     <h4>{genre}</h4>
                     <div className="genres music-genres">
                         {artistsByGenre[genre]?.map((artist, index) => (
@@ -336,11 +344,12 @@ const Intereses = () => {
             ))}
 
             {/* Barra de selección de edad mínima */}
-            <div className='age-selector'>
+            <div className='age-selector form-label py-2'>
                 <h3>¿Con usuarios de qué edades quieres comparar tu ADN?</h3>
                 <label>Edad mínima:</label>
                 <input
                     type="range"
+                    className="form-range"
                     min="16"
                     max="98"
                     value={agePreference.min}
@@ -357,10 +366,11 @@ const Intereses = () => {
             </div>
 
             {/* Barra de selección de edad máxima */}
-            <div className='age-selector'>
+            <div className='age-selector form-label'>
                 <label>Edad máxima:</label>
                 <input
                     type="range"
+                    className='form-range'
                     min={agePreference.min + 1}
                     max="99"
                     value={agePreference.max}
@@ -377,8 +387,8 @@ const Intereses = () => {
             </div>
 
             {/* Selección de género */}
-            <h3>Género:</h3>
-            <div className="gender-selector">
+            <div className="gender-selector py-2">
+                <h3>Género:</h3>
                 <label>
                     <input
                         type="radio"

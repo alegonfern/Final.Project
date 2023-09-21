@@ -96,34 +96,6 @@
     transform: scale(1.1);
 }
 
-/* Estilo para la barra de selección de edad */
-.age-selector {
-    margin-top: 20px;
-}
-
-.age-selector label {
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.age-selector input[type="range"] {
-   
-    height: 20px; /* Mantén el tamaño de la barra */
-    background-color: #ff6600; /* Cambia el color de fondo de la barra a uno llamativo */
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.age-selector input[type="number"] {
-    width: 50px;
-    height: 30px; /* Ajusta la altura del campo numérico */
-    margin-left: 10px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
 
 /* Estilo para los géneros seleccionados */
 .selected-genres {
