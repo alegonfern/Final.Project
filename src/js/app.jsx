@@ -45,9 +45,9 @@ function App() {
                 </div>
                 <div className="content" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
                   <Routes>
+                    <Route path="/Home" element={<Home />} />
                     <Route path="/login_google" element={<GoogleCallback />} />
                     <Route path="/Intereses" element={<Intereses />} />
-                    <Route path="/Home" element={<Home />} />
                     <Route path="/MatchPreview" element={<MatchPreview />} />
                     <Route path="/Group" element={<Group />} />
                     <Route path="/profile" element={<Profile />} />

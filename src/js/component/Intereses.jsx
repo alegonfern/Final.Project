@@ -9,64 +9,100 @@ const Intereses = () => {
         'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura'];
 
     const gamesByGenre = {
-        'Acción': ['Call of Duty', 'Battlefield', 'Doom'],
-        'Aventura': ['The Legend of Zelda', 'Uncharted', 'Tomb Raider'],
-        'Estrategia': ['Civilization', 'Starcraft', 'Age of Empires'],
-        'Deportes': ['FIFA', 'NBA 2K', 'Madden NFL'],
-        'Carreras': ['Mario Kart', 'Need for Speed', 'Forza Horizon'],
-        'Simulación': ['The Sims', 'SimCity', 'RollerCoaster Tycoon'],
-        'RPG': ['The Elder Scrolls V: Skyrim', 'The Witcher 3: Wild Hunt', 'Final Fantasy VII Remake'],
-        'Plataformas': ['Super Mario Bros.', 'Sonic the Hedgehog', 'Donkey Kong Country'],
-        'Lucha': ['Street Fighter V', 'Mortal Kombat 11', 'Super Smash Bros. Ultimate'],
-        'Shooter': ['Call of Duty: Warzone', 'Overwatch', 'Counter-Strike: Global Offensive'],
-        'Sandbox': ['Minecraft', 'Grand Theft Auto V', 'Red Dead Redemption 2'],
-        'Estrategia en tiempo real (RTS)': ['Starcraft II', 'Age of Empires II', 'Warcraft III'],
-        'Multijugador en línea Battle Arena (MOBA)': ['League of Legends', 'Dota 2', 'Smite'],
-        'Juegos de rol (RPG, ARPG y más)': ['The Witcher 3: Wild Hunt', 'Skyrim', 'Dark Souls III'],
-        'Simulación y deportes': ['FIFA 22', 'NBA 2K22', 'Football Manager 2022'],
-        'Rompecabezas y juegos de fiesta': ['Tetris Effect: Connected', 'Overcooked! All You Can Eat', 'Mario Party Superstars'],
-        'Acción-aventura': ['The Legend of Zelda: Breath of the Wild', 'God of War', 'Spider-Man: Miles Morales']
-    };
+        'Simulación y deportes', 'Rompecabezas y juegos de fiesta', 'Acción-aventura', 'Survival', 'Horror', 'Ciencia ficción', 'Fantasía', 'Misterio', 'Historia visual', 'Musical', 'Educativo', 'Casual'];
+
+
+        const gamesByGenre = {
+            'Acción': ['Call of Duty', 'Battlefield', 'Doom', 'Halo', 'Gears of War'],
+            'Aventura': ['The Legend of Zelda', 'Uncharted', 'Tomb Raider', "Assassin's Creed", 'Horizon Zero Dawn'],
+            'Estrategia': ['Civilization', 'Starcraft', 'Age of Empires', 'Total War: Three Kingdoms', 'Company of Heroes'],
+            'Deportes': ['FIFA', 'NBA 2K', 'Madden NFL', 'WWE 2K', 'Rocket League'],
+            'Carreras': ['Mario Kart', 'Need for Speed', 'Forza Horizon', 'Burnout Paradise', 'Gran Turismo'],
+            'Simulación': ['The Sims', 'SimCity', 'RollerCoaster Tycoon', 'Cities: Skylines', 'Farming Simulator 22'],
+            'RPG': ['The Elder Scrolls V: Skyrim', 'The Witcher 3: Wild Hunt', 'Final Fantasy VII Remake', 'Dragon Age: Origins', 'Persona 5'],
+            'Plataformas': ['Super Mario Bros.', 'Sonic the Hedgehog', 'Donkey Kong Country', 'Celeste', 'Hollow Knight'],
+            'Lucha': ['Street Fighter V', 'Mortal Kombat 11', 'Super Smash Bros. Ultimate', 'Tekken 7', 'Dragon Ball FighterZ'],
+            'Shooter': ['Call of Duty: Warzone', 'Overwatch', 'Counter-Strike: Global Offensive', 'Rainbow Six Siege', 'Destiny 2'],
+            'Sandbox': ['Minecraft', 'Grand Theft Auto V', 'Red Dead Redemption 2', "No Man's Sky", 'Terraria'],
+            'Estrategia en tiempo real (RTS)': ['Starcraft II', 'Age of Empires II', 'Warcraft III', 'Command & Conquer: Red Alert 2', 'Stronghold Crusader'],
+            'Multijugador en línea Battle Arena (MOBA)': ['League of Legends', 'Dota 2', 'Smite', 'Heroes of the Storm', 'Vainglory'],
+            'Juegos de rol (RPG, ARPG y más)': ['The Witcher 3: Wild Hunt', 'Skyrim', 'Dark Souls III', 'Diablo III', 'Path of Exile'],
+            'Simulación y deportes': ['FIFA 22', 'NBA 2K22', 'Football Manager 2022', 'Pro Evolution Soccer 2022', 'Rocket League'],
+            'Rompecabezas y juegos de fiesta': ['Tetris Effect: Connected', 'Overcooked! All You Can Eat', 'Mario Party Superstars', 'Keep Talking and Nobody Explodes', 'Jackbox Party Pack'],
+            'Acción-aventura': ['The Legend of Zelda: Breath of the Wild', 'God of War', 'Spider-Man: Miles Morales', "Assassin's Creed Valhalla", 'Red Dead Redemption 2'],
+            'Survival': ['The Forest', 'ARK: Survival Evolved', 'Rust', 'Subnautica', 'The Long Dark'],
+            'Horror': ['Resident Evil Village', 'Silent Hill 2', 'Amnesia: The Dark Descent', 'Outlast', 'Alien: Isolation'],
+            'Ciencia ficción': ['Mass Effect', 'Deus Ex', 'Prey', 'System Shock 2', 'XCOM 2'],
+            'Fantasía': ['Dragon Age: Inquisition', 'Divinity: Original Sin 2', 'Dark Souls', 'The Elder Scrolls IV: Oblivion', 'Kingdoms of Amalur: Reckoning'],
+            'Misterio': ['L.A. Noire', 'Murdered: Soul Suspect', 'Her Story', 'The Vanishing of Ethan Carter', 'Return of Obra Dinn'],
+            'Historia visual': ['Doki Doki Literature Club!', 'Phoenix Wright: Ace Attorney', 'Steins;Gate', 'The House in Fata Morgana', 'VA-11 Hall-A: Cyberpunk Bartender Action'],
+            'Musical': ['Beat Saber', 'Guitar Hero', 'Dance Dance Revolution', 'Crypt of the NecroDancer', 'Thumper'],
+            'Educativo': ['Minecraft: Education Edition', 'Kerbal Space Program', 'Carmen Sandiego', 'The Oregon Trail', 'Math Blaster'],
+            'Casual': ['Candy Crush Saga', 'Angry Birds', 'Plants vs. Zombies', 'Fruit Ninja', 'Sudoku']
+        };
+        
 
     // Definición de géneros de películas y películas relacionadas
     const musicGenres = [
         'Rock', 'Pop', 'Hip-Hop', 'Electronic', 'Jazz', 'Blues', 'Country',
-        'R&B', 'Reggae', 'Metal', 'Classical', 'Folk', 'Indie', 'Soul', 'Punk'
+        'R&B', 'Reggae', 'Metal', 'Classical', 'Folk', 'Indie', 'Soul', 'Punk',
+        'Funk', 'Disco', 'Techno', 'House', 'Salsa', 'Merengue', 'K-Pop', 'Reggaeton', 'Gospel', 'Trance', 'Dancehall'
     ];
+    
 
     const artistsByGenre = {
-        'Rock': ['The Beatles', 'Led Zeppelin', 'Queen'],
-        'Pop': ['Michael Jackson', 'Madonna', 'Taylor Swift'],
-        'Hip-Hop': ['Eminem', 'Jay-Z', 'Kendrick Lamar'],
-        'Electronic': ['Daft Punk', 'Calvin Harris', 'The Chemical Brothers'],
-        'Jazz': ['Miles Davis', 'John Coltrane', 'Ella Fitzgerald'],
-        'Blues': ['B.B. King', 'Muddy Waters', 'Stevie Ray Vaughan'],
-        'Country': ['Johnny Cash', 'Dolly Parton', 'Garth Brooks'],
-        'R&B': ['Aretha Franklin', 'Stevie Wonder', 'Beyoncé'],
-        'Reggae': ['Bob Marley', 'Peter Tosh', 'Jimmy Cliff'],
-        'Metal': ['Metallica', 'Iron Maiden', 'Black Sabbath'],
-        'Classical': ['Ludwig van Beethoven', 'Wolfgang Amadeus Mozart', 'Johann Sebastian Bach'],
-        'Folk': ['Bob Dylan', 'Simon & Garfunkel', 'Joni Mitchell'],
-        'Indie': ['Radiohead', 'Arctic Monkeys', 'Tame Impala'],
-        'Soul': ['Ray Charles', 'James Brown', 'Otis Redding'],
-        'Punk': ['The Ramones', 'The Clash', 'Sex Pistols']
+        'Rock': ['The Beatles', 'Led Zeppelin', 'Queen', 'Pink Floyd', 'The Rolling Stones'],
+        'Pop': ['Michael Jackson', 'Madonna', 'Taylor Swift', 'Elton John', 'Adele'],
+        'Hip-Hop': ['Eminem', 'Jay-Z', 'Kendrick Lamar', 'Notorious B.I.G.', 'Tupac Shakur'],
+        'Electronic': ['Daft Punk', 'Calvin Harris', 'The Chemical Brothers', 'David Guetta', 'Deadmau5'],
+        'Jazz': ['Miles Davis', 'John Coltrane', 'Ella Fitzgerald', 'Louis Armstrong', 'Duke Ellington'],
+        'Blues': ['B.B. King', 'Muddy Waters', 'Stevie Ray Vaughan', 'Eric Clapton', 'John Lee Hooker'],
+        'Country': ['Johnny Cash', 'Dolly Parton', 'Garth Brooks', 'Willie Nelson', 'Kenny Rogers'],
+        'R&B': ['Aretha Franklin', 'Stevie Wonder', 'Beyoncé', 'Whitney Houston', 'Marvin Gaye'],
+        'Reggae': ['Bob Marley', 'Peter Tosh', 'Jimmy Cliff', 'Toots and the Maytals', 'Damian Marley'],
+        'Metal': ['Metallica', 'Iron Maiden', 'Black Sabbath', 'Megadeth', 'Slayer'],
+        'Classical': ['Ludwig van Beethoven', 'Wolfgang Amadeus Mozart', 'Johann Sebastian Bach', 'Pyotr Ilyich Tchaikovsky', 'Antonio Vivaldi'],
+        'Folk': ['Bob Dylan', 'Simon & Garfunkel', 'Joni Mitchell', 'Neil Young', 'Woody Guthrie'],
+        'Indie': ['Radiohead', 'Arctic Monkeys', 'Tame Impala', 'Vampire Weekend', 'Arcade Fire'],
+        'Soul': ['Ray Charles', 'James Brown', 'Otis Redding', 'Aretha Franklin', 'Al Green'],
+        'Punk': ['The Ramones', 'The Clash', 'Sex Pistols', 'Green Day', 'The Offspring'],
+        'Funk': ['James Brown', 'Parliament-Funkadelic', 'Stevie Wonder', 'Prince', 'Sly and the Family Stone'],
+        'Disco': ['Bee Gees', 'Donna Summer', 'Chic', 'Gloria Gaynor', 'Earth, Wind & Fire'],
+        'Techno': ['Kraftwerk', 'Carl Cox', 'The Prodigy', 'Daft Punk', 'Fatboy Slim'],
+        'House': ['Daft Punk', 'The Chemical Brothers', 'David Guetta', 'Calvin Harris', 'Avicii'],
+        'Salsa': ['Celia Cruz', 'Marc Anthony', 'Héctor Lavoe', 'Rubén Blades', 'Willie Colón'],
+        'Merengue': ['Juan Luis Guerra', 'Olga Tañón', 'Los Hermanos Rosario', 'Fernando Villalona', 'Eddy Herrera'],
+        'K-Pop': ['BTS', 'BLACKPINK', 'EXO', 'TWICE', 'Red Velvet'],
+        'Reggaeton': ['Daddy Yankee', 'Don Omar', 'Wisin & Yandel', 'Ozuna', 'Bad Bunny'],
+        'Gospel': ['Mahalia Jackson', 'Kirk Franklin', 'Aretha Franklin', 'Tasha Cobbs Leonard', 'Fred Hammond'],
+        'Trance': ['Armin van Buuren', 'Paul van Dyk', 'Above & Beyond', 'Tiesto', 'Ferry Corsten'],
+        'Dancehall': ['Sean Paul', 'Shaggy', 'Beenie Man', 'Vybz Kartel', 'Popcaan']
     };
-
+    
     const movieGenres = [
         'Acción', 'Aventura', 'Catástrofe', 'Ciencia Ficción', 'Comedia', 'Documentales',
-        'Drama', 'Fantasía'
+        'Drama', 'Fantasía', 'Misterio', 'Romance', 'Terror', 'Suspense', 'Animación', 'Crimen', 'Western'
     ];
+    
 
     const moviesByGenre = {
-        'Acción': ['Mad Max: Fury Road', 'Die Hard', 'Gladiator'],
-        'Aventura': ['Indiana Jones and the Last Crusade', 'Pirates of the Caribbean', 'The Lord of the Rings: The Fellowship of the Ring'],
-        'Catástrofe': ['2012', 'The Day After Tomorrow', "Dante's Peak"],
-        'Ciencia Ficción': ['Blade Runner', 'The Matrix', 'Inception'],
-        'Comedia': ['Superbad', 'The Grand Budapest Hotel', 'Anchorman: The Legend of Ron Burgundy'],
-        'Documentales': ['March of the Penguins', 'Planet Earth', "Won't You Be My Neighbor?"],
-        'Drama': ['The Shawshank Redemption', 'The Godfather', "Schindler's List"],
-        'Fantasía': ["Harry Potter and the Sorcerer's Stone", 'The Chronicles of Narnia: The Lion, the Witch and the Wardrobe', "Pan's Labyrinth"]
-    };
+    'Acción': ['Mad Max: Fury Road', 'Die Hard', 'Gladiator', 'John Wick', 'The Dark Knight'],
+    'Aventura': ['Indiana Jones and the Last Crusade', 'Pirates of the Caribbean', 'The Lord of the Rings: The Fellowship of the Ring', 'Jurassic Park', 'Avatar'],
+    'Catástrofe': ['2012', 'The Day After Tomorrow', "Dante's Peak", 'San Andreas', 'Twister'],
+    'Ciencia Ficción': ['Blade Runner', 'The Matrix', 'Inception', 'Interstellar', 'Alien'],
+    'Comedia': ['Superbad', 'The Grand Budapest Hotel', 'Anchorman: The Legend of Ron Burgundy', 'The Hangover', 'Super Troopers'],
+    'Documentales': ['March of the Penguins', 'Planet Earth', "Won't You Be My Neighbor?", 'Blackfish', 'The Act of Killing'],
+    'Drama': ['The Shawshank Redemption', 'The Godfather', "Schindler's List", 'Forrest Gump', 'The Green Mile'],
+    'Fantasía': ["Harry Potter and the Sorcerer's Stone", 'The Chronicles of Narnia: The Lion, the Witch and the Wardrobe', "Pan's Labyrinth", 'The NeverEnding Story', 'Alice in Wonderland'],
+    'Misterio': ['The Sixth Sense', 'Sherlock Holmes', 'The Girl with the Dragon Tattoo', 'Gone Girl', 'Prisoners'],
+    'Romance': ['The Notebook', 'Titanic', 'Pretty Woman', 'Eternal Sunshine of the Spotless Mind', 'La La Land'],
+    'Terror': ['The Shining', 'The Exorcist', 'Get Out', 'A Nightmare on Elm Street', 'Hereditary'],
+    'Suspense': ['Seven', 'The Silence of the Lambs', 'Shutter Island', 'The Usual Suspects', 'Gone Baby Gone'],
+    'Animación': ['Toy Story', 'Frozen', 'Finding Nemo', 'The Lion King', 'Zootopia'],
+    'Crimen': ['Pulp Fiction', 'Goodfellas', 'Heat', 'The Departed', 'No Country for Old Men'],
+    'Western': ['Django Unchained', 'The Good, the Bad and the Ugly', 'True Grit', 'Once Upon a Time in the West', 'Tombstone']
+};
+
 
     const platforms = ['Nintendo', 'PlayStation', 'Xbox', 'PC', 'Celular'];
 
