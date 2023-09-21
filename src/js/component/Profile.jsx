@@ -1,7 +1,7 @@
 import React from 'react'
 import Avatar from './profile component/Avatar'
 import UserName from './profile component/UserName'
-import UserBadges from './profile component/UserBadges' 
+import UserBadges from './profile component/UserBadges'
 import UserInterests from './profile component/UserInterests'
 import RelatedGames from './profile component/RelatedGames'
 import { useContext, useState } from "react";
@@ -21,7 +21,7 @@ const Profile = () => {
     const [data, setData] = useState(null);
     const { isLoggedIn } = useContext(UserContext);
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (isLoggedIn) {
             // Leer el token del localStorage
             const token = localStorage.getItem('jwtToken');
@@ -64,7 +64,7 @@ const Profile = () => {
 
     if (!data) {
         return <p>Error al cargar datos privados.</p>;
-    }
+    } */
 
     return (
         <div className="container-fluid pt-5">
@@ -72,8 +72,8 @@ const Profile = () => {
             <div className="container border-top border-muted">
                 <div className="row justify-content-center">
                     <div className="col-12 col-lg-4 d-flex flex-column align-items-start justify-content-center">
-                        <Avatar/>
-                        <UserBadges badges={userBadges}/> 
+                        <Avatar />
+                        <UserBadges badges={userBadges} />
                     </div>
                     <div className="col-12 col-lg-8 d-flex flex-column align-items-start justify-content-center">
                         <UserName />

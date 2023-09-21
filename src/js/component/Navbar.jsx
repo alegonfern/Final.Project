@@ -8,7 +8,7 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg navbar-secondary bg-secondary fixed-top"> {/* Cambio de clase a navbar-dark y color de fondo a bg-dark */}
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">
-                <FontAwesomeIcon icon={faDna} rotation={90} style={{ color: "#05ff09", fontSize: "3rem" }} className="icon" />
+                    <FontAwesomeIcon icon={faDna} rotation={90} style={{ color: "#48CB86", fontSize: "3rem" }} className="icon" />
                 </a>
                 <div className="d-flex align-items-center"> {/* Cambio de clases para alinear elementos */}
                     <span className="navbar-text me-2 pe-2" style={{ fontSize: "1.5rem", color: "#fff" }} >Nombre Usuario</span>
