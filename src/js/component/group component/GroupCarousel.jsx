@@ -5,27 +5,22 @@ const GroupCarousel = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        const fetchRandomUsers = async () => {
+        const fetchUserData = async () => {
             try {
-                const response = await fetch('https://randomuser.me/api/?results=20');
+                const response = await fetch('http://127.0.0.1:5000/users'); // Utiliza la URL correcta de tu servidor
                 if (response.ok) {
                     const data = await response.json();
-                    const randomUsers = data.results.map((result) => {
-                        return {
-                            AvatarUsuario: result.picture.large,
-                            NombreUsuario: `${result.name.first} ${result.name.last}`,
-                        };
-                    });
-                    setUsers(randomUsers);
+                    // Asumiendo que tu servidor devuelve datos en el formato esperado
+                    setUsers(data.users);
                 } else {
-                    throw new Error('Error al obtener datos de la API');
+                    throw new Error('Error al obtener datos de usuarios');
                 }
             } catch (error) {
-                console.error('Error al obtener usuarios aleatorios:', error);
+                console.error('Error al obtener usuarios:', error);
             }
         };
 
-        fetchRandomUsers();
+        fetchUserData();
     }, []);
 
     return (
@@ -37,8 +32,8 @@ const GroupCarousel = () => {
                             {users.slice(0, 10).map((user, index) => (
                                 <CarouselCard
                                     key={index}
-                                    AvatarUsuario={user.AvatarUsuario}
-                                    NombreUsuario={user.NombreUsuario}
+                                    AvatarUsuario={user.url_avatar} // Asegúrate de que el nombre de la propiedad sea correcto
+                                    NombreUsuario={`${user.first_name} ${user.last_name}`} // Concatenación de first_name y last_name
                                 />
                             ))}
                         </div>
@@ -48,8 +43,8 @@ const GroupCarousel = () => {
                             {users.slice(10).map((user, index) => (
                                 <CarouselCard
                                     key={index}
-                                    AvatarUsuario={user.AvatarUsuario}
-                                    NombreUsuario={user.NombreUsuario}
+                                    AvatarUsuario={user.url_avatar} // Asegúrate de que el nombre de la propiedad sea correcto
+                                    NombreUsuario={`${user.first_name} ${user.last_name}`} // Concatenación de first_name y last_name
                                 />
                             ))}
                         </div>

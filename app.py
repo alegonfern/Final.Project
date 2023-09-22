@@ -101,7 +101,8 @@ def get_users():
             "mail": user.mail,
             "subscription_date": user.suscription_date.strftime("%Y-%m-%d %H:%M:%S"),
             "last_name": user.last_name,
-            "first_name": user.first_name
+            "first_name": user.first_name,
+            "url_avatar": user.url_avatar
             # Asegúrate de formatear la fecha como desees
         }
         user_list.append(user_data)  # Agrega el usuario a la lista
@@ -483,7 +484,7 @@ usuarios_obtenidos = []
 @app.route('/obtener-usuarios-externos', methods=['GET'])
 def obtener_usuarios_externos():
     try:
-        N = request.args.get('N', type=int, default=10)  # Parámetro opcional para la cantidad de usuarios, valor por defecto 10
+        N = request.args.get('N', type=int, default=13)  # Parámetro opcional para la cantidad de usuarios, valor por defecto 10
 
         # Realiza el método GET y almacena los datos en la variable global
         response = requests.get(f'https://randomuser.me/api/?results={N}')
@@ -543,9 +544,84 @@ def crear_usuarios_desde_api():
         db.session.rollback()  # Revierte cualquier cambio en la base de datos en caso de error
         return jsonify({'error': 'Error al crear usuarios desde la API externa'}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route('/bdintereses', methods=['POST'])
+def bd_intereses():
+    try:
+        data = request.json
 
+        # Asegúrate de que data sea una lista de usuarios con sus intereses
+        if not isinstance(data, list):
+            return jsonify({"error": "Se esperaba una lista de usuarios"}), 400
+
+        for user_data in data:
+            # Obtén el ID de usuario proporcionado en los datos
+            user_id = user_data["user_id"]
+
+            # Obtén los datos de intereses del usuario actual
+            generos_game = user_data["generos_game"]
+            games = user_data["games"]
+            generos_musica = user_data["generos_musica"]
+            artistas = user_data["artistas"]
+            generos_pelicula = user_data["generos_pelicula"]
+            peliculas = user_data["peliculas"]
+            plataformas = user_data["plataformas"]
+            edad_minima = user_data["edad_minima"]
+            edad_maxima = user_data["edad_maxima"]
+            sexo = user_data["sexo"]
+
+            # Crea el usuario
+            user = User(id=user_id)  # Asegúrate de usar el modelo correcto para tu User
+
+            # Géneros de Juegos
+            for genero_nombre in generos_game:
+                genero = GeneroGame(genero=genero_nombre, user_id=user_id)
+                db.session.add(genero)
+
+            # Juegos
+            for game_nombre in games:
+                game = Game(game=game_nombre, user_id=user_id)
+                db.session.add(game)
+
+            # Géneros de Música
+            for genero_musica_nombre in generos_musica:
+                genero_musica = GeneroMusica(genero_musica=genero_musica_nombre, user_id=user_id)
+                db.session.add(genero_musica)
+
+            # Artistas
+            for artista_nombre in artistas:
+                artista = Artista(artista=artista_nombre, user_id=user_id)
+                db.session.add(artista)
+
+            # Géneros de Película
+            for genero_pelicula_nombre in generos_pelicula:
+                genero_pelicula = GeneroPelicula(genero_pelicula=genero_pelicula_nombre, user_id=user_id)
+                db.session.add(genero_pelicula)
+
+            # Películas
+            for pelicula_nombre in peliculas:
+                pelicula = Pelicula(pelicula=pelicula_nombre, user_id=user_id)
+                db.session.add(pelicula)
+
+            # Plataformas
+            for plataforma_nombre in plataformas:
+                plataforma = Plataforma(plataforma=plataforma_nombre, user_id=user_id)
+                db.session.add(plataforma)
+
+            # Género (Sexo)
+            sexo_usuario = Sexo(genero_sexo=sexo["genero_sexo"], user_id=user_id)
+            db.session.add(sexo_usuario)
+
+            # Rangos de Edad
+            rango_edad = RangoEdad(edad_minima=edad_minima, edad_maxima=edad_maxima, user_id=user_id)
+            db.session.add(rango_edad)
+
+        # Guarda los cambios en la base de datos
+        db.session.commit()
+
+        return jsonify({"message": "Intereses almacenados exitosamente"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
