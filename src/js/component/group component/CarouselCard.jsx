@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaDna } from 'react-icons/fa';
 
 
-const CarouselCard = ({ AvatarUsuario, NombreUsuario, receiverId, PuntuacionCompatibilidad }) => {
+const CarouselCard = ({ AvatarUsuario, NombreUsuario, receiveId, PuntuacionCompatibilidad }) => {
 
     const { userId } = useContext(UserContext);
 
@@ -17,7 +17,7 @@ const CarouselCard = ({ AvatarUsuario, NombreUsuario, receiverId, PuntuacionComp
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ senderId: 2, receiverId: 1, status: 'Pendiente' }), // Agregar User ID de la sesion y poblar BBDD
+            body: JSON.stringify({ senderId: userId, receiverId: receiveId, status: 'Pendiente' }), // Agregar User ID de la sesion y poblar BBDD
         };
 
         fetch(`http://127.0.0.1:5000/friend-request`, postOptions)

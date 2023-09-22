@@ -48,6 +48,7 @@ const GroupCarousel = () => {
                                         AvatarUsuario={user.url_avatar} // Asegúrate de que el nombre de la propiedad sea correcto
                                         NombreUsuario={`${user.first_name} ${user.last_name}`} // Concatenación de first_name y last_name
                                         PuntuacionCompatibilidad={compatibilityScore ? compatibilityScore.compatibilidad : 0} // Ajusta el nombre de la propiedad de puntuación según tu contexto
+                                        receiveId={user.id}
                                     />
                                 );
                             })}
@@ -68,6 +69,7 @@ const GroupCarousel = () => {
                                         AvatarUsuario={user.url_avatar} // Asegúrate de que el nombre de la propiedad sea correcto
                                         NombreUsuario={`${user.first_name} ${user.last_name}`} // Concatenación de first_name y last_name
                                         PuntuacionCompatibilidad={compatibilityScore ? compatibilityScore.compatibilidad : 0} // Ajusta el nombre de la propiedad de puntuación según tu contexto
+                                        receiveId={user.id}
                                     />
                                 );
                             })}
