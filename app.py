@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from models import User, Profile, Genero, Game, FriendRequest, Match
+from models import User, Profile,Sexo, RangoEdad, GeneroGame, Game,GeneroMusica,Artista,GeneroPelicula,Pelicula,Plataforma, FriendRequest, Match
 import requests
 from models import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -138,8 +138,8 @@ def signup():
     password = data.get("password")
     profile=Profile()
     user.profile=profile
-    genero=Genero()
-    user.genero=genero
+    generos_game=GeneroGame()
+    user.genero_game=generos_game
     
     # Formato datetime
     birth_date_str = data.get("birth_date")
@@ -217,54 +217,81 @@ def update_user_profile(user_id):
 
 
 #End point guardar intereses
-@app.route('/generos', methods=['POST'])
-def agregar_generos():
+@app.route('/intereses', methods=['POST'])
+def agregar_intereses():
     try:
         data = request.json
 
         # Obtén el ID de usuario proporcionado en los datos (DEBE SER POR CONTEXT)
         user_id = data["user_id"]
 
-        # Obténgo los géneros del arreglo en los datos
-        genero = data["genero"]
+        # Obtén los datos de intereses del arreglo en los datos
+        generos_game = data["generos_game"]
+        games = data["games"]
+        generos_musica = data["generos_musica"]
+        artistas = data["artistas"]
+        generos_pelicula = data["generos_pelicula"]
+        peliculas = data["peliculas"]
+        plataformas = data["plataformas"]
+        edad_minima = data["edad_minima"]
+        edad_maxima = data["edad_maxima"]
+        sexo = data["sexo"]
+       
 
-        
-        # Agrego los nuevos géneros seleccionados por el usuario
-        for genero_nombre in genero:
-            genero = Genero(genero=genero_nombre, user_id=user_id)  # Asigno el user_id directamente
+        # Géneros de Juegos
+        for genero_nombre in generos_game:
+            genero = GeneroGame(genero=genero_nombre, user_id=user_id)
             db.session.add(genero)
 
-        # Guardo los cambios en la base de datos
-        db.session.commit()
+        # Juegos
+        for game_nombre in games:
+            game = Game(game=game_nombre, user_id=user_id)
+            db.session.add(game)
 
-        return jsonify({"message": "Géneros almacenados exitosamente"}), 200
+        # Géneros de Música
+        for genero_musica_nombre in generos_musica:
+            genero_musica = GeneroMusica(genero_musica=genero_musica_nombre, user_id=user_id)
+            db.session.add(genero_musica)
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        # Artistas
+        for artista_nombre in artistas:
+            artista = Artista(artista=artista_nombre, user_id=user_id)
+            db.session.add(artista)
 
-@app.route('/game', methods=['POST'])
-def agregar_games():
-    try:
-        data = request.json
+        # Géneros de Película
+        for genero_pelicula_nombre in generos_pelicula:
+            genero_pelicula = GeneroPelicula(genero_pelicula=genero_pelicula_nombre, user_id=user_id)
+            db.session.add(genero_pelicula)
 
-        # Obtén el ID de usuario proporcionado en los datos (DEBE SER POR CONTEXT)
-        user_id = data["user_id"]
+        # Películas
+        for pelicula_nombre in peliculas:
+            pelicula = Pelicula(pelicula=pelicula_nombre, user_id=user_id)
+            db.session.add(pelicula)
 
-        # Obtén los juegos del arreglo en los datos
-        juegos = data["games"] 
+        # Plataformas
+        for plataforma_nombre in plataformas:
+            plataforma = Plataforma(plataforma=plataforma_nombre, user_id=user_id)
+            db.session.add(plataforma)
 
-        # Agrega los nuevos juegos seleccionados por el usuario
-        for juego_nombre in juegos: 
-            juego = Game(games=juego_nombre, user_id=user_id)  # Debe ir por context
-            db.session.add(juego)
+        # Género (Sexo)
+        sexo_usuario = Sexo(genero_sexo=sexo["genero_sexo"], user_id=user_id)
+        db.session.add(sexo_usuario)
+
+
+        # Rangos de Edad
+        rango_edad = RangoEdad(edad_minima=edad_minima, edad_maxima=edad_maxima, user_id=user_id)
+        db.session.add(rango_edad)
+        
 
         # Guarda los cambios en la base de datos
         db.session.commit()
 
-        return jsonify({"message": "Juegos almacenados exitosamente"}), 200
+        return jsonify({"message": "Intereses almacenados exitosamente"}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
 
 @app.route("/Home", methods=["GET"])
 @jwt_required()  # Protege la ruta con autenticación JWT

@@ -18,9 +18,20 @@ class User(db.Model):
     birth_date = db.Column(db.DateTime, nullable=False)
     gender = db.Column(db.String(250), nullable=False)
     profile = db.relationship("Profile",uselist=False)
-    generos= relationship("Genero", back_populates="user")
-    games= relationship("Game", back_populates="user")
-   
+       
+    # Intereses
+    
+    rango_edad = db.relationship("RangoEdad", back_populates="user")
+    sexo = db.relationship("Sexo", back_populates="user")
+    generos_game = db.relationship("GeneroGame", back_populates="user")
+    games = db.relationship("Game", back_populates="user")
+    generos_musica = db.relationship("GeneroMusica", back_populates="user")
+    artistas = db.relationship("Artista", back_populates="user")
+    generos_pelicula = db.relationship("GeneroPelicula", back_populates="user")
+    peliculas = db.relationship("Pelicula", back_populates="user")
+    plataformas = db.relationship("Plataforma", back_populates="user")
+    
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
         print(f"Contraseña almacenada: {self.password_hash}")
@@ -37,19 +48,6 @@ class Profile(db.Model):
     rating = db.Column(db.Integer)
     registration_date = db.Column(db.Date)
 
-class Genero(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    genero = db.Column(db.String(255))
-    user = relationship("User", back_populates="generos")
-
-class Game(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    games = db.Column(db.String(255))
-    user = relationship("User", back_populates="games")
-
-
 class FriendRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -61,3 +59,62 @@ class Match(db.Model):
     user_id_1 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user_id_2 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     connection_date = db.Column(db.Date)
+
+# Tablas para tipos de intereses
+class RangoEdad(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    edad_minima = db.Column(db.Integer, nullable=False)
+    edad_maxima = db.Column(db.Integer, nullable=False)
+    user = relationship("User", back_populates="rango_edad")
+
+class Sexo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    genero_sexo = db.Column(db.String(255), nullable=False)
+    user = relationship("User", back_populates="sexo")
+
+
+class GeneroGame(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    genero = db.Column(db.String(255))
+    user = relationship("User", back_populates="generos_game")
+
+class Game(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    game = db.Column(db.String(255))
+    user = relationship("User", back_populates="games")
+
+class GeneroMusica(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    genero_musica = db.Column(db.String(255))
+    user = relationship("User", back_populates="generos_musica")
+
+class Artista(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    artista = db.Column(db.String(255))
+    user = relationship("User", back_populates="artistas")
+
+class GeneroPelicula(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    genero_pelicula = db.Column(db.String(255))
+    user = relationship("User", back_populates="generos_pelicula")
+
+class Pelicula(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    pelicula = db.Column(db.String(255))
+    user = relationship("User", back_populates="peliculas")
+
+class Plataforma(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    plataforma = db.Column(db.String(255))
+    user = relationship("User", back_populates="plataformas")
+
+
