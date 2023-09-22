@@ -72,12 +72,17 @@ def compatibilidad(usuario1, usuario2):
         elif edad_usuario1 > rango_edad_usuario2.edad_minima and edad_usuario1 < rango_edad_usuario2.edad_maxima:
             puntos += 2
     
-    # Itera sobre la lista de relaciones sexo para encontrar la correcta
-    for sexo_usuario2 in usuario2.sexo:
-        if usuario1.sexo[0].genero_sexo == sexo_usuario2.genero_sexo:
-            puntos += 4
+    
+  # Verifica si alguno de los usuarios no tiene información de género (sexo)
+    if (not usuario1.sexo or not usuario2.sexo) and (usuario1.sexo or usuario2.sexo):
+        puntos += 0  # Si alguno de los usuarios no tiene género, asigna 0 puntos solo si el otro tiene género
+    else:
+        for sexo_usuario2 in usuario2.sexo:
+            if usuario1.sexo and usuario1.sexo[0].genero_sexo == sexo_usuario2.genero_sexo:
+                puntos += 4
     
     # Normalización de las puntuaciones para que estén en una escala de 0 a 10
     puntos *= 100 / 33
 
-    return puntos
+     # Redondear a un decimal
+    return f"{round(puntos, 1)}%"

@@ -7,7 +7,7 @@ export const UserProvider = ({ children }) => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [userName, setUserName] = useState('Nombre Usuario');
   const [userId, setUserId] = useState(null);
-
+  const [compatibilityScores, setCompatibilityScores] = useState([]);
   const [userPreferences, setUserPreferences] = useState({}); // Agrega el estado de preferencias de usuario
 
   const updateUserPreferences = (preferences) => {
@@ -94,8 +94,24 @@ export const UserProvider = ({ children }) => {
       });
   }
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      // Realiza una solicitud al servidor para obtener las puntuaciones de compatibilidad
+      fetch("http://127.0.0.1:5000/calcular_compatibilidad_entre_usuarios") // Ajusta la URL a tu endpoint
+        .then(response => response.json())
+        .then(data => {
+          const userCompatibilityScores = data.compatibilidades.filter(score => score.usuario1_id === userId || score.usuario2_id === userId);
+          setCompatibilityScores(userCompatibilityScores);
+        })
+        .catch(error => {
+          console.error('Error al obtener las puntuaciones de compatibilidad', error);
+        });
+    }
+  }, [isLoggedIn, userId]);
+
+
   return (
-    <UserContext.Provider value={{ handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName, userId, updateUserPreferences }}>
+    <UserContext.Provider value={{ compatibilityScores, handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName, userId, updateUserPreferences }}>
       {children}
     </UserContext.Provider>
   );

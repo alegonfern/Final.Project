@@ -138,10 +138,9 @@ def signup():
     last_name = data.get("last_name")
     email = data.get("email")
     password = data.get("password")
+    url_avatar=data.get("url_avatar")
     profile=Profile()
     user.profile=profile
-    generos_game=GeneroGame()
-    user.genero_game=generos_game
     
     # Formato datetime
     birth_date_str = data.get("birth_date")
@@ -167,7 +166,8 @@ def signup():
         last_name=last_name,
         birth_date=birth_date,
         gender=gender,
-        suscription_date=suscription_date
+        suscription_date=suscription_date,
+        url_avatar=url_avatar
     )
     new_user.set_password(password) 
     db.session.add(new_user)

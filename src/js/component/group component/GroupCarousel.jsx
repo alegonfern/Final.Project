@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import CarouselCard from './CarouselCard';
+import { useContext } from "react";
+import { UserContext } from "../../store/UserContext";
 
 const GroupCarousel = () => {
+    const { compatibilityScores, userId } = useContext(UserContext);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -23,30 +26,51 @@ const GroupCarousel = () => {
         fetchUserData();
     }, []);
 
+    // Filtra los usuarios para excluir al usuario actual
+    const filteredUsers = users.filter(user => user.id !== userId);
+
     return (
         <div className='box my-4'>
             <div id="groupCarousel" className="carousel slide">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                         <div className='carousel-card d-flex justify-content-between'>
-                            {users.slice(0, 10).map((user, index) => (
-                                <CarouselCard
-                                    key={index}
-                                    AvatarUsuario={user.url_avatar} // Asegúrate de que el nombre de la propiedad sea correcto
-                                    NombreUsuario={`${user.first_name} ${user.last_name}`} // Concatenación de first_name y last_name
-                                />
-                            ))}
+                            {filteredUsers.slice(0, 10).map((user, index) => {
+                                // Buscar la puntuación de compatibilidad del usuario actual
+                                const compatibilityScore = compatibilityScores.find(score => {
+                                    return (score.usuario1_id === userId && score.usuario2_id === user.id) ||
+                                        (score.usuario1_id === user.id && score.usuario2_id === userId);
+                                });
+
+                                return (
+                                    <CarouselCard
+                                        key={index}
+                                        AvatarUsuario={user.url_avatar} // Asegúrate de que el nombre de la propiedad sea correcto
+                                        NombreUsuario={`${user.first_name} ${user.last_name}`} // Concatenación de first_name y last_name
+                                        PuntuacionCompatibilidad={compatibilityScore ? compatibilityScore.compatibilidad : 0} // Ajusta el nombre de la propiedad de puntuación según tu contexto
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                     <div className="carousel-item">
                         <div className='carousel-card d-flex justify-content-between'>
-                            {users.slice(10).map((user, index) => (
-                                <CarouselCard
-                                    key={index}
-                                    AvatarUsuario={user.url_avatar} // Asegúrate de que el nombre de la propiedad sea correcto
-                                    NombreUsuario={`${user.first_name} ${user.last_name}`} // Concatenación de first_name y last_name
-                                />
-                            ))}
+                            {filteredUsers.slice(10).map((user, index) => {
+                                // Buscar la puntuación de compatibilidad del usuario actual
+                                const compatibilityScore = compatibilityScores.find(score => {
+                                    return (score.usuario1_id === userId && score.usuario2_id === user.id) ||
+                                        (score.usuario1_id === user.id && score.usuario2_id === userId);
+                                });
+
+                                return (
+                                    <CarouselCard
+                                        key={index}
+                                        AvatarUsuario={user.url_avatar} // Asegúrate de que el nombre de la propiedad sea correcto
+                                        NombreUsuario={`${user.first_name} ${user.last_name}`} // Concatenación de first_name y last_name
+                                        PuntuacionCompatibilidad={compatibilityScore ? compatibilityScore.compatibilidad : 0} // Ajusta el nombre de la propiedad de puntuación según tu contexto
+                                    />
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

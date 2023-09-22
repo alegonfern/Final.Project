@@ -2,8 +2,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../../store/UserContext';
 import { AiOutlineClose, AiOutlineCheck } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+import { FaDna } from 'react-icons/fa';
 
-const CarouselCard = ({ AvatarUsuario, NombreUsuario, receiverId }) => {
+
+const CarouselCard = ({ AvatarUsuario, NombreUsuario, receiverId, PuntuacionCompatibilidad }) => {
 
     const { userId } = useContext(UserContext);
 
@@ -50,6 +52,12 @@ const CarouselCard = ({ AvatarUsuario, NombreUsuario, receiverId }) => {
             <div className="card-body d-flex justify-content-center flex-column align-items-center">
                 <div>
                     <h5 className="text-center">{NombreUsuario}</h5>
+                    <h5 className="text-center">
+                        {PuntuacionCompatibilidad}{' '}
+                        <span style={{ fontSize: '24px' }}>
+                            <FaDna />
+                        </span>
+                    </h5>
                 </div>
                 <div className="btn-group">
                     <button type="button" onClick={handleClick} className="btn mx-2">
