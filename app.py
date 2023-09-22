@@ -13,6 +13,7 @@ from flask import make_response
 from flask_jwt_extended import JWTManager
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
+from compatibilidad import compatibilidad
 
 app = Flask(__name__)
 app.config['DEBUG'] = True 
@@ -291,6 +292,26 @@ def agregar_intereses():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/calcular_compatibilidad', methods=['POST'])
+def calcular_compatibilidad():
+    data = request.json  # Supongamos que envías datos con los IDs de los usuarios
+
+    # Recupera los IDs de los dos usuarios de la solicitud POST
+    usuario1_id = 1
+    usuario2_id = 2
+
+    # Recupera los usuarios desde la base de datos
+    usuario1 = User.query.get(usuario1_id)
+    usuario2 = User.query.get(usuario2_id)
+
+    # Asegúrate de que ambos usuarios existan
+    if not usuario1 or not usuario2:
+        return jsonify({"message": "Usuario(s) no encontrado(s)"}), 404
+
+    # Aquí deberías calcular la puntuación de compatibilidad según tus criterios
+    puntuacion_compatibilidad = compatibilidad(usuario1, usuario2)
+
+    return jsonify({"compatibilidad": puntuacion_compatibilidad})
 
 
 @app.route("/Home", methods=["GET"])
@@ -431,6 +452,10 @@ def create_match(user_id_1, user_id_2):
         db.session.commit()
     except Exception as e:
         db.session.rollback()
+
+
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

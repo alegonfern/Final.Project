@@ -227,6 +227,8 @@ const Intereses = () => {
                 handleGenderChange={handleGenderChange}
             />
             <button onClick={savePreferences}>Guardar Preferencias</button>
+
+
         </div>
     );
 };
