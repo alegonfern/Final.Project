@@ -15,7 +15,7 @@ const CarouselCard = ({ AvatarUsuario, NombreUsuario, receiverId }) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ senderId:2, receiverId: 1, status: 'Pendiente' }),
+            body: JSON.stringify({ senderId: 2, receiverId: 1, status: 'Pendiente' }), // Agregar User ID de la sesion y poblar BBDD
         };
 
         fetch(`http://127.0.0.1:5000/friend-request`, postOptions)

@@ -174,6 +174,7 @@ def signup():
 
     return jsonify({"message": "Usuario creado con éxito"}), 201
 
+
 #Enpoint usuario por ID
 @app.route("/user/<int:user_id>", methods=["GET"])
 def get_user_profile(user_id):
@@ -312,6 +313,28 @@ def calcular_compatibilidad():
     puntuacion_compatibilidad = compatibilidad(usuario1, usuario2)
 
     return jsonify({"compatibilidad": puntuacion_compatibilidad})
+
+@app.route('/calcular_compatibilidad_entre_usuarios', methods=['GET'])
+def calcular_compatibilidad_entre_usuarios():
+    # Obtener todos los usuarios registrados en la base de datos
+    usuarios = User.query.all()
+
+    # Crear una lista de resultados de compatibilidad
+    resultados_compatibilidad = []
+
+    # Calcular la compatibilidad para cada par de usuarios únicos
+    for i, usuario1 in enumerate(usuarios):
+        for usuario2 in usuarios[i + 1:]:
+            # Comprueba si la compatibilidad ya se calculó para esta pareja
+            puntuacion_compatibilidad = compatibilidad(usuario1, usuario2)
+            resultados_compatibilidad.append({
+                "usuario1_id": usuario1.id,
+                "usuario2_id": usuario2.id,
+                "compatibilidad": puntuacion_compatibilidad
+            })
+
+    return jsonify({"compatibilidades": resultados_compatibilidad})
+
 
 
 @app.route("/Home", methods=["GET"])
@@ -454,6 +477,73 @@ def create_match(user_id_1, user_id_2):
         db.session.rollback()
 
 
+# Variable global para almacenar los datos obtenidos del GET
+usuarios_obtenidos = []
+
+@app.route('/obtener-usuarios-externos', methods=['GET'])
+def obtener_usuarios_externos():
+    try:
+        N = request.args.get('N', type=int, default=10)  # Parámetro opcional para la cantidad de usuarios, valor por defecto 10
+
+        # Realiza el método GET y almacena los datos en la variable global
+        response = requests.get(f'https://randomuser.me/api/?results={N}')
+        if response.status_code == 200:
+            data = response.json()
+            usuarios_obtenidos.extend(data['results'])
+            return jsonify({'message': 'Usuarios obtenidos con éxito'}), 200
+        else:
+            return jsonify({'error': 'Error al obtener datos de la API externa'}), 500
+
+    except Exception as e:
+        logging.error(f'Error al obtener usuarios externos: {str(e)}')
+        return jsonify({'error': 'Error al obtener usuarios externos'}), 500
+
+@app.route('/crear-usuarios-desde-api', methods=['POST'])
+def crear_usuarios_desde_api():
+    try:
+        # Obtén los datos almacenados en la variable global
+        for user_data in usuarios_obtenidos:
+            username = user_data['login']['username']
+            first_name = user_data['name']['first']
+            last_name = user_data['name']['last']
+            email = user_data['email']
+            password = user_data['login']['password']
+            birth_date_str = user_data['dob']['date']
+            gender = user_data['gender']
+            suscription_date = datetime.utcnow()
+
+            # Verifica si el usuario o el correo ya existen en la base de datos
+            existing_user = User.query.filter_by(username=username).first()
+            existing_email = User.query.filter_by(mail=email).first()
+
+            if existing_user or existing_email:
+                continue  # Si el usuario o el correo ya existen, pasa al siguiente usuario
+
+            # Crea un nuevo usuario y almacena la contraseña en formato hash
+            new_user = User(
+                username=username,
+                mail=email,
+                first_name=first_name,
+                last_name=last_name,
+                birth_date=datetime.strptime(birth_date_str, "%Y-%m-%dT%H:%M:%S.%fZ"),
+                gender=gender,
+                suscription_date=suscription_date
+            )
+            new_user.set_password(password)
+            db.session.add(new_user)
+
+        # Realiza la transacción en la base de datos
+        db.session.commit()
+
+        return jsonify({'message': 'Usuarios creados con éxito a partir de los datos del método GET'}), 201
+
+    except Exception as e:
+        logging.error(f'Error al crear usuarios desde la API externa: {str(e)}')
+        db.session.rollback()  # Revierte cualquier cambio en la base de datos en caso de error
+        return jsonify({'error': 'Error al crear usuarios desde la API externa'}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
 

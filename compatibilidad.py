@@ -78,6 +78,6 @@ def compatibilidad(usuario1, usuario2):
             puntos += 4
     
     # Normalización de las puntuaciones para que estén en una escala de 0 a 10
-    puntos *= 10 / 33
+    puntos *= 100 / 33
 
     return puntos
