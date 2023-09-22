@@ -511,7 +511,7 @@ def crear_usuarios_desde_api():
             birth_date_str = user_data['dob']['date']
             gender = user_data['gender']
             suscription_date = datetime.utcnow()
-
+            url_avatar = user_data['picture']['large']
             # Verifica si el usuario o el correo ya existen en la base de datos
             existing_user = User.query.filter_by(username=username).first()
             existing_email = User.query.filter_by(mail=email).first()
@@ -527,7 +527,8 @@ def crear_usuarios_desde_api():
                 last_name=last_name,
                 birth_date=datetime.strptime(birth_date_str, "%Y-%m-%dT%H:%M:%S.%fZ"),
                 gender=gender,
-                suscription_date=suscription_date
+                suscription_date=suscription_date,
+                url_avatar=url_avatar
             )
             new_user.set_password(password)
             db.session.add(new_user)

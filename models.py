@@ -11,6 +11,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True) 
     username = db.Column(db.String(250), nullable=False)
     mail = db.Column(db.String(250), nullable=False, unique=True)
+    url_avatar = db.Column(db.String(250), nullable=False)
     password_hash = db.Column(db.String(250), nullable=False)
     suscription_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     first_name = db.Column(db.String(250), nullable=False)
