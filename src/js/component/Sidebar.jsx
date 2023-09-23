@@ -62,27 +62,51 @@ function Sidebar() {
                         </div>
                         <div className="offcanvas-body">
                             <ul className="navbar-nav flex-column">
+
+
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">
-                                        Home
-                                    </a>
+                                    <Link to="/Home" className="nav-link">
+                                        <FontAwesomeIcon icon={faHouse} /> Home
+                                    </Link>
                                 </li>
+
+
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">
-                                        Profile
-                                    </a>
+                                    <Link to="/Profile" className="nav-link">
+                                        <FontAwesomeIcon icon={faUser} /> Profile
+                                    </Link>
                                 </li>
 
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">
-                                        Mis intereses
-                                    </a>
+                                    <Link to="/Intereses" className="nav-link">
+                                        <FontAwesomeIcon icon={faHeart} /> Mis Intereses
+                                    </Link>
                                 </li>
 
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">
-                                        Salas de Interés
-                                    </a>
+                                    <Link to="/Group" className="nav-link">
+                                        <FontAwesomeIcon icon={faList} /> Salas de Interés
+                                    </Link>
+                                </li>
+
+                                <li className="nav-item">
+                                    <Link to="/Contacts" className="nav-link">
+                                        <FontAwesomeIcon icon={faUserFriends} /> Mis M4tch's
+                                    </Link>
+                                </li>
+
+
+                                <li className="nav-item">
+                                    <Link to="/chat" className="nav-link">
+                                        <FontAwesomeIcon icon={faComments} /> Chats
+                                    </Link>
+                                </li>
+
+
+                                <li className="nav-item">
+                                    <Link to="/calendar" className="nav-link">
+                                        <FontAwesomeIcon icon={faBell} /> Eventos
+                                    </Link>
                                 </li>
 
 
@@ -94,17 +118,19 @@ function Sidebar() {
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                     >
-                                        Mis Intereses
+                                        Configuración
                                     </a>
+
+
                                     <ul className="dropdown-menu dropdown-menu-dark">
                                         <li>
                                             <a className="dropdown-item" href="#">
-                                                Salas de Interés
+                                                Cerrar Sesión
                                             </a>
                                         </li>
                                         <li>
                                             <a className="dropdown-item" href="#">
-                                                Another action
+                                                Privacidad
                                             </a>
                                         </li>
                                         <li>
@@ -112,7 +138,7 @@ function Sidebar() {
                                         </li>
                                         <li>
                                             <a className="dropdown-item" href="#">
-                                                Something else here
+                                                Más información
                                             </a>
                                         </li>
                                     </ul>
