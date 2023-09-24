@@ -82,17 +82,17 @@ function Sidebar() {
                                     </Link>
                                 </li>
 
-                                <li className="nav-item">
+                            {/*     <li className="nav-item">
                                     <Link to="/Group" className="nav-link">
                                         <FontAwesomeIcon icon={faList} /> Salas de Interés
                                     </Link>
                                 </li>
-
-                                {/*     <li className="nav-item">
+ */}
+                                    <li className="nav-item">
                                     <Link to="/Matches" className="nav-link">
                                         <FontAwesomeIcon icon={faUserFriends} /> Mis M4tch's
                                     </Link>
-                                </li> */}
+                                </li>
 
 
                                 <li className="nav-item">
