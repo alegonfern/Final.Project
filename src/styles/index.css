@@ -1,5 +1,6 @@
+
 /* Estilos para el Modo LIGHT */
-:root {
+/* :root {
     --bg-color: #FFFFFF;
     --header-bg-color: #D3D3D3;
     --sidebar-bg-color: #D3D3D3;
@@ -12,94 +13,93 @@
     --accent-color-2: #4B0082;
     --modal-bg-color: #FFFFFF;
 }
-
+ */
 /* Aplicar estilos generales para el Modo LIGHT */
-body {
+/* body {
     background-color: var(--bg-color);
     color: var(--text-color);
-}
+} */
 
-header {
+/* header {
     background-color: var(--header-bg-color);
-}
+} */
 
-.sidebar-container {
+/* .sidebar-container {
     background-color: var(--sidebar-bg-color);
     color: var(--text-color);
 }
-
-a {
+ */
+/* a {
     color: var(--link-color);
     text-decoration: none;
-}
+} */
 
-h5 {
+/* h5 {
     color: var(--text-color);
     text-decoration: none;
-}
+} */
 
-a:hover {
+/* a:hover {
     color: var(--link-hover-color);
-}
+} */
 
-button {
+/* button {
     background-color: var(--button-bg-color);
     color: var(--button-text-color);
 }
-
+ */
 /* Navbar personalizado para el Modo LIGHT */
-.navbar-secondary {
+/* .navbar-secondary {
     background-color: var(--header-bg-color) !important;
-    /* Sobrescribe el estilo de Bootstrap */
-    /* Otros estilos específicos del Navbar en el Modo LIGHT si es necesario */
-}
 
-/* Estilos para el texto dentro del Navbar en el Modo LIGHT */
-.navbar-secondary .navbar-text {
-    color: var(--text-color) !important;
-    /* Color del texto en el Modo LIGHT */
 }
+ */
+/* Estilos para el texto dentro del Navbar en el Modo LIGHT */
+/* .navbar-secondary .navbar-text {
+    color: var(--text-color) !important;
+ 
+} */
 
 /* Sidebar personalizado para el Modo LIGHT */
-.sidebar-container {
-    background-color: var(--sidebar-bg-color) !important;
+/* .sidebar-container {
+    background-color: var(--sidebar-bg-color) !important; */
     /* Sobrescribe el estilo de Bootstrap */
-    color: var(--text-color) !important;
+    /* color: var(--text-color) !important; */
     /* Color del texto en el Sidebar en el Modo LIGHT */
     /* Otros estilos específicos del Sidebar en el Modo LIGHT si es necesario */
-}
+/* } */
 
 /* Estilos para los textos dentro de los elementos <a> en el Sidebar en el Modo LIGHT */
-.sidebar-container .nav-item a.nav-link {
-    color: var(--text-color) !important;
+/* .sidebar-container .nav-item a.nav-link {
+    color: var(--text-color) !important; */
     /* Color del texto en el Modo LIGHT */
-}
+/* } */
 
 /* Estilos específicos de Modo LIGHT con toque Gamer para el componente MATCH */
-.match-view {
-    background-color: #FFFFFF !important;
+/* .match-view {
+    background-color: #FFFFFF !important; */
     /* Fondo blanco */
-    color: #000000 !important;
+   /*  color: #000000 !important; */
     /* Texto negro */
-}
-
-.gamer-card {
-    background-color: #F1F1F1 !important;
+/* }
+ */
+/* .gamer-card {
+    background-color: #F1F1F1 !important; */
     /* Fondo gris claro */
-    border: 1px solid #CCCCCC !important;
+/*     border: 1px solid #CCCCCC !important; */
     /* Borde gris claro */
-}
+/* } */
 
-.profile-card {
+/* .profile-card {
     background-color: #F1F1F1 !important;
     color: #000000 !important;
 }
-
+ */
 
 
 
 /* Estilos para el Modo DARK */
-[data-theme="dark"] {
+/* [data-theme="dark"] {
     --bg-color: #000402;
     --header-bg-color: #1C2C54;
     --sidebar-bg-color: #1C2C54;
@@ -112,75 +112,75 @@ button {
     --accent-color-2: #4BC8B5;
     --modal-bg-color: #000402;
 }
-
+ */
 
 
 /* Navbar personalizado para el Modo DARK */
-[data-theme="dark"] .navbar-secondary {
-    background-color: var(--header-bg-color) !important;
+/* [data-theme="dark"] .navbar-secondary {
+    background-color: var(--header-bg-color) !important; */
     /* Sobrescribe el estilo de Bootstrap */
     /* Otros estilos específicos del Navbar en el Modo DARK si es necesario */
-}
+/* } */
 
 /* Estilos para el texto dentro del Navbar en el Modo DARK */
-[data-theme="dark"] .navbar-secondary .navbar-text {
-    color: var(--text-color) !important;
+/* [data-theme="dark"] .navbar-secondary .navbar-text {
+    color: var(--text-color) !important; */
     /* Color del texto en el Modo DARK */
-}
+/* } */
 
 /* Sidebar personalizado para el Modo DARK */
-[data-theme="dark"] .sidebar-container {
-    background-color: var(--sidebar-bg-color) !important;
+/* [data-theme="dark"] .sidebar-container {
+    background-color: var(--sidebar-bg-color) !important; */
     /* Sobrescribe el estilo de Bootstrap */
-    color: var(--text-color) !important;
+ /*    color: var(--text-color) !important; */
     /* Color del texto en el Sidebar en el Modo DARK */
     /* Otros estilos específicos del Sidebar en el Modo DARK si es necesario */
-}
+/* } */
 
 /* Estilos para los textos dentro de los elementos <a> en el Sidebar en el Modo DARK */
-[data-theme="dark"] .sidebar-container .nav-item a.nav-link {
-    color: var(--text-color) !important;
+/* [data-theme="dark"] .sidebar-container .nav-item a.nav-link {
+    color: var(--text-color) !important; */
     /* Color del texto en el Modo DARK */
-}
+/* } */
 
 /* Estilos específicos de Modo DARK para el componente MATCH */
-[data-theme="dark"] .match-view {
+/* [data-theme="dark"] .match-view {
     background-color: #000402 !important;
-    color: #fff !important;
+    color: #fff !important; */
     /* Otros estilos específicos de Modo DARK para MATCH si es necesario */
-}
+/* } */
 
-[data-theme="dark"] .gamer-card {
+/* [data-theme="dark"] .gamer-card {
     background-color: #333 !important;
-    border: 1px solid #444 !important;
+    border: 1px solid #444 !important; */
     /* Otros estilos específicos de Modo DARK para MATCH si es necesario */
-}
+/* } */
 
-[data-theme="dark"] .profile-card {
+/* [data-theme="dark"] .profile-card {
     background-color: #222 !important;
     color: #ddd !important;
-}
+} */
 
-[data-theme="dark"] h5 {
-    color: #fff;
+/* [data-theme="dark"] h5 {
+    color: #fff; */
     /* Color de texto para <h5> en el Modo DARK */
 
-}
+/* } */
 
-.container {
+/* .container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80vh;
     margin-left: -10%;
-}
+} */
 
-.row {
+/* .row {
     width: 100%;
-}
+} */
 
-.input-group {
+/* .input-group {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */

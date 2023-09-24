@@ -1,8 +1,8 @@
-"""URL AVATARD BD
+"""base
 
-Revision ID: dd1db1cc1ea9
+Revision ID: 1c469796d358
 Revises: 
-Create Date: 2023-09-22 11:32:33.639612
+Create Date: 2023-09-22 20:08:11.766331
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dd1db1cc1ea9'
+revision = '1c469796d358'
 down_revision = None
 branch_labels = None
 depends_on = None
