@@ -1,5 +1,6 @@
 import React from 'react'
 import "../../../styles/Wall.css"
+
 const GroupWall = () => {
     return (
         <>
@@ -24,7 +25,7 @@ const GroupWall = () => {
                                     <span className="description">Shared publicly - 7:30 PM Today</span>
                                 </div>
                                 <div className="box-tools">
-                                    <button
+                                    {/* <button
                                         type="button"
                                         className="btn btn-box-tool"
                                         data-toggle="tooltip"
@@ -46,13 +47,13 @@ const GroupWall = () => {
                                         data-widget="remove"
                                     >
                                         <i className="fa fa-times" />
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                             <div className="box-body" style={{ display: "block" }}>
                                 <img
                                     className="img-responsive pad"
-                                    src="https://www.bootdey.com/image/600x300/"
+                                    src="https://www.bootdey.com/image/200x300/"
                                     alt="Photo"
                                 />
                                 <p>I took this photo this morning. What do you guys think?</p>

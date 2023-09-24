@@ -2,7 +2,7 @@ import React from 'react'
 import GroupHeader from './GroupHeader'
 import GroupCards from './GroupCards'
 import GroupWall from './GroupWall'
-import GroupNews from './GroupNews'
+import GroupNewsCarousel from './GroupNewsCarousel'
 
 const Group = () => {
     return (
@@ -25,7 +25,7 @@ const Group = () => {
                 <GroupWall/>
                 </div>
                 <div className='col-6'>
-                <GroupNews/>
+                <GroupNewsCarousel/>
                 </div>
             </div>
 
