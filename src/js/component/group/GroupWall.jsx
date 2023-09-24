@@ -10,7 +10,7 @@ const GroupWall = () => {
                     rel="stylesheet"
                 />
                 <div className="container bootstrap snippets bootdey">
-                    <div className="col-md-8">
+                    <div className="col-md-12 col-sm-12 col-lg-12">
                         <div className="box box-widget">
                             <div className="box-header with-border">
                                 <div className="user-block">
@@ -53,7 +53,7 @@ const GroupWall = () => {
                             <div className="box-body" style={{ display: "block" }}>
                                 <img
                                     className="img-responsive pad"
-                                    src="https://www.bootdey.com/image/200x300/"
+                                    src="https://www.bootdey.com/image/660x300/"
                                     alt="Photo"
                                 />
                                 <p>I took this photo this morning. What do you guys think?</p>
