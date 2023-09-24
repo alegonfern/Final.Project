@@ -16,32 +16,32 @@ const GroupNewsCarousel = () => {
                 'X-RapidAPI-Host': 'diablo4-smartable.p.rapidapi.com',
             },
         })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Error al cargar noticias');
-            }
-            return response.json();
-        })
-        .then((data) => {
-            // Verifica que 'data.value' sea un arreglo antes de establecerlo como el estado 'news'
-            if (Array.isArray(data.value)) {
-                setNews(data.value); // Actualiza el estado 'news' con los datos de las noticias.
-            } else {
-                console.error('La respuesta de la API no es un arreglo:', data);
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Error al cargar noticias');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // Verifica que 'data.value' sea un arreglo antes de establecerlo como el estado 'news'
+                if (Array.isArray(data.value)) {
+                    setNews(data.value); // Actualiza el estado 'news' con los datos de las noticias.
+                } else {
+                    console.error('La respuesta de la API no es un arreglo:', data);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }, []);
     return (
         <>
-            <div className='box my-4'>
+            {/* <div className='box my-4'> */}
             <div id="newsCarousel" className="carousel slide">
                 <div className="carousel-inner">
                     {news.map((article, index) => (
                         <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
-                            <div className='carousel-card d-flex justify-content-between'>
+                            <div className='carousel-card d-flex justify-content-center align-items-center'>
                                 <GroupNewsCard
                                     AvatarGrupo={article.images[0].url} // URL de la imagen
                                     NombreGrupo={article.title} // Título de la noticia
@@ -60,8 +60,8 @@ const GroupNewsCarousel = () => {
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
-        </div>
-        
+            {/*   </div> */}
+
             {/* <div id="carouselExample" className="carousel slide">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
