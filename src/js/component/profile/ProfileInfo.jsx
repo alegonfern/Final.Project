@@ -3,16 +3,62 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { faSave } from '@fortawesome/free-regular-svg-icons';
-import EmojiPicker from 'react-emoji-picker';
 
 const ProfileInfo = () => {
     const [lugarDeNacimiento, setLugarDeNacimiento] = useState('Lugar de Nacimiento');
     const [editando, setEditando] = useState(false);
 
+    const [editandoNombre, setEditandoNombre] = useState(false);
+    const [nombreUsuario, setNombreUsuario] = useState("Nombre Usuario");
+
+
+    const [editandoEmail, setEditandoEmail] = useState(false);
+    const [email, setEmail] = useState("example@example.com");
+
+    const [editandoTelefono, setEditandoTelefono] = useState(false);
+    const [telefono, setTelefono] = useState("(097) 234-5678");
+
 
     const handleLugarDeNacimientoChange = (event) => {
         setLugarDeNacimiento(event.target.value);
     };
+
+    // Función para manejar el inicio de la edición del Teléfono
+    const handleEditarTelefonoClick = () => {
+        setEditandoTelefono(true);
+    };
+
+    // Función para manejar el guardado del Teléfono editado
+    const handleGuardarTelefonoClick = () => {
+        setEditandoTelefono(false);
+        // Aquí puedes guardar el nuevo valor del Teléfono en tu backend
+    };
+
+    // Función para manejar el inicio de la edición del Nombre Usuario
+    const handleEditarNombreClick = () => {
+        setEditandoNombre(true);
+    };
+
+    // Función para manejar el guardado del Nombre Usuario editado
+    const handleGuardarNombreClick = () => {
+        setEditandoNombre(false);
+        // Aquí puedes guardar el nuevo valor del Nombre Usuario en tu backend
+    };
+
+    // Función para manejar el inicio de la edición del correo electrónico
+    const handleEditarEmailClick = () => {
+        setEditandoEmail(true);
+    };
+
+    // Función para manejar el guardado del correo electrónico editado
+    const handleGuardarEmailClick = () => {
+        setEditandoEmail(false);
+        // Aquí puedes guardar el nuevo valor del correo electrónico en tu backend
+    };
+
+
+
+
 
     const handleEditarClick = () => {
         setEditando(true);
@@ -79,6 +125,9 @@ const ProfileInfo = () => {
                                         )}
 
                                 </div>
+
+
+
                             </div>
                             <div className="card mb-4 mb-lg-0">
                                 <div className="card-body p-0">
@@ -122,6 +171,9 @@ const ProfileInfo = () => {
                         <div className="col-lg-8">
                             <div className="card mb-4">
                                 <div className="card-body">
+
+
+                                    {/*
                                     <div className="row">
                                         <div className="col-sm-3">
                                             <p className="mb-0">Nombre</p>
@@ -131,7 +183,46 @@ const ProfileInfo = () => {
                                         </div>
                                     </div>
                                     <hr />
+                                        */}
+
+
                                     <div className="row">
+                                        <div className="col-sm-3">
+                                            <p className="mb-0">Nombre</p>
+                                        </div>
+                                        <div className="col-sm-9">
+                                            {editandoNombre ? (
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        value={nombreUsuario}
+                                                        onChange={(e) => setNombreUsuario(e.target.value)}
+                                                    />
+                                                    <FontAwesomeIcon
+                                                        icon={faSave}
+                                                        onClick={handleGuardarNombreClick}
+                                                        style={{ cursor: "pointer", marginLeft: "10px", fontSize: "20px" }}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    {nombreUsuario}
+                                                    <FontAwesomeIcon
+                                                        icon={faPencilAlt}
+                                                        onClick={handleEditarNombreClick}
+                                                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+
+
+
+
+                                    {  /*    <div className="row">
                                         <div className="col-sm-3">
                                             <p className="mb-0">Email</p>
                                         </div>
@@ -139,7 +230,54 @@ const ProfileInfo = () => {
                                             <p className="text-muted mb-0">example@example.com</p>
                                         </div>
                                     </div>
+                                    <hr /> 
+                                    */
+                                    }
+
+
+
+
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <p className="mb-0">Email</p>
+                                        </div>
+                                        <div className="col-sm-9">
+                                            {editandoEmail ? (
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        value={email}
+                                                        onChange={(e) => setEmail(e.target.value)}
+                                                    />
+                                                    <FontAwesomeIcon
+                                                        icon={faSave}
+                                                        onClick={handleGuardarEmailClick}
+                                                        style={{ cursor: "pointer", marginLeft: "10px", fontSize: "20px" }}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    {email}
+                                                    <FontAwesomeIcon
+                                                        icon={faPencilAlt}
+                                                        onClick={handleEditarEmailClick}
+                                                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
                                     <hr />
+
+
+
+
+
+
+
+
+                                    {/*
+
                                     <div className="row">
                                         <div className="col-sm-3">
                                             <p className="mb-0">Teléfono</p>
@@ -149,6 +287,44 @@ const ProfileInfo = () => {
                                         </div>
                                     </div>
                                     <hr />
+*/
+                                    }
+
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <p className="mb-0">Teléfono</p>
+                                        </div>
+                                        <div className="col-sm-9">
+                                            {editandoTelefono ? (
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        value={telefono}
+                                                        onChange={(e) => setTelefono(e.target.value)}
+                                                    />
+                                                    <FontAwesomeIcon
+                                                        icon={faSave}
+                                                        onClick={handleGuardarTelefonoClick}
+                                                        style={{ cursor: "pointer", marginLeft: "10px", fontSize: "20px" }}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    {telefono}
+                                                    <FontAwesomeIcon
+                                                        icon={faPencilAlt}
+                                                        onClick={handleEditarTelefonoClick}
+                                                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+
+
+
                                     <div className="row">
                                         <div className="col-sm-3">
                                             <p className="mb-0">Movil</p>
@@ -158,6 +334,10 @@ const ProfileInfo = () => {
                                         </div>
                                     </div>
                                     <hr />
+
+
+
+
                                     <div className="row">
                                         <div className="col-sm-3">
                                             <p className="mb-0">Dirección</p>
