@@ -13,6 +13,7 @@ import Group from "./component/group/Group";
 import Profile from "./component/profile/Profile";
 import Intereses from './component/interests/Intereses';
 import Matches from "./component/matches/Matches";
+import Chat from "./component/chat/Chat";
 
 import Sidebar from './component/Sidebar';
 
@@ -21,7 +22,6 @@ import Google_test from "./component/test component Google/Google_test";
 import Match from './component/Match';
 import MatchPreview from './component/match preview component/MatchPreview';
 import MyCalendar from "./component/Calendar";
-import Chat from "./component/Chat";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
@@ -44,7 +44,7 @@ function App() {
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/Group" element={<Group />} />
                   <Route path="/Intereses" element={<Intereses />} />
-                  <Route path="/Matches" element={<Matches/>} />
+                  <Route path="/Matches" element={<Matches />} />
 
                   <Route path="/login_google" element={<GoogleCallback />} />
                   <Route path="/MatchPreview" element={<MatchPreview />} />
@@ -52,7 +52,7 @@ function App() {
                   <Route path="/Google" element={<Google_test />} />
                   <Route path="/calendar" element={<MyCalendar />} />
                   <Route path="/chat" element={<Chat />} />
-                  
+
                 </Routes>
 
               </div>
