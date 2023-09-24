@@ -43,11 +43,16 @@ class User(db.Model):
 class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    profile_picture = db.Column(db.String(255))
-    description = db.Column(db.String(255))
-    social_media = db.Column(db.String(255))
-    rating = db.Column(db.Integer)
-    registration_date = db.Column(db.Date)
+    user_name= db.Column(db.String(255))
+    telefono = db.Column(db.Integer)
+    movil= db.Column(db.Integer)
+    adress = db.Column(db.String(255))
+    lugar_nacimiento = db.Column(db.String(255))
+    web=db.Column(db.String(255))
+    instagram=db.Column(db.String(255))
+    twitch=db.Column(db.String(255))
+    facebook=db.Column(db.String(255))
+    threads=db.Column(db.String(255))
 
 class FriendRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
