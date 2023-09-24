@@ -89,7 +89,7 @@ function Sidebar() {
                                 </li>
 
                                 <li className="nav-item">
-                                    <Link to="/Contacts" className="nav-link">
+                                    <Link to="/Matches" className="nav-link">
                                         <FontAwesomeIcon icon={faUserFriends} /> Mis M4tch's
                                     </Link>
                                 </li>
