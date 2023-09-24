@@ -13,7 +13,7 @@ function Chat() {
                 href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
                 rel="stylesheet"
             />
-            <div className="container">
+            <div className="container" style={{ marginTop: "100px" }}>
                 <div className="row clearfix">
                     <div className="col-lg-12">
                         <div className="card chat-app">
