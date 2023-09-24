@@ -2,11 +2,14 @@ import React from 'react'
 import ProfileCard from './ProfileCard'
 import ProfileBasicInfo from './ProfileBasicInfo'
 import ProfileBadges from './ProfileBadges'
-
+import ProfileInfo from './ProfileInfo'
 const Profile = () => {
     return (
         <>
             <div className='row'>
+                <div className='col-12'>
+                    <ProfileInfo />
+                </div>
                 <div className='col-6'>
                     <ProfileCard />
                 </div>
@@ -17,7 +20,7 @@ const Profile = () => {
 
             <div className='row'>
                 <div className='col-3'>
-                    <ProfileBadges/>
+                    <ProfileBadges />
                 </div>
             </div>
 
