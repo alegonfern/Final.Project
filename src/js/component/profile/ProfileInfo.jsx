@@ -1,6 +1,37 @@
 import React from 'react'
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSave } from '@fortawesome/free-regular-svg-icons';
+import EmojiPicker from 'react-emoji-picker';
 
 const ProfileInfo = () => {
+    const [lugarDeNacimiento, setLugarDeNacimiento] = useState('Lugar de Nacimiento');
+    const [editando, setEditando] = useState(false);
+
+
+    const handleLugarDeNacimientoChange = (event) => {
+        setLugarDeNacimiento(event.target.value);
+    };
+
+    const handleEditarClick = () => {
+        setEditando(true);
+    };
+    const handleGuardarClick = () => {
+        // Aquí puedes enviar el nuevo valor de lugarDeNacimiento al servidor a través de una solicitud HTTP (por ejemplo, utilizando Axios).
+        // También puedes agregar una función para manejar la lógica de guardar en el servidor.
+        // Ejemplo de solicitud con Axios:
+        // axios.post('/api/guardar-lugar-nacimiento', { lugarDeNacimiento })
+        //   .then((response) => {
+        //     // Manejar la respuesta del servidor si es necesario
+        //   })
+        //   .catch((error) => {
+        //     // Manejar errores si es necesario
+        //   });
+
+        setEditando(false); // Desactivar el modo de edición después de guardar.
+    };
+
     return (
         <>
             <section style={{ backgroundColor: "#eee", marginTop: "50px" }}>
@@ -19,13 +50,34 @@ const ProfileInfo = () => {
                                     />
                                     <h5 className="my-3">Nombre de Usuario</h5>
                                     <p className="text-muted mb-1">Estado del Usuario</p>
-                                    <p className="text-muted mb-4">Lugar de Nacimiento</p>
-                                    <div className="d-flex justify-content-center mb-2">
-                                        <button type="button" className="btn btn-primary">
-                                            Editar
-                                        </button>
+                                    {editando ? (
+                                        <p className="text-muted mb-4">
+                                            <input
+                                                type="text"
+                                                value={lugarDeNacimiento}
+                                                onChange={handleLugarDeNacimientoChange}
+                                            />
+                                            <FontAwesomeIcon
+                                                icon={faSave}
+                                                onClick={handleGuardarClick}
+                                                style={{ cursor: 'pointer', marginLeft: '10px', fontSize: "20px" }}
+                                            />
+                                        </p>
+                                    )
 
-                                    </div>
+
+
+                                        : (
+                                            <p className="text-muted mb-4">
+                                                {lugarDeNacimiento}
+                                                <FontAwesomeIcon
+                                                    icon={faPencilAlt}
+                                                    onClick={handleEditarClick}
+                                                    style={{ cursor: 'pointer', marginLeft: '10px' }}
+                                                />
+                                            </p>
+                                        )}
+
                                 </div>
                             </div>
                             <div className="card mb-4 mb-lg-0">
