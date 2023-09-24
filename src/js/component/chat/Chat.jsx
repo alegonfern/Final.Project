@@ -1,9 +1,11 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
-import { UserContext } from "../store/UserContext";
-import "../../styles/Chat.css"
+import { UserContext } from "../../store/UserContext";
+import "../../../styles/Chat.css"
 
 function Chat() {
+
+
 
     return (
         <>
