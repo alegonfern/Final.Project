@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 // include your styles into the webpack bundle
 import "../styles/index.css";
-import '../styles/Profile.css';
+
 
 //import your own components
 import Home from "./component/Home";
@@ -15,18 +15,21 @@ import Profile from "./component/Profile";
 import Group from './component/Group';
 import GoogleCallback from './component/GoogleCallback';
 import Google_test from "./component/test component/Google_test";
-import Intereses from './component/Intereses-respaldo';
+import Intereses from './component/Intereses';
 import Match from './component/Match';
 import MatchPreview from './component/match preview component/MatchPreview';
 import Sidebar from './component/Sidebar';
-import Contacts from "./component/contact list/Contacts";
+
 import Navbar from "./component/Navbar";
 import { Calendar } from "react-big-calendar";
 import MyCalendar from "./component/Calendar";
 import Chat from "./component/Chat";
+import NewHome from "./component/new home/NewHome";
 import PrivateRoute from "./component/PrivateRoute";
 import { UserContext } from "./store/UserContext";
 import { useContext } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 function App() {
@@ -38,12 +41,10 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="*" element={
             <>
-              <Navbar />
-              <div className="app" style={{ display: 'grid', gridTemplateColumns: '1fr 3fr' }}>
                 <div>
                   <Sidebar />
                 </div>
-                <div className="content" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
+                <div className="content" >
                   <Routes>
                     <Route path="/Home" element={<Home />} />
                     <Route path="/login_google" element={<GoogleCallback />} />
@@ -53,11 +54,12 @@ function App() {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/match" element={<Match />} />
                     <Route path="/Google" element={<Google_test />} />
-                    <Route path="/Contacts" element={<Contacts />} />
+                  
                     <Route path="/calendar" element={<MyCalendar />} />
                     <Route path="/chat" element={<Chat />} />
+                    <Route path="/NewHome" element={<NewHome />} />
                   </Routes>
-                </div>
+
               </div>
             </>
           } />
