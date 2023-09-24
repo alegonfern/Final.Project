@@ -1,6 +1,6 @@
 import React from 'react'
 
-const NewHomeCard = ({groupImagen, groupName}) => {
+const HomeCard = ({groupImagen, groupName}) => {
     return (
         <>
             <div className="col mb-5">
@@ -34,4 +34,4 @@ const NewHomeCard = ({groupImagen, groupName}) => {
     )
 }
 
-export default NewHomeCard
+export default HomeCard

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { UserContext } from "../store/UserContext";
+import { UserContext } from "../../store/UserContext";
 import { useLocation } from 'react-router-dom';
 
 const GoogleCallback = () => {
