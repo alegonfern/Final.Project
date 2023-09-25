@@ -18,11 +18,23 @@ const ProfileInfo = () => {
     const [editandoTelefono, setEditandoTelefono] = useState(false);
     const [telefono, setTelefono] = useState("(097) 234-5678");
 
+    const [editandoMovil, setEditandoMovil] = useState(false);
+    const [movil, setMovil] = useState("(098) 765-4321");
 
     const handleLugarDeNacimientoChange = (event) => {
         setLugarDeNacimiento(event.target.value);
     };
 
+    // Función para manejar el inicio de la edición del Móvil
+    const handleEditarMovilClick = () => {
+        setEditandoMovil(true);
+    };
+
+    // Función para manejar el guardado del Móvil editado
+    const handleGuardarMovilClick = () => {
+        setEditandoMovil(false);
+        // Aquí puedes guardar el nuevo valor del Móvil en tu backend
+    };
     // Función para manejar el inicio de la edición del Teléfono
     const handleEditarTelefonoClick = () => {
         setEditandoTelefono(true);
@@ -324,7 +336,7 @@ const ProfileInfo = () => {
 
 
 
-
+                                    {/*
                                     <div className="row">
                                         <div className="col-sm-3">
                                             <p className="mb-0">Movil</p>
@@ -334,6 +346,41 @@ const ProfileInfo = () => {
                                         </div>
                                     </div>
                                     <hr />
+
+                                            */}
+                                    <div className="row">
+                                        <div className="col-sm-3">
+                                            <p className="mb-0">Movil</p>
+                                        </div>
+                                        <div className="col-sm-9">
+                                            {editandoMovil ? (
+                                                <div>
+                                                    <input
+                                                        type="text"
+                                                        value={movil}
+                                                        onChange={(e) => setMovil(e.target.value)}
+                                                    />
+                                                    <FontAwesomeIcon
+                                                        icon={faSave}
+                                                        onClick={handleGuardarMovilClick}
+                                                        style={{ cursor: "pointer", marginLeft: "10px", fontSize: "20px" }}
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    {movil}
+                                                    <FontAwesomeIcon
+                                                        icon={faPencilAlt}
+                                                        onClick={handleEditarMovilClick}
+                                                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <hr />
+
+
 
 
 
@@ -346,6 +393,9 @@ const ProfileInfo = () => {
                                             <p className="text-muted mb-0">Bay Area, San Francisco, CA</p>
                                         </div>
                                     </div>
+
+
+
                                 </div>
                             </div>
                             <div className="row">
@@ -354,12 +404,12 @@ const ProfileInfo = () => {
                                         <div className="card-body">
                                             <p className="mb-4">
                                                 <span className="text-primary font-italic me-1">
-                                                    Métricas
+                                                    Mis intereses
                                                 </span>{" "}
-                                                Metricas Interes
+                                                Respecto a los demas usuarios:
                                             </p>
                                             <p className="mb-1" style={{ fontSize: ".77rem" }}>
-                                                Web Design
+                                                Categoría 1
                                             </p>
                                             <div className="progress rounded" style={{ height: 5 }}>
                                                 <div
@@ -372,7 +422,7 @@ const ProfileInfo = () => {
                                                 />
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem" }}>
-                                                Website Markup
+                                                Categoría 2
                                             </p>
                                             <div className="progress rounded" style={{ height: 5 }}>
                                                 <div
@@ -385,7 +435,7 @@ const ProfileInfo = () => {
                                                 />
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem" }}>
-                                                One Page
+                                                Categoría 3
                                             </p>
                                             <div className="progress rounded" style={{ height: 5 }}>
                                                 <div
@@ -398,7 +448,7 @@ const ProfileInfo = () => {
                                                 />
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem" }}>
-                                                Mobile Template
+                                                Categoría 4
                                             </p>
                                             <div className="progress rounded" style={{ height: 5 }}>
                                                 <div
@@ -411,7 +461,7 @@ const ProfileInfo = () => {
                                                 />
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem" }}>
-                                                Backend API
+                                                Categoría 5
                                             </p>
                                             <div className="progress rounded mb-2" style={{ height: 5 }}>
                                                 <div
@@ -426,17 +476,18 @@ const ProfileInfo = () => {
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className="col-md-6">
                                     <div className="card mb-4 mb-md-0">
                                         <div className="card-body">
                                             <p className="mb-4">
                                                 <span className="text-primary font-italic me-1">
-                                                    assigment
+                                                    Música
                                                 </span>{" "}
-                                                Project Status
+                                                Que escucha el resto:
                                             </p>
                                             <p className="mb-1" style={{ fontSize: ".77rem" }}>
-                                                Web Design
+                                                Musica 1
                                             </p>
                                             <div className="progress rounded" style={{ height: 5 }}>
                                                 <div
@@ -449,7 +500,7 @@ const ProfileInfo = () => {
                                                 />
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem" }}>
-                                                Website Markup
+                                                Musica 2
                                             </p>
                                             <div className="progress rounded" style={{ height: 5 }}>
                                                 <div
@@ -462,7 +513,7 @@ const ProfileInfo = () => {
                                                 />
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem" }}>
-                                                One Page
+                                                Musica 3
                                             </p>
                                             <div className="progress rounded" style={{ height: 5 }}>
                                                 <div
@@ -475,7 +526,7 @@ const ProfileInfo = () => {
                                                 />
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem" }}>
-                                                Mobile Template
+                                                Musica 4
                                             </p>
                                             <div className="progress rounded" style={{ height: 5 }}>
                                                 <div
@@ -488,7 +539,7 @@ const ProfileInfo = () => {
                                                 />
                                             </div>
                                             <p className="mt-4 mb-1" style={{ fontSize: ".77rem" }}>
-                                                Backend API
+                                                Musica 5
                                             </p>
                                             <div className="progress rounded mb-2" style={{ height: 5 }}>
                                                 <div

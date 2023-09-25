@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react';
 import HomeCard from './HomeCard'
 import HomeFooter from './HomeFooter'
 
@@ -31,6 +31,12 @@ import educativoImg from '../../../img/generos de juegos/Educativo.jpg';
 import casualImg from '../../../img/generos de juegos/Casual.jpg';
 
 const Home = () => {
+
+    const [selectedGenre, setSelectedGenre] = useState(null);
+
+    const handleCardClick = (genre) => {
+        setSelectedGenre(genre);
+    };
 
     const groupImages = {
         Universo: universoImg,
@@ -102,6 +108,7 @@ const Home = () => {
                                 key={index}
                                 groupImagen={group.groupImagen}
                                 groupName={group.groupName}
+                                onClick={() => handleCardClick(group.groupName)}
                             />
                         ))}
                     </div>

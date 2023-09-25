@@ -1,12 +1,7 @@
 import React from 'react'
 import "../../../styles/Wall.css"
-import Consola from "../../../img/Consola.jpg";
 
-
-
-
-
-const GroupWall = () => {
+const GameWall = () => {
     return (
         <>
             <>
@@ -25,9 +20,9 @@ const GroupWall = () => {
                                         alt="User Image"
                                     />
                                     <span className="username">
-                                        <a href="#">Usuario.</a>
+                                        <a href="#">John Breakgrow jr.</a>
                                     </span>
-                                    <span className="description">Compartido en el grupo - 7:30 PM Hoy</span>
+                                    <span className="description">Shared publicly - 7:30 PM Today</span>
                                 </div>
                                 <div className="box-tools">
                                     {/* <button
@@ -58,15 +53,15 @@ const GroupWall = () => {
                             <div className="box-body" style={{ display: "block" }}>
                                 <img
                                     className="img-responsive pad"
-                                    src={Consola}
+                                    src="https://www.bootdey.com/image/660x300/"
                                     alt="Photo"
                                 />
-                                <p>Que les parece mi nueva adquisición? </p>
+                                <p>I took this photo this morning. What do you guys think?</p>
                                 <button type="button" className="btn btn-default btn-xs">
-                                    <i className="fa fa-share" /> Compartir
+                                    <i className="fa fa-share" /> Share
                                 </button>
                                 <button type="button" className="btn btn-default btn-xs">
-                                    <i className="fa fa-thumbs-o-up" /> Me Gusta
+                                    <i className="fa fa-thumbs-o-up" /> Like
                                 </button>
                                 <span className="pull-right text-muted">127 likes - 3 comments</span>
                             </div>
@@ -80,9 +75,10 @@ const GroupWall = () => {
                                     <div className="comment-text">
                                         <span className="username">
                                             Maria Gonzales
-                                            <span className="text-muted pull-right">8:03 PM Hoy</span>
+                                            <span className="text-muted pull-right">8:03 PM Today</span>
                                         </span>
-                                        El manso maquinon!
+                                        It is a long established fact that a reader will be distracted by
+                                        the readable content of a page when looking at its layout.
                                     </div>
                                 </div>
                                 <div className="box-comment">
@@ -93,10 +89,11 @@ const GroupWall = () => {
                                     />
                                     <div className="comment-text">
                                         <span className="username">
-                                            Luna Lunola
+                                            Luna Stark
                                             <span className="text-muted pull-right">8:03 PM Today</span>
                                         </span>
-                                        Algun día invita a jugar!!!
+                                        It is a long established fact that a reader will be distracted by
+                                        the readable content of a page when looking at its layout.
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +108,7 @@ const GroupWall = () => {
                                         <input
                                             type="text"
                                             className="form-control input-sm"
-                                            placeholder="Presiona Enter para postear!"
+                                            placeholder="Press enter to post comment"
                                         />
                                     </div>
                                 </form>
@@ -125,4 +122,4 @@ const GroupWall = () => {
     )
 }
 
-export default GroupWall
+export default GameWall
