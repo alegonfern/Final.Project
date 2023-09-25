@@ -6,8 +6,6 @@ const Matches = () => {
     return (
 
         <>
-            <MatchesHeader />
-
             <div className="row col-12 justify-content-center">
                 <MatchesCards />
             </div>

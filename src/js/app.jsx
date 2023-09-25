@@ -14,6 +14,7 @@ import Profile from "./component/profile/Profile";
 import Intereses from './component/interests/Intereses';
 import Matches from "./component/matches/Matches";
 import Chat from "./component/chat/Chat";
+import Adn from "./component/adn/adn";
 
 import Sidebar from './component/Sidebar';
 
@@ -45,6 +46,7 @@ function App() {
                   <Route path="/Group" element={<Group />} />
                   <Route path="/Intereses" element={<Intereses />} />
                   <Route path="/Matches" element={<Matches />} />
+                  <Route path="/Adn" element={<Adn/>} />
 
 
                   <Route path="/login_google" element={<GoogleCallback />} />
