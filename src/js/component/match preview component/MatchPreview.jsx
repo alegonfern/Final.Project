@@ -1,6 +1,9 @@
+import '../../../styles/MatchPreview.css';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDna } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faTimes, faDna } from '@fortawesome/free-solid-svg-icons';
+import { useContext, useState, useEffect } from "react";
+import { UserContext } from "../../store/UserContext"
 
 const MatchPreview = ({ user, onClose }) => {
   const modalStyle = {

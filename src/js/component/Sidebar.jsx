@@ -82,13 +82,13 @@ function Sidebar() {
                                     </Link>
                                 </li>
 
-                            {/*     <li className="nav-item">
+                                {/*     <li className="nav-item">
                                     <Link to="/Group" className="nav-link">
                                         <FontAwesomeIcon icon={faList} /> Salas de Interés
                                     </Link>
                                 </li>
  */}
-                                    <li className="nav-item">
+                                <li className="nav-item">
                                     <Link to="/Matches" className="nav-link">
                                         <FontAwesomeIcon icon={faUserFriends} /> Mis M4tch's
                                     </Link>
@@ -110,7 +110,8 @@ function Sidebar() {
 
                                 <li className="nav-item">
                                     <Link to="/Adn" className="nav-link">
-                                    <FontAwesomeIcon icon={faDna} rotation={90} style={{ color: "#48CB86", fontSize: "3rem" }} className="icon" />
+
+                                        <FontAwesomeIcon icon={faDna} style={{ color: "#cb484b", fontSize: "2rem" }} className="icon" />
                                     </Link>
                                 </li>
 
