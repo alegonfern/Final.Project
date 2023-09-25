@@ -37,9 +37,9 @@ const MatchCarousel = () => {
         return result;
     }
 
-
     return (
-
+        <div>
+            {/* Agrega el contenido del carrusel aquí */}
             <div id="groupCarousel" className="carousel slide border-0">
                 <div className="carousel-inner">
                     {chunkArray(filteredUsers, 4).map((group, groupIndex) => (
@@ -75,9 +75,7 @@ const MatchCarousel = () => {
                     <span className="visually-hidden">Next</span>
                 </button>
             </div>
-    
-
-
+        </div>
     );
 }
 
