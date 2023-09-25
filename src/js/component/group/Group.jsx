@@ -3,6 +3,7 @@ import GroupHeader from './GroupHeader'
 import GroupCards from './GroupCards'
 import GroupWall from './GroupWall'
 import GroupNewsCarousel from './GroupNewsCarousel'
+import MatchCarousel from '../match/MatchCarousel';
 
 const Group = (selectedGenre) => {
 
@@ -40,7 +41,9 @@ const Group = (selectedGenre) => {
     return (
         <>
             <GroupHeader />
-
+            <div className="container px-4 px-lg-5 mt-5">
+                    <MatchCarousel/>
+                    </div>
             <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {games.map((game, index) => (
                     <GroupCards

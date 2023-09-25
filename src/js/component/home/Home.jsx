@@ -29,6 +29,7 @@ import historiaVisualImg from '../../../img/generos de juegos/Historia visual.jp
 import musicalImg from '../../../img/generos de juegos/Musical.jpg';
 import educativoImg from '../../../img/generos de juegos/Educativo.jpg';
 import casualImg from '../../../img/generos de juegos/Casual.jpg';
+import MatchCarousel from '../match/MatchCarousel';
 
 const Home = () => {
 
@@ -102,6 +103,7 @@ const Home = () => {
         <>
             <section className="py-5">
                 <div className="container px-4 px-lg-5 mt-5">
+                    <MatchCarousel/>
                     <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                         {groupsData.map((group, index) => (
                             <HomeCard

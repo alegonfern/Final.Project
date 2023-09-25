@@ -3,6 +3,7 @@ import GrapGenderHome from '../GrapGenderHome'
 import GrapGeneroHome from '../GrapGeneroHome'
 
 import GrapGameHome from '../GrapGameHome'
+
 const HomeFooter = () => {
     return (
         <>
