@@ -15,6 +15,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 from compatibilidad import compatibilidad
 from collections import Counter
+from sqlalchemy import or_
 
 app = Flask(__name__)
 app.config['DEBUG'] = True 
@@ -660,6 +661,53 @@ def get_top3_juegos():
     top3_juegos = [{"juego": juego[0], "repeticiones": juego[1]} for juego in juegos]
 
     return jsonify(top3_juegos)
+
+
+
+from sqlalchemy import or_
+
+# ...
+
+@app.route('/matches/<int:user_id>', methods=['GET'])
+def get_matches(user_id):
+    try:
+        # Consulta la tabla Match para obtener los IDs de los usuarios que hicieron match con "user_id"
+        matched_user_ids = (
+            db.session.query(Match)
+            .filter(or_(Match.user_id_1 == user_id, Match.user_id_2 == user_id))
+            .with_entities(Match.user_id_1, Match.user_id_2)
+            .all()
+        )
+
+        # Obtén una lista de IDs de usuarios coincidentes
+        user_ids = [match.user_id_1 if match.user_id_2 == user_id else match.user_id_2 for match in matched_user_ids]
+
+        # Consulta la tabla User para obtener los datos de los usuarios que hicieron match
+        matched_users = (
+            User.query
+            .filter(User.id.in_(user_ids))
+            .with_entities(User.id, User.first_name, User.last_name, User.url_avatar, User.gender, User.birth_date)
+            .all()
+        )
+
+        # Convierte los resultados en una lista de diccionarios
+        matched_users_data = [
+            {
+                "user_id":user.id,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "gender": user.gender,
+                "birth_date": user.birth_date.strftime("%Y-%m-%d") if user.birth_date else None,
+                "url_avatar": user.url_avatar
+            }
+            for user in matched_users
+        ]
+
+        return jsonify({"matches": matched_users_data}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
