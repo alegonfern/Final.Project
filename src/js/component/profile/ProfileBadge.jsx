@@ -57,9 +57,9 @@ const ProfileBadges = () => {
                                 </div>
                             </div>
                             <h3 className="h5 mb-1">
-                                <a href="#!">Elmer Chavez</a>
+                                <a href="#!">Creación Perfil</a>
                             </h3>
-                            <p className="mb-0">Founder</p>
+                            <p className="mb-0">Renocimiento por crear el perfil y agregar intereses.</p>
                         </div>
                     </div>
                     <div
@@ -101,9 +101,9 @@ const ProfileBadges = () => {
                                 </div>
                             </div>
                             <h3 className="h5 mb-1">
-                                <a href="#!">Elmira Milani</a>
+                                <a href="#!">Premio al más rápido.</a>
                             </h3>
-                            <p className="mb-0">Co-Founder</p>
+                            <p className="mb-0">Te demoraste solo dos días en hacer M4tch!</p>
                         </div>
                     </div>
                     <div
@@ -146,9 +146,9 @@ const ProfileBadges = () => {
                             </div>
                             <h3 className="h5 mb-1">
                                 {" "}
-                                <a href="#!">Dorcas Laueri</a>
+                                <a href="#!">Premio Gamer Destacado</a>
                             </h3>
-                            <p className="mb-0">Developer</p>
+                            <p className="mb-0">Lograste finalizar al menos 2 juegos de nuestra plataforma!</p>
                         </div>
                     </div>
                     <div
@@ -191,9 +191,9 @@ const ProfileBadges = () => {
                             </div>
                             <h3 className="h5 mb-1">
                                 {" "}
-                                <a href="#!">Steven Miloler</a>
+                                <a href="#!">Premio Referido</a>
                             </h3>
-                            <p className="mb-0">Designer</p>
+                            <p className="mb-0">Lograste traer a M4tch al menos a 10 contactos!</p>
                         </div>
                     </div>
                 </div>
