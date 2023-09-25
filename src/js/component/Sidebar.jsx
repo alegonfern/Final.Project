@@ -110,7 +110,7 @@ function Sidebar() {
 
                                 <li className="nav-item">
                                     <Link to="/Adn" className="nav-link">
-                                    <FontAwesomeIcon icon={faDna} rotation={90} style={{ color: "#48CB86", fontSize: "3rem" }} className="icon" />
+                                    <FontAwesomeIcon icon={faDna} style={{ color: "#cb484b", fontSize: "2rem" }} className="icon" />
                                     </Link>
                                 </li>
 
