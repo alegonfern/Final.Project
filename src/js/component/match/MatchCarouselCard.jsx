@@ -1,15 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FaDna } from 'react-icons/fa';
 import { UserContext } from '../../store/UserContext';
+import MatchPreview from '../match preview component/MatchPreview';
 
 const MatchCarouselCard = ({ AvatarUsuario, NombreUsuario, receiveId, PuntuacionCompatibilidad }) => {
     const { userId } = useContext(UserContext);
+    const [showUserProfile, setShowUserProfile] = useState(false); // Estado para mostrar el modal de usuario
 
     const handleClick = async (e) => {
         e.preventDefault();
-
+        setShowUserProfile(true);
         const postOptions = {
             method: 'POST',
             headers: {
@@ -31,20 +33,23 @@ const MatchCarouselCard = ({ AvatarUsuario, NombreUsuario, receiveId, Puntuacion
             });
     };
 
-    const linkTo = '/MatchPreview';
+    const handleCloseModal = () => {
+        // Cambiar el estado para ocultar el modal al hacer clic en el botón de cierre (X)
+        setShowUserProfile(false);
+    };
 
     return (
         <div className="card rounded text-center" style={{ width: "18rem", backgroundColor: 'rgba(0, 0, 0, 0)' }}>
-            <a href={linkTo} data-toggle="modal" data-target="#myModal">
+            <a href="#myModal" data-toggle="modal">
                 <img
                     style={{ height: '100px', width: '100px', objectFit: 'cover', borderRadius: '50%' }}
                     src={AvatarUsuario}
                     className="img-fluid mt-3"
                     alt="Avatar del usuario"
-                    data-toggle="modal"
-                    data-target="#myModal"
+                    onClick={handleClick}
                 />
             </a>
+
             <div className="card-body d-flex flex-column justify-content-center align-items-center">
                 <div>
                     <h5 className="text-center">{NombreUsuario}</h5>
@@ -61,6 +66,25 @@ const MatchCarouselCard = ({ AvatarUsuario, NombreUsuario, receiveId, Puntuacion
                     </button>
                 </div>
             </div>
+
+            {/* Mostrar el modal cuando showUserProfile es verdadero */}
+            {showUserProfile && (
+                <div className="modal fade show" id="myModal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleCloseModal}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div className="modal-body">
+                                <MatchPreview
+                                    user={{ AvatarUsuario, NombreUsuario, PuntuacionCompatibilidad }}
+                                    onClose={handleCloseModal}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
