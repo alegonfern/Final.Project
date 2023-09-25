@@ -7,6 +7,7 @@ export const UserProvider = ({ children }) => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [userName, setUserName] = useState('Nombre Usuario');
   const [userId, setUserId] = useState(null);
+
   const [compatibilityScores, setCompatibilityScores] = useState([]);
   const [userPreferences, setUserPreferences] = useState({}); // Agrega el estado de preferencias de usuario
 
