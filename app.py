@@ -14,6 +14,7 @@ from flask_jwt_extended import JWTManager
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 from compatibilidad import compatibilidad
+from collections import Counter
 
 app = Flask(__name__)
 app.config['DEBUG'] = True 
@@ -102,7 +103,8 @@ def get_users():
             "subscription_date": user.suscription_date.strftime("%Y-%m-%d %H:%M:%S"),
             "last_name": user.last_name,
             "first_name": user.first_name,
-            "url_avatar": user.url_avatar
+            "url_avatar": user.url_avatar,
+            "gender":user.gender
             # Asegúrate de formatear la fecha como desees
         }
         user_list.append(user_data)  # Agrega el usuario a la lista
@@ -623,6 +625,41 @@ def bd_intereses():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
+
+@app.route("/gender_distribution", methods=["GET"])
+def get_gender_distribution():
+    users = User.query.all()
+    gender_data = [user.gender for user in users if user.gender]  # Filtra los géneros no nulos
+    gender_distribution = dict(Counter(gender_data))
+    
+    return jsonify(gender_distribution)
+
+@app.route("/generos_game_distribution", methods=["GET"])
+def get_generos_game_distribution():
+    # Obtener todos los géneros de juegos de los usuarios registrados
+    generos = [genero.genero for genero in GeneroGame.query.all()]
+
+    # Contar la cantidad de juegos en cada género
+    conteo_por_genero = {}
+
+    for genero in generos:
+        if genero in conteo_por_genero:
+            conteo_por_genero[genero] += 1
+        else:
+            conteo_por_genero[genero] = 1
+
+    return jsonify(conteo_por_genero)
+
+@app.route("/top5_juegos", methods=["GET"])
+def get_top3_juegos():
+    # Realiza una consulta para contar cuántas veces se repite cada juego
+    juegos = db.session.query(Game.game, db.func.count(Game.game)).group_by(Game.game).order_by(db.func.count(Game.game).desc()).limit(5).all()
+
+    # Formatea los datos en una lista de diccionarios
+    top3_juegos = [{"juego": juego[0], "repeticiones": juego[1]} for juego in juegos]
+
+    return jsonify(top3_juegos)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)

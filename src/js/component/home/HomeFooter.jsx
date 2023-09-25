@@ -1,5 +1,8 @@
 import React from 'react'
+import GrapGenderHome from '../GrapGenderHome'
+import GrapGeneroHome from '../GrapGeneroHome'
 
+import GrapGameHome from '../GrapGameHome'
 const HomeFooter = () => {
     return (
         <>
@@ -8,29 +11,29 @@ const HomeFooter = () => {
                 <div className="card-group">
 
                     <div className="card px-4 py-4">
-                        <img src="..." className="card-img-top" alt="..." />
                         <div className="card-body">
                             <p className="card-text">
-                                <small className="text-body-secondary">Descripción gráfico </small>
+                                <small className="text-body-secondary">Quienes somos: </small>
                             </p>
+                            <GrapGenderHome />
                         </div>
                     </div>
 
                     <div className="card px-4 py-4">
-                        <img src="..." className="card-img-top" alt="..." />
                         <div className="card-body">
                             <p className="card-text">
-                                <small className="text-body-secondary">Descripción gráfico </small>
+                                <small className="text-body-secondary mb-5">Podio de Generos : </small>
                             </p>
+                            <GrapGeneroHome />
                         </div>
                     </div>
 
                     <div className="card px-4 py-4">
-                        <img src="..." className="card-img-top" alt="..." />
                         <div className="card-body">
                             <p className="card-text">
-                                <small className="text-body-secondary">Descripción gráfico </small>
+                                <small className="text-body-secondary">Top 5 Games: </small>
                             </p>
+                            <GrapGameHome />
                         </div>
                     </div>
                 </div>
