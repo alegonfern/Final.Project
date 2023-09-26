@@ -9,6 +9,7 @@ const Signup = () => {
         password: '',
         birth_date: '',
         gender: 'Non binary',
+        url_avatar: '',
     });
 
     const handleSubmit = async (e) => {

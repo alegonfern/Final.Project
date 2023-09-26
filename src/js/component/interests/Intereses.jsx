@@ -229,21 +229,24 @@ const Intereses = () => {
 
     const handleSaveInterests = async () => {
         // Crear un objeto con los datos de interés para enviar al backend
-        const userData = {
-            userId: userId, // Aquí debes establecer el ID de usuario adecuado
-            selectedGenres: selectedGenres,
-            selectedGames: selectedGames,
-            selectedMoviesGenres: selectedMoviesGenres,
-            selectedMovies: selectedMovies,
-            selectedMusicGenres: selectedMusicGenres,
-            selectedArtists: selectedArtists,
-            selectedPlatforms: selectedPlatforms,
-            agePreference: agePreference,
-            genderPreference: genderPreference,
-        };
+        const userData = [
+            {
+                user_id: 14, // Cambia esto al ID de usuario adecuado
+                generos_game: selectedGenres,
+                games: selectedGames,
+                generos_musica: selectedMusicGenres,
+                artistas: selectedArtists,
+                generos_pelicula: selectedMoviesGenres,
+                peliculas: selectedMovies,
+                plataformas: selectedPlatforms,
+                edad_minima: agePreference.min,
+                edad_maxima: agePreference.max,
+                sexo: { genero_sexo: genderPreference },
+            },
+        ];
 
         // URL del endpoint en tu backend para guardar los datos de interés
-        const saveInterestsUrl = "http://127.0.0.1:5000/generos";
+        const saveInterestsUrl = "http://127.0.0.1:5000/bdintereses"; // Cambia la URL según tu ruta de Flask
 
         try {
             const response = await fetch(saveInterestsUrl, {
@@ -266,6 +269,7 @@ const Intereses = () => {
             alert('Error al conectar con el servidor. Por favor, intenta nuevamente más tarde.');
         }
     };
+
 
     return (
         <div className="container px-4 px-lg-5 mt-5">
