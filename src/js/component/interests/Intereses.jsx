@@ -231,7 +231,7 @@ const Intereses = () => {
         // Crear un objeto con los datos de interés para enviar al backend
         const userData = [
             {
-                user_id: 14, // Cambia esto al ID de usuario adecuado
+                user_id: userId,
                 generos_game: selectedGenres,
                 games: selectedGames,
                 generos_musica: selectedMusicGenres,
