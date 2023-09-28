@@ -6,8 +6,9 @@ import { UserContext } from '../../store/UserContext';
 import MatchPreview from '../match preview component/MatchPreview';
 
 const MatchCarouselCard = ({ AvatarUsuario, NombreUsuario, receiveId, PuntuacionCompatibilidad }) => {
-    const { userId } = useContext(UserContext);
+
     const [showUserProfile, setShowUserProfile] = useState(false); // Estado para mostrar el modal de usuario
+    const userId = sessionStorage.getItem('userId'); // Traigo el UserId
 
     const handleClick = async (e) => {
         e.preventDefault();
@@ -34,7 +35,7 @@ const MatchCarouselCard = ({ AvatarUsuario, NombreUsuario, receiveId, Puntuacion
     };
 
     const handleCloseModal = () => {
-        // Cambiar el estado para ocultar el modal al hacer clic en el botón de cierre (X)
+        // Cambio el estado para ocultar el modal al hacer clic en el botón de cierre (X)
         setShowUserProfile(false);
     };
 
@@ -67,7 +68,7 @@ const MatchCarouselCard = ({ AvatarUsuario, NombreUsuario, receiveId, Puntuacion
                 </div>
             </div>
 
-            {/* Mostrar el modal cuando showUserProfile es verdadero */}
+
             {showUserProfile && (
                 <div className="modal fade show" id="myModal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
                     <div className="modal-dialog modal-dialog-centered" role="document">

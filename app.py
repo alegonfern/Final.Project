@@ -16,6 +16,8 @@ from flask_jwt_extended import jwt_required
 from compatibilidad import compatibilidad
 from collections import Counter
 from sqlalchemy import or_
+from flask_session import Session
+
 
 app = Flask(__name__)
 app.config['DEBUG'] = True 
@@ -58,35 +60,43 @@ class UserAdminView(ModelView):
 admin.add_view(UserAdminView(User, db.session))
 admin.add_view(ModelView(Profile, db.session))
 
-# validacion de Inicio de Sesion con metodo POST.
 @app.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()
-    username = data.get("username")
-    password = data.get("password")
+    try:
+        data = request.get_json()
+        username= data.get("username")
+        password = data.get("password")
 
-    user = User.query.filter_by(username=username).first()
-
-    if user:
-        if check_password_hash(user.password_hash, password):
-            # Autenticación exitosa
-            logging.info(f"Autenticación exitosa para el usuario: {username}")
-            token = create_access_token(identity=user.id)  # Genera el token JWT
-            user_id = user.id
-            return jsonify({"token": token, "message": "Autenticación exitosa", "user_id": user_id})
-        else:
-            # Autenticación fallida, contraseña incorrecta
-            logging.warning(
-                f"Autenticación fallida para el usuario: {username} (contraseña incorrecta)"
+        if not username or not password:
+            return (
+                jsonify(
+                    {
+                        "success": False,
+                        "message": "Nobre de usuario y contraseña son requeridos.",
+                    }
+                ),
+                400,
             )
-    else:
-        # Autenticación fallida, usuario no encontrado
-        logging.warning(
-            f"Autenticación fallida para el usuario: {username} (usuario no encontrado)"
-        )
 
-    # Devuelve un mensaje de error
-    return jsonify({"message": "Credenciales incorrectas"}), 401
+        # Compruebo si el usuario existe
+        user = User.query.filter_by(username=username).first()
+        if not user or not check_password_hash(user.password_hash, password):
+            return (
+                jsonify({"success": False, "message": "Credenciales inválidas."}),
+                401,
+            )
+
+        # Genero un token JWT para el usuario autenticado
+        access_token = create_access_token(identity=str(user.id))
+
+        # Devuelvo el token JWT en la respuesta
+        return jsonify({"success": True, "access_token": access_token,"user_id": user.id}), 200
+    except Exception as e:
+        # Manejo de errores de la base de datos u otros errores
+        return (
+            jsonify({"success": False, "message": str(e)}),
+            500,
+        )  # Devuelvo un código de error 500 en caso de fallo
 
 
 # Ruta para obtener la lista de usuarios en formato JSON
@@ -329,7 +339,7 @@ def calcular_compatibilidad_entre_usuarios():
     # Calcular la compatibilidad para cada par de usuarios únicos
     for i, usuario1 in enumerate(usuarios):
         for usuario2 in usuarios[i + 1:]:
-            # Comprueba si la compatibilidad ya se calculó para esta pareja
+            # Compruebo si la compatibilidad ya se calculó para esta pareja
             puntuacion_compatibilidad = compatibilidad(usuario1, usuario2)
             resultados_compatibilidad.append({
                 "usuario1_id": usuario1.id,
@@ -338,6 +348,32 @@ def calcular_compatibilidad_entre_usuarios():
             })
 
     return jsonify({"compatibilidades": resultados_compatibilidad})
+
+@app.route('/calcular_compatibilidad_entre_usuarios/<int:user_id>', methods=['GET'])
+def calcular_compatibilidad_usuario(user_id):
+    # Obtengo el usuario específico por su ID
+    usuario = User.query.get(user_id)
+    
+    if not usuario:
+        return jsonify({"message": "Usuario no encontrado"}), 404
+
+    # Obtengo todos los usuarios registrados en la base de datos
+    usuarios = User.query.filter(User.id != user_id).all()
+
+    # Calculo la compatibilidad para el usuario específico con cada otro usuario
+    resultados_compatibilidad = []
+
+    for otro_usuario in usuarios:
+        puntuacion_compatibilidad = compatibilidad(usuario, otro_usuario)
+        resultados_compatibilidad.append({
+            "usuario1_id": usuario.id,
+            "usuario2_id": otro_usuario.id,
+            "compatibilidad": puntuacion_compatibilidad
+        })
+
+    return jsonify({"compatibilidades": resultados_compatibilidad})
+
+
 
 
 

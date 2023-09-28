@@ -30,16 +30,16 @@ const Login = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const resultado = await flogin(username, password);
+        console.log("success:", resultado, "Estas siendo redirigido al Home");
+        if (resultado) {
+            // Redirigo al usuario a la ruta.
+            navigate("/home");
+        }
 
-        flogin(username, password)
-            .then((isAuthenticated) => {
-                if (isAuthenticated) {
-                    navigate("/Home");
-                }
-            });
-    };
+    }
 
     return (
         <div className="container mt-5 pt-5">

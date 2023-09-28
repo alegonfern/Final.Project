@@ -26,43 +26,45 @@ export const UserProvider = ({ children }) => {
     document.body.setAttribute('data-theme', theme);
   }, [theme]);
 
+
   const flogin = (username, password) => {
-    const url = "http://127.0.0.1:5000/login";
-
-    const postOptions = {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    }
-
-    return fetch(url, postOptions)
-      .then(response => {
-        if (response.ok) {
-          return response.json(); // Parsea la respuesta JSON
-        } else {
-          console.error('Credenciales incorrectas');
-          return false;
-        }
+    return new Promise((resolve, reject) => {
+      fetch('http://127.0.0.1:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
       })
-      .then(data => {
-        if (data) {
-          setIsLoggedIn(true);
-          setUserId(data.user_id);
-          const token = data.token;
-          console.log('El inicio de sesión fue exitoso y el token es:', token, 'Id;', userId);
-          localStorage.setItem('jwtToken', token);
-          return true;
-        } else {
-          return false;
-        }
-      })
-      .catch((error) => {
-        console.error('Error al enviar la solicitud', error);
-        return false;
-      });
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Error en la solicitud.');
+          }
+        })
+        .then(data => {
+          console.log("Inicio exitoso, Token generado");
+          const token = data.access_token;
+          const userId = data.user_id;
+          const logged = true;
+          setUserId(userId);
+          setIsLoggedIn(logged);
+          console.log("Este es el Token", token, " | Este es el ID de Usuario:", userId);
+          sessionStorage.setItem('token', token);
+          sessionStorage.setItem('userId', userId);
+
+
+          resolve(true); // Resuelvo la promesa con true en caso de éxito
+        })
+        .catch(err => {
+          console.error('Error en la solicitud:', err.message);
+          setError('Error en la solicitud. Por favor, inténtalo de nuevo más tarde.');
+          resolve(false); // Resuelvo la promesa con false en caso de error
+        });
+    });
   };
+
 
   const handleGoogleCallback = async (code) => {
     const key = 'AIzaSyDvHtJsPXyQX7k91Ppo4GSvms0gt0HlXJw';
@@ -94,21 +96,6 @@ export const UserProvider = ({ children }) => {
         console.error('Error al obtener el token de acceso de Google', error);
       });
   }
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      // Realiza una solicitud al servidor para obtener las puntuaciones de compatibilidad
-      fetch("http://127.0.0.1:5000/calcular_compatibilidad_entre_usuarios") // Ajusta la URL a tu endpoint
-        .then(response => response.json())
-        .then(data => {
-          const userCompatibilityScores = data.compatibilidades.filter(score => score.usuario1_id === userId || score.usuario2_id === userId);
-          setCompatibilityScores(userCompatibilityScores);
-        })
-        .catch(error => {
-          console.error('Error al obtener las puntuaciones de compatibilidad', error);
-        });
-    }
-  }, [isLoggedIn, userId]);
 
 
   return (
