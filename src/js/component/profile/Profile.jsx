@@ -3,10 +3,12 @@ import ProfileCard from './ProfileCard'
 import ProfileBasicInfo from './ProfileBasicInfo'
 import ProfileBadges from './ProfileBadge'
 import ProfileInfo from './ProfileInfo'
-
+import Sidebar from '../Sidebar';
 const Profile = () => {
     return (
         <>
+            <Sidebar />
+
             <div className='row'>
                 <div className='col-12'>
                     <ProfileInfo />

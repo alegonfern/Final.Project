@@ -25,45 +25,32 @@ import MatchPreview from './component/match preview component/MatchPreview';
 import MyCalendar from "./component/Calendar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-
+import PrivateRoute from "./component/PrivateRoute"
 
 function App() {
   return (
     <UserProvider>
       <Router>
+
         <Routes>
+
           <Route path="/login" element={<Login />} />
-          <Route path="/Signup" element={<Signup />} />
-          <Route path="*" element={
-            <>
-              <div>
-                <Sidebar />
-              </div>
-              <div className="content" >
-                <Routes>
-                  <Route path="/Home" element={<Home />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/Group" element={<Group />} />
-                  <Route path="/Intereses" element={<Intereses />} />
-                  <Route path="/Matches" element={<Matches />} />
-                  <Route path="/Adn" element={<Adn/>} />
+          <Route path="/signup" element={<Signup />} />
 
+          <Route path="/Home" element={<PrivateRoute element={<Home />} />} />
+          <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
+          <Route path="/Group" element={<PrivateRoute element={<Group />} />} />
+          <Route path="/Intereses" element={<PrivateRoute element={<Intereses />} />} />
+          <Route path="/Matches" element={<PrivateRoute element={<Matches />} />} />
+          <Route path="/Adn" element={<PrivateRoute element={<Adn />} />} />
+          <Route path="/calendar" element={<PrivateRoute element={<MyCalendar />} />} />
+          <Route path="/chat" element={<PrivateRoute element={<Chat />} />} />
 
-                  <Route path="/login_google" element={<GoogleCallback />} />
-                  <Route path="/MatchPreview" element={<MatchPreview />} />
-                  <Route path="/match" element={<Match />} />
-                  <Route path="/Google" element={<Google_test />} />
-                  <Route path="/calendar" element={<MyCalendar />} />
-                  <Route path="/chat" element={<Chat />} />
-
-                </Routes>
-
-              </div>
-            </>
-          } />
         </Routes>
+
       </Router>
     </UserProvider>
+
   );
 }
 export default App;

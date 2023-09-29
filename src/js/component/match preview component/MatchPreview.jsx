@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTimes, faDna } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../store/UserContext"
-
+import Sidebar from '../Sidebar';
 const MatchPreview = ({ user, onClose }) => {
   const modalStyle = {
     // Estilos para el modal
@@ -59,23 +59,26 @@ const MatchPreview = ({ user, onClose }) => {
   };
 
   return (
-    <div style={modalStyle} className="user-profile-modal">
-      <div style={contentStyle} className="modal-content">
-        <span className="close" onClick={onClose}>&times;</span>
-        <div style={containerStyle}>
-          <h2>{user.NombreUsuario}</h2>
-          <img
-            src={user.AvatarUsuario}
-            alt={`Avatar de ${user.NombreUsuario}`}
-            style={{ height: '200px', width: '200px', objectFit: 'cover', borderRadius: '50%' }}
-          />
-          <p style={compatibilityStyle}>Compatibilidad: {user.PuntuacionCompatibilidad}</p>
-        </div>
-        <div style={dnaIconStyle} className="dna-icon">
-          <FontAwesomeIcon icon={faDna} />
+    <>
+      <Sidebar />
+      <div style={modalStyle} className="user-profile-modal">
+        <div style={contentStyle} className="modal-content">
+          <span className="close" onClick={onClose}>&times;</span>
+          <div style={containerStyle}>
+            <h2>{user.NombreUsuario}</h2>
+            <img
+              src={user.AvatarUsuario}
+              alt={`Avatar de ${user.NombreUsuario}`}
+              style={{ height: '200px', width: '200px', objectFit: 'cover', borderRadius: '50%' }}
+            />
+            <p style={compatibilityStyle}>Compatibilidad: {user.PuntuacionCompatibilidad}</p>
+          </div>
+          <div style={dnaIconStyle} className="dna-icon">
+            <FontAwesomeIcon icon={faDna} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

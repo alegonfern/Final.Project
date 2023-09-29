@@ -6,7 +6,7 @@ import { faDna as faSolidDna } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import googleIcon from '../../img/google-icon.png'
 import '../../styles/index.css';
-
+import { Link } from "react-router-dom";
 const Login = () => {
 
     const { flogin, handleGoogleCallback } = useContext(UserContext);
@@ -67,17 +67,13 @@ const Login = () => {
                             </button>
                         </div>
                     </form>
-                    <div className="row justify-content-center mt-3">
-                        <a href="#">Olvidé mi contraseña</a>
-                    </div>
+
                     <div className="row justify-content-center mt-3 mb-3">
-                        <a href="#">Crear nuevo usuario</a>
+                        <Link to="/signup" className="nav-link" style={{ textDecoration: 'underline', color: 'blue' }}>
+                            Crear nuevo usuario
+                        </Link>
                     </div>
-                    <div className="d-flex justify-content-center mt-3">
-                        <button className="google-login-button mx-auto my-3" onClick={handleGoogleSignIn}>
-                            <img src={googleIcon} className="google-icon img-fluid"></img>Iniciar sesión con Google
-                        </button>
-                    </div>
+
                 </div>
             </div>
         </div>

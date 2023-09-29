@@ -4,7 +4,7 @@ import GroupCards from './GroupCards'
 import GroupWall from './GroupWall'
 import GroupNewsCarousel from './GroupNewsCarousel'
 import MatchCarousel from '../match/MatchCarousel';
-
+import Sidebar from '../Sidebar';
 const Group = (selectedGenre) => {
 
     const gamesByGenre = {
@@ -35,21 +35,22 @@ const Group = (selectedGenre) => {
         'Educativo': ['Minecraft: Education Edition', 'Kerbal Space Program', 'Carmen Sandiego', 'The Oregon Trail', 'Math Blaster'],
         'Casual': ['Candy Crush Saga', 'Angry Birds', 'Plants vs. Zombies', 'Fruit Ninja', 'Sudoku']
     };
-    
+
     const games = gamesByGenre[selectedGenre] || [];
-    
+
     return (
         <>
+            <Sidebar />
             <GroupHeader />
             <div className="container px-4 px-lg-5 mt-5">
-                    <MatchCarousel/>
-                    </div>
+                <MatchCarousel />
+            </div>
             <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {games.map((game, index) => (
                     <GroupCards
-                       key={index}
-                       groupName={game}
-                       games={games}
+                        key={index}
+                        groupName={game}
+                        games={games}
                     />
                 ))}
             </div>

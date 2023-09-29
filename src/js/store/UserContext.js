@@ -3,10 +3,10 @@ import React, { createContext, useEffect, useState } from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [userName, setUserName] = useState('Nombre Usuario');
   const [userId, setUserId] = useState(null);
+  const [error, setError] = useState(null);
 
   const [compatibilityScores, setCompatibilityScores] = useState([]);
   const [userPreferences, setUserPreferences] = useState({}); // Agrega el estado de preferencias de usuario
@@ -47,9 +47,7 @@ export const UserProvider = ({ children }) => {
           console.log("Inicio exitoso, Token generado");
           const token = data.access_token;
           const userId = data.user_id;
-          const logged = true;
           setUserId(userId);
-          setIsLoggedIn(logged);
           console.log("Este es el Token", token, " | Este es el ID de Usuario:", userId);
           sessionStorage.setItem('token', token);
           sessionStorage.setItem('userId', userId);
@@ -97,9 +95,15 @@ export const UserProvider = ({ children }) => {
       });
   }
 
+  const logout = () => {
+    // Elimino el token de autenticación.
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userId');
+
+  };
 
   return (
-    <UserContext.Provider value={{ compatibilityScores, handleGoogleCallback, isLoggedIn, flogin, theme, toggleTheme, userName, setUserName, userId, updateUserPreferences }}>
+    <UserContext.Provider value={{ logout, compatibilityScores, handleGoogleCallback, flogin, theme, toggleTheme, userName, setUserName, userId, updateUserPreferences }}>
       {children}
     </UserContext.Provider>
   );

@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { UserContext } from "../store/UserContext";
 import { useEffect } from 'react';
 import "../../styles/calendar.css"
-
+import Sidebar from './Sidebar';
 
 const localizer = momentLocalizer(moment);
 
@@ -76,6 +76,7 @@ function MyCalendar() {
 
     return (
         <>
+            <Sidebar />
             <link
                 href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
                 rel="stylesheet"
